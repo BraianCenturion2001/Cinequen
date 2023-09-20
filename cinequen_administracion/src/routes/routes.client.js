@@ -7,7 +7,6 @@ const routesClient = [
         path: "/",
         layout: ClientLayout,
         component: Home,
-        exact: true,
     }
 ];
 
