@@ -1,5 +1,5 @@
-import React, { useState, createContext } from "react";
-import { setToken } from "../api/token"
+import React, { useState, useEffect, createContext } from "react";
+import { setToken, getToken } from "../api/token"
 import { useUser } from "../hooks/useUser"
 
 export const AuthContext = createContext({
@@ -13,6 +13,19 @@ export function AuthProvider(props) {
     const [auth, setAuth] = useState(undefined)
     const { getMe } = useUser();
 
+    useEffect(() => {
+        (async () => {
+            const token = getToken();
+            if (token) {
+                const me = await getMe(token);
+                setAuth({ token, me })
+            } else {
+                setAuth(null);
+            }
+        })();
+    }, []);
+
+
     const login = async (token) => {
         setToken(token);
         const me = await getMe(token);
@@ -24,6 +37,8 @@ export function AuthProvider(props) {
         login,
         logout: () => console.log("Cerrando sesion")
     }
+
+    if (auth === undefined) return null;
 
     return (
         < AuthContext.Provider value={valueContext}>
