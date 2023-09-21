@@ -8,13 +8,16 @@ import { loginApi } from "../../../api/user";
 import { useAuth } from "../../../hooks"
 
 export function LoginForm() {
+    const { login } = useAuth();
+
     const formik = useFormik({
         initialValues: initialValues(),
         validationSchema: Yup.object(validationSchema()),
         onSubmit: async (formValue) => {
             try {
                 const response = await loginApi(formValue)
-                console.log(response);
+                const { access } = response;
+                login(access)
             } catch (error) {
                 console.log(error)
                 toast.error(error.message)

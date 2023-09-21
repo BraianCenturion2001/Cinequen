@@ -1,4 +1,6 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, createContext } from "react";
+import { setToken } from "../api/token"
+import { useUser } from "../hooks/useUser"
 
 export const AuthContext = createContext({
     auth: undefined,
@@ -8,10 +10,18 @@ export const AuthContext = createContext({
 
 export function AuthProvider(props) {
     const { children } = props;
+    const [auth, setAuth] = useState(undefined)
+    const { getMe } = useUser();
+
+    const login = async (token) => {
+        setToken(token);
+        const me = await getMe(token);
+        setAuth({ token, me })
+    }
 
     const valueContext = {
-        auth: null,
-        login: () => console.log("Realizando Login"),
+        auth,
+        login,
         logout: () => console.log("Cerrando sesion")
     }
 
