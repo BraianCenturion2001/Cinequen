@@ -1,6 +1,7 @@
 import React from 'react'
 import { Menu, Icon } from "semantic-ui-react"
 import { Link, useLocation } from "react-router-dom"
+import { useAuth } from "../../../hooks"
 import "./SideBar.scss"
 
 export function SideBar(props) {
@@ -17,6 +18,7 @@ export function SideBar(props) {
 
 function MenuLeft(props) {
     const { pathname } = props
+    const { auth } = useAuth();
 
     return (
         <Menu fixed="left" borderless className='side' vertical>
@@ -36,9 +38,12 @@ function MenuLeft(props) {
                 <Icon name='calendar alternate' /> Funciones
             </Menu.Item>
 
-            <Menu.Item as={Link} to={'/admin/users'} active={pathname === '/admin/users'}>
-                <Icon name='users' /> Usuarios
-            </Menu.Item>
+            {auth.me?.is_staff && (
+                <Menu.Item as={Link} to={'/admin/users'} active={pathname === '/admin/users'}>
+                    <Icon name='users' /> Usuarios
+                </Menu.Item>
+            )}
         </Menu>
+
     )
 }
