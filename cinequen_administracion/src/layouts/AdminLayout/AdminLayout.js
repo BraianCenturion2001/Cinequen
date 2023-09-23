@@ -2,7 +2,7 @@ import React from 'react';
 import "./AdminLayout.scss";
 import { LoginAdmin } from "../../pages/Admin"
 import { useAuth } from "../../hooks"
-import { TopMenu } from "../../components/Admin"
+import { TopMenu, SideBar } from "../../components/Admin"
 
 export function AdminLayout(props) {
     const { children } = props;
@@ -17,7 +17,7 @@ export function AdminLayout(props) {
             </div>
 
             <div className='admin-layout__main-content'>
-                {children}
+                <SideBar>{children}</SideBar>
             </div>
         </div>
     )
