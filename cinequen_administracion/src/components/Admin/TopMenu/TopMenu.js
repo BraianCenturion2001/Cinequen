@@ -17,7 +17,7 @@ export function TopMenu() {
     return (
         <Menu fixed='top' className='top-menu-admin'>
             <Menu.Item className='top-menu-admin__logo'>
-                <p>Cinequen Admin</p>
+                <p>Cinequén Administración</p>
             </Menu.Item>
 
             <Menu.Menu position='right'>
