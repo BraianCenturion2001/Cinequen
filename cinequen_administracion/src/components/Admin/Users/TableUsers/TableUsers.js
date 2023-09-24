@@ -5,7 +5,7 @@ import { map } from "lodash"
 
 
 export function TableUsers(props) {
-    const { users, updateUser } = props;
+    const { users, updateUser, deleteUser } = props;
     return (
         <Table className='table-users-admin'>
             <Table.Header>
@@ -32,7 +32,7 @@ export function TableUsers(props) {
                         <Table.Cell className='status'>
                             {user.is_staff ? <Icon name='check' /> : <Icon name='close' />}
                         </Table.Cell>
-                        <Actions user={user} updateUser={updateUser} />
+                        <Actions user={user} updateUser={updateUser} deleteUser={deleteUser} />
                     </Table.Row>
                 ))}
             </Table.Body>
@@ -41,14 +41,14 @@ export function TableUsers(props) {
 }
 
 function Actions(props) {
-    const { user, updateUser } = props;
+    const { user, updateUser, deleteUser } = props;
 
     return (
         <Table.Cell textAlign='right'>
             <Button icon onClick={() => updateUser(user)}>
                 <Icon name='pencil' />
             </Button>
-            <Button icon negative /* onClick={()} */>
+            <Button icon negative onClick={() => deleteUser(user)}>
                 <Icon name='trash alternate' />
             </Button>
         </Table.Cell>
