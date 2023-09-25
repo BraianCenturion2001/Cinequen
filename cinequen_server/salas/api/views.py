@@ -7,4 +7,4 @@ from salas.api.serializer import SalaSerializer
 class SalaApiViewSet(ModelViewSet):
     permissions_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = SalaSerializer
-    queryset = Sala.objects.all
+    queryset = Sala.objects.all()

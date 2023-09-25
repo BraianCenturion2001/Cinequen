@@ -7,4 +7,4 @@ from establecimientos.api.serializer import EstablecimientoSerializer
 class EstablecimientoApiViewSet(ModelViewSet):
     permissions_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = EstablecimientoSerializer
-    queryset = Establecimiento.objects.all
+    queryset = Establecimiento.objects.all()

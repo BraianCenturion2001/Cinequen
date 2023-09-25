@@ -7,4 +7,4 @@ from peliculas.api.serializer import PeliculaSerializer
 class PeliculaApiViewSet(ModelViewSet):
     permissions_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = PeliculaSerializer
-    queryset = Pelicula.objects.all
+    queryset = Pelicula.objects.all()
