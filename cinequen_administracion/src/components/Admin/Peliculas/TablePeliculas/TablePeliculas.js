@@ -4,7 +4,7 @@ import { Table, Button, Icon, Image } from "semantic-ui-react"
 import { map } from "lodash"
 
 export function TablePeliculas(props) {
-    const { peliculas, editPelicula } = props;
+    const { peliculas, editPelicula, deletePelicula } = props;
     return (
         <Table className='table-peliculas-admin'>
             <Table.Header>
@@ -25,7 +25,7 @@ export function TablePeliculas(props) {
                         </Table.Cell>
                         <Table.Cell>{pelicula.duracion}</Table.Cell>
                         <Table.Cell>{pelicula.clasificacion}</Table.Cell>
-                        <Actions pelicula={pelicula} editPelicula={editPelicula} />
+                        <Actions pelicula={pelicula} editPelicula={editPelicula} deletePelicula={deletePelicula} />
                     </Table.Row>
                 ))}
             </Table.Body>
@@ -34,14 +34,14 @@ export function TablePeliculas(props) {
 }
 
 function Actions(props) {
-    const { pelicula, editPelicula } = props;
+    const { pelicula, editPelicula, deletePelicula } = props;
 
     return (
         <Table.Cell>
             <Button icon onClick={() => editPelicula(pelicula)} >
                 <Icon name='pencil' />
             </Button>
-            <Button icon negative /* onClick={() => deleteUser(user)} */>
+            <Button icon negative onClick={() => deletePelicula(pelicula)}>
                 <Icon name='trash alternate' />
             </Button>
         </Table.Cell>

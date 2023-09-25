@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from ".";
-import { getPeliculasApi, addPeliculaApi, updatePeliculaApi } from "../api/peliculas";
+import { getPeliculasApi, addPeliculaApi, updatePeliculaApi, deletePeliculaApi } from "../api/peliculas";
 
 export function usePelicula() {
     const [loading, setLoading] = useState(true);
@@ -43,6 +43,17 @@ export function usePelicula() {
         }
     }
 
+    const deletePelicula = async (id) => {
+        try {
+            setLoading(true)
+            await deletePeliculaApi(id, auth.token);
+            setLoading(false)
+        } catch (error) {
+            setLoading(false);
+            setError(error)
+        }
+    }
+
     return {
         loading,
         error,
@@ -50,6 +61,7 @@ export function usePelicula() {
         getPeliculas,
         addPelicula,
         updatePelicula,
+        deletePelicula,
 
     };
 }

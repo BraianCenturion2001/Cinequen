@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Loader } from "semantic-ui-react"
-import { HeaderPage, TablePeliculas, AddEditPeliculaForm } from "../../components/Admin"
+import { HeaderPage, TablePeliculas, AddEditPeliculaForm, DeletePelicula } from "../../components/Admin"
 import { ModalBasic } from "../../components/Common"
 import { usePelicula } from "../../hooks"
 
@@ -31,6 +31,12 @@ export function PeliculasAdmin() {
         openCloseModal();
     }
 
+    const deletePelicula = (data) => {
+        setTitleModal("Eliminar Película");
+        setContentModal(<DeletePelicula onClose={openCloseModal} onRefetch={onRefetch} pelicula={data} />);
+        openCloseModal();
+    }
+
     return (
         <>
             <HeaderPage title="Peliculas" btnTitle="Nueva pelicula" btnClick={addPelicula} />
@@ -40,7 +46,7 @@ export function PeliculasAdmin() {
                     Cargando
                 </Loader>
             ) : (
-                <TablePeliculas peliculas={peliculas} editPelicula={editPelicula} />
+                <TablePeliculas peliculas={peliculas} editPelicula={editPelicula} deletePelicula={deletePelicula} />
             )}
 
             <ModalBasic show={showModal} onClose={openCloseModal} title={titleModal} children={contentModal} />
