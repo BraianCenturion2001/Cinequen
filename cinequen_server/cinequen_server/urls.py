@@ -9,6 +9,7 @@ from users.api.router import router_user
 from peliculas.api.router import router_peliculas
 from establecimientos.api.router import router_establecimientos
 from salas.api.router import router_salas
+from funciones.api.router import router_funciones
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -33,6 +34,7 @@ urlpatterns = [
     path('api/', include(router_peliculas.urls)),
     path('api/', include(router_establecimientos.urls)),
     path('api/', include(router_salas.urls)),
+    path('api/', include(router_funciones.urls)),
 ]
 
 # Configura el acceso a las imágenes
