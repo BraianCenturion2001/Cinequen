@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'peliculas',
     'salas',
     'funciones',
+    'peliculasxestablecimientos',
     'users',
 ]
 

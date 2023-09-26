@@ -11,4 +11,4 @@ class Funcion(models.Model):
         'peliculas.Pelicula', on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return str(self.fecha.strftime("%d/%m/%Y")) + " - Sala: " + str(self.sala) + " - Película: " + str(self.pelicula)
+        return str(self.fecha.strftime("%d/%m/%Y")) + " - Sala: " + str(self.sala) + " - Establecimiento: " + str(self.sala.establecimiento) + " - Película: " + str(self.pelicula)
