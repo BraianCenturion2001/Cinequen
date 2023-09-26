@@ -6,3 +6,4 @@ export * from "./HeaderPage";
 export * from "./Users"
 export * from "./Establecimientos"
 export * from "./Peliculas"
+export * from "./Salas"

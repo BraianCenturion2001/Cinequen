@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Loader } from "semantic-ui-react"
-import { HeaderPage } from "../../components/Admin"
+import { HeaderPage, TableSalas } from "../../components/Admin"
 import { ModalBasic } from "../../components/Common"
-import { } from "../../hooks"
+import { useSala } from "../../hooks"
 
 export function SalasAdmin() {
 
-    /* const { loading, establecimientos, getEstablecimientos } = useEstablecimiento(); */
+    const { loading, salas, getSalas } = useSala();
     const [showModal, setShowModal] = useState(false)
     const [titleModal, setTitleModal] = useState(null)
     const [refetch, setRefetch] = useState(false)
@@ -15,9 +15,9 @@ export function SalasAdmin() {
     const openCloseModal = () => setShowModal((prev) => !prev);
     const onRefetch = () => setRefetch((prev) => !prev);
 
-    /* useEffect(() => {
-        getEstablecimientos();
-    }, [refetch]) */
+    useEffect(() => {
+        getSalas();
+    }, [refetch])
 
     /* const addEstablecimiento = () => {
         setTitleModal("Nuevo Establecimiento");
@@ -40,14 +40,16 @@ export function SalasAdmin() {
     return (
         <>
             <HeaderPage title="Salas" btnTitle="Nueva Sala" /* btnClick={addEstablecimiento}  */ />
-            {/* 
-            {loading ? (
-                <Loader active inline="centered">
-                    Cargando
-                </Loader>
-            ) : (
-                <TableEstablecimientos establecimientos={establecimientos} updateEstablecimiento={updateEstablecimiento} deleteEstablecimiento={deleteEstablecimiento} />
-            )} */}
+
+            {
+                loading ? (
+                    <Loader active inline="centered" >
+                        Cargando
+                    </Loader>
+                ) : (
+                    <TableSalas salas={salas} /* updateEstablecimiento={updateEstablecimiento} deleteEstablecimiento={deleteEstablecimiento} */ />
+                )
+            }
 
             {/* <ModalBasic show={showModal} onClose={openCloseModal} title={titleModal} children={contentModal} /> */}
         </>
