@@ -9,5 +9,5 @@ class SalaSerializer(ModelSerializer):
             'nombre',
             'tipo',
             'precio_entrada',
-            'idEstablecimiento',
+            'establecimiento',
         ]
