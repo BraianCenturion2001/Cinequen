@@ -1,6 +1,6 @@
 import React from 'react';
 import "./LoginForm.scss";
-import { Button, Form } from "semantic-ui-react";
+import { Button, Form, Icon } from "semantic-ui-react";
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import { toast } from "react-toastify"
@@ -42,7 +42,10 @@ export function LoginForm() {
                 onChange={formik.handleChange}
                 error={formik.errors.password}
             />
-            <Button type='submit' content="Iniciar Sesión" primary fluid />
+            <Button type='submit' content="Iniciar Sesión" inverted fluid>
+                <Icon name="sign-in" />
+                Iniciar Sesión
+            </Button>
         </ Form>
     )
 }

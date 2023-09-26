@@ -5,10 +5,13 @@
   align-items: center;
   justify-content: center;
   background-color: #2a2a72;
-  background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
+  background-image: url("../../../../public/images/Fondo\ Rojo.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 
   &__content {
-    background-color: #fff;
+    background-color: rgb(0, 0, 0);
     padding: 50px 50px;
     border-radius: 20px;
     width: 500px;
