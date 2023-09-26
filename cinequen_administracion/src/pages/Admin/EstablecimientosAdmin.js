@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Loader } from "semantic-ui-react"
-import { HeaderPage, TableEstablecimientos, AddEditEstablecimientoForm, DeleteEstablecimiento } from "../../components/Admin"
+import { HeaderPage, TableEstablecimientos, AddEditEstablecimientoForm, DeleteEstablecimiento, ListPeliculaEstablecimiento, ListFuncionesEstablecimiento } from "../../components/Admin"
 import { ModalBasic } from "../../components/Common"
 import { useEstablecimiento } from "../../hooks"
 
@@ -37,6 +37,18 @@ export function EstablecimientosAdmin() {
         openCloseModal();
     }
 
+    const listFuncionesEstablecimiento = (data) => {
+        setTitleModal("Ver Funciones de " + data.nombre);
+        setContentModal(<ListFuncionesEstablecimiento onClose={openCloseModal} onRefetch={onRefetch} establecimiento={data} />);
+        openCloseModal();
+    }
+
+    const listPeliculasEstablecimiento = (data) => {
+        setTitleModal("Ver Peliculas de " + data.nombre);
+        setContentModal(<ListPeliculaEstablecimiento onClose={openCloseModal} onRefetch={onRefetch} establecimiento={data} />);
+        openCloseModal();
+    }
+
     return (
         <>
             <HeaderPage title="Establecimientos" btnTitle="Nuevo establecimiento" btnClick={addEstablecimiento} />
@@ -46,7 +58,13 @@ export function EstablecimientosAdmin() {
                     Cargando
                 </Loader>
             ) : (
-                <TableEstablecimientos establecimientos={establecimientos} updateEstablecimiento={updateEstablecimiento} deleteEstablecimiento={deleteEstablecimiento} />
+                <TableEstablecimientos
+                    establecimientos={establecimientos}
+                    updateEstablecimiento={updateEstablecimiento}
+                    deleteEstablecimiento={deleteEstablecimiento}
+                    listFuncionesEstablecimiento={listFuncionesEstablecimiento}
+                    listPeliculasEstablecimiento={listPeliculasEstablecimiento}
+                />
             )}
 
             <ModalBasic show={showModal} onClose={openCloseModal} title={titleModal} children={contentModal} />

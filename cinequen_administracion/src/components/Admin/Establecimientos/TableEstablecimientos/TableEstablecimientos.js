@@ -4,7 +4,7 @@ import { Table, Button, Icon } from "semantic-ui-react"
 import { map } from "lodash"
 
 export function TableEstablecimientos(props) {
-    const { establecimientos, updateEstablecimiento, deleteEstablecimiento } = props;
+    const { establecimientos, updateEstablecimiento, deleteEstablecimiento, listFuncionesEstablecimiento, listPeliculasEstablecimiento } = props;
 
     return (
         <Table className='table-establecimientos-admin'>
@@ -26,7 +26,13 @@ export function TableEstablecimientos(props) {
                         <Table.Cell>{establecimiento.ciudad}</Table.Cell>
                         <Table.Cell>{establecimiento.provincia}</Table.Cell>
                         <Table.Cell>{establecimiento.horario_apertura}</Table.Cell>
-                        <Actions establecimiento={establecimiento} updateEstablecimiento={updateEstablecimiento} deleteEstablecimiento={deleteEstablecimiento} />
+                        <Actions
+                            establecimiento={establecimiento}
+                            updateEstablecimiento={updateEstablecimiento}
+                            deleteEstablecimiento={deleteEstablecimiento}
+                            listFuncionesEstablecimiento={listFuncionesEstablecimiento}
+                            listPeliculasEstablecimiento={listPeliculasEstablecimiento}
+                        />
                     </Table.Row>
                 ))}
             </Table.Body>
@@ -35,11 +41,14 @@ export function TableEstablecimientos(props) {
 }
 
 function Actions(props) {
-    const { establecimiento, updateEstablecimiento, deleteEstablecimiento } = props;
+    const { establecimiento, updateEstablecimiento, deleteEstablecimiento, listFuncionesEstablecimiento, listPeliculasEstablecimiento } = props;
 
     return (
         <Table.Cell textAlign='right'>
-            <Button title="Ver Peliculas" icon color="purple" /* onClick={() => updateEstablecimiento(establecimiento)} */>
+            <Button title="Ver Funciones" icon color="orange" onClick={() => listFuncionesEstablecimiento(establecimiento)} >
+                <Icon name='calendar alternate' />
+            </Button>
+            <Button title="Ver Peliculas" icon color="purple" onClick={() => listPeliculasEstablecimiento(establecimiento)} >
                 <Icon name='list' />
             </Button>
             <Button title="Editar Establecimiento" icon color="yellow" onClick={() => updateEstablecimiento(establecimiento)}>
