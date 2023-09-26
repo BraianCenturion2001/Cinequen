@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getSalasApi, addSalaApi, updateSalaApi } from "../api/salas";
+import { getSalasApi, addSalaApi, updateSalaApi, deleteSalaApi } from "../api/salas";
 import { useAuth } from ".";
 
 export function useSala() {
@@ -42,6 +42,17 @@ export function useSala() {
         }
     }
 
+    const deleteSala = async (id) => {
+        try {
+            setLoading(true)
+            await deleteSalaApi(id, auth.token);
+            setLoading(false)
+        } catch (error) {
+            setLoading(false);
+            setError(error)
+        }
+    }
+
     return {
         loading,
         error,
@@ -49,6 +60,7 @@ export function useSala() {
         getSalas,
         addSala,
         updateSala,
+        deleteSala,
 
     };
 }

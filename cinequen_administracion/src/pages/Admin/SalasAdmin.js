@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Loader } from "semantic-ui-react"
-import { HeaderPage, TableSalas, AddEditSalaForm } from "../../components/Admin"
+import { HeaderPage, TableSalas, AddEditSalaForm, DeleteSala } from "../../components/Admin"
 import { ModalBasic } from "../../components/Common"
 import { useSala } from "../../hooks"
 
@@ -30,12 +30,12 @@ export function SalasAdmin() {
         setContentModal(<AddEditSalaForm onClose={openCloseModal} onRefetch={onRefetch} sala={data} />);
         openCloseModal();
     }
-    /*
-        const deleteEstablecimiento = (data) => {
-            setTitleModal("Eliminar Establecimiento");
-            setContentModal(<DeleteEstablecimiento onClose={openCloseModal} onRefetch={onRefetch} establecimiento={data} />);
-            openCloseModal();
-        } */
+
+    const deleteSala = (data) => {
+        setTitleModal("Eliminar Sala");
+        setContentModal(<DeleteSala onClose={openCloseModal} onRefetch={onRefetch} sala={data} />);
+        openCloseModal();
+    }
 
     return (
         <>
@@ -47,7 +47,7 @@ export function SalasAdmin() {
                         Cargando
                     </Loader>
                 ) : (
-                    <TableSalas salas={salas} updateSala={updateSala} /*deleteEstablecimiento={deleteEstablecimiento} */ />
+                    <TableSalas salas={salas} updateSala={updateSala} deleteSala={deleteSala} />
                 )
             }
 
