@@ -39,10 +39,13 @@ function Actions(props) {
 
     return (
         <Table.Cell textAlign='right'>
-            <Button icon onClick={() => updateEstablecimiento(establecimiento)}>
+            <Button title="Ver Peliculas" icon color="purple" /* onClick={() => updateEstablecimiento(establecimiento)} */>
+                <Icon name='list' />
+            </Button>
+            <Button title="Editar Establecimiento" icon color="yellow" onClick={() => updateEstablecimiento(establecimiento)}>
                 <Icon name='pencil' />
             </Button>
-            <Button icon negative onClick={() => deleteEstablecimiento(establecimiento)}>
+            <Button title="Eliminar Establecimiento" icon negative onClick={() => deleteEstablecimiento(establecimiento)}>
                 <Icon name='trash alternate' />
             </Button>
         </Table.Cell>

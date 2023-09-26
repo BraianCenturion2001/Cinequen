@@ -1,6 +1,6 @@
 import React from 'react'
 import "./TableSalas.scss"
-import { Table, Button, Icon, Image } from "semantic-ui-react"
+import { Table, Button, Icon } from "semantic-ui-react"
 import { map } from "lodash"
 
 export function TableSalas(props) {
