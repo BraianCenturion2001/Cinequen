@@ -1,5 +1,5 @@
 import { AdminLayout } from "../layouts";
-import { HomeAdmin, UsersAdmin, FuncionesAdmin, PeliculasAdmin, EstablecimientosAdmin } from "../pages/Admin";
+import { HomeAdmin, UsersAdmin, FuncionesAdmin, PeliculasAdmin, EstablecimientosAdmin, SalasAdmin } from "../pages/Admin";
 
 const routesAdmin = [
     {
@@ -26,6 +26,11 @@ const routesAdmin = [
         path: "/admin/establecimientos",
         layout: AdminLayout,
         component: EstablecimientosAdmin,
+    },
+    {
+        path: "/admin/salas",
+        layout: AdminLayout,
+        component: SalasAdmin,
     },
 ];
 

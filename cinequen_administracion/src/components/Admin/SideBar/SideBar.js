@@ -34,9 +34,14 @@ function MenuLeft(props) {
                 <Icon name='building' /> Establecimientos
             </Menu.Item>
 
+            <Menu.Item as={Link} to={'/admin/salas'} active={pathname === '/admin/salas'}>
+                <Icon name='computer' /> Salas
+            </Menu.Item>
+
             <Menu.Item as={Link} to={'/admin/funciones'} active={pathname === '/admin/funciones'}>
                 <Icon name='calendar alternate' /> Funciones
             </Menu.Item>
+
 
             {auth.me?.is_staff && (
                 <Menu.Item as={Link} to={'/admin/users'} active={pathname === '/admin/users'}>
