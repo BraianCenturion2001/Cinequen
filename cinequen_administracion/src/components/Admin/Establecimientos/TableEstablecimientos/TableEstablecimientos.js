@@ -4,7 +4,7 @@ import { Table, Button, Icon } from "semantic-ui-react"
 import { map } from "lodash"
 
 export function TableEstablecimientos(props) {
-    const { establecimientos } = props;
+    const { establecimientos, updateEstablecimiento, deleteEstablecimiento } = props;
 
     return (
         <Table className='table-establecimientos-admin'>
@@ -26,7 +26,7 @@ export function TableEstablecimientos(props) {
                         <Table.Cell>{establecimiento.ciudad}</Table.Cell>
                         <Table.Cell>{establecimiento.provincia}</Table.Cell>
                         <Table.Cell>{establecimiento.horario_apertura}</Table.Cell>
-                        <Actions establecimiento={establecimiento} />
+                        <Actions establecimiento={establecimiento} updateEstablecimiento={updateEstablecimiento} deleteEstablecimiento={deleteEstablecimiento} />
                     </Table.Row>
                 ))}
             </Table.Body>
@@ -35,14 +35,14 @@ export function TableEstablecimientos(props) {
 }
 
 function Actions(props) {
-    const { establecimiento } = props;
+    const { establecimiento, updateEstablecimiento, deleteEstablecimiento } = props;
 
     return (
         <Table.Cell textAlign='right'>
-            <Button icon /* onClick={() => updateUser(user)} */>
+            <Button icon onClick={() => updateEstablecimiento(establecimiento)}>
                 <Icon name='pencil' />
             </Button>
-            <Button icon negative /* onClick={() => deleteUser(user)} */>
+            <Button icon negative onClick={() => deleteEstablecimiento(establecimiento)}>
                 <Icon name='trash alternate' />
             </Button>
         </Table.Cell>

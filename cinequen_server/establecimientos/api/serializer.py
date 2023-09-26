@@ -6,6 +6,7 @@ class EstablecimientoSerializer(ModelSerializer):
     class Meta:
         model = Establecimiento
         fields = [
+            'id',
             'nombre',
             'direccion',
             'ciudad',
