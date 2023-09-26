@@ -4,6 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from peliculasxestablecimientos.models import PeliculaxEstablecimiento
 from peliculasxestablecimientos.api.serializer import PeliculaxEstablecimientoSerializer
+from peliculasxestablecimientos.api.filters import PeliculaxEstablecimientoFilter
 
 
 class PeliculaxEstablecimientoApiViewSet(ModelViewSet):
@@ -11,4 +12,4 @@ class PeliculaxEstablecimientoApiViewSet(ModelViewSet):
     serializer_class = PeliculaxEstablecimientoSerializer
     queryset = PeliculaxEstablecimiento.objects.all()
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['establecimiento', 'pelicula', 'activo', 'tipo']
+    filterset_class = PeliculaxEstablecimientoFilter

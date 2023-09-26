@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import "./AddFuncionForm.scss"
-import { Form, Button, Checkbox, Dropdown } from "semantic-ui-react"
+import { Form, Button, Dropdown } from "semantic-ui-react"
 import { useEstablecimiento, usePeliculaEstablecimiento, useSala, useFuncion } from "../../../../hooks"
 import { useFormik } from "formik";
 import * as Yup from "yup";

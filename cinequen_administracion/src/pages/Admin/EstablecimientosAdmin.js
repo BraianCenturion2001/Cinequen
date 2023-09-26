@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Loader } from "semantic-ui-react"
-import { HeaderPage, TableEstablecimientos, AddEditEstablecimientoForm, DeleteEstablecimiento, ListPeliculaEstablecimiento, ListFuncionesEstablecimiento } from "../../components/Admin"
+import { HeaderPage, TableEstablecimientos, AddEditEstablecimientoForm, DeleteEstablecimiento, ListPeliculaEstablecimiento, ListFuncionesEstablecimiento, AddPeliculaEstablecimientoForm } from "../../components/Admin"
 import { ModalBasic } from "../../components/Common"
 import { useEstablecimiento } from "../../hooks"
 
@@ -49,6 +49,12 @@ export function EstablecimientosAdmin() {
         openCloseModal();
     }
 
+    const addPeliculaEstablecimiento = (data) => {
+        setTitleModal("Nuevo Pelicula para " + data.nombre);
+        setContentModal(<AddPeliculaEstablecimientoForm onClose={openCloseModal} onRefetch={onRefetch} establecimiento={data} />);
+        openCloseModal();
+    }
+
     return (
         <>
             <HeaderPage title="Establecimientos" btnTitle="Nuevo establecimiento" btnClick={addEstablecimiento} />
@@ -64,6 +70,7 @@ export function EstablecimientosAdmin() {
                     deleteEstablecimiento={deleteEstablecimiento}
                     listFuncionesEstablecimiento={listFuncionesEstablecimiento}
                     listPeliculasEstablecimiento={listPeliculasEstablecimiento}
+                    addPeliculaEstablecimiento={addPeliculaEstablecimiento}
                 />
             )}
 
