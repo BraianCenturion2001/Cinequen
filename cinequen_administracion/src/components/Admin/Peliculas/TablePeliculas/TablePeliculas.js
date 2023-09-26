@@ -38,7 +38,7 @@ function Actions(props) {
 
     return (
         <Table.Cell>
-            <Button icon onClick={() => editPelicula(pelicula)} >
+            <Button icon color='yellow' onClick={() => editPelicula(pelicula)} >
                 <Icon name='pencil' />
             </Button>
             <Button icon negative onClick={() => deletePelicula(pelicula)}>

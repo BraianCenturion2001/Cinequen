@@ -45,7 +45,7 @@ function Actions(props) {
 
     return (
         <Table.Cell textAlign='right'>
-            <Button icon onClick={() => updateUser(user)}>
+            <Button icon color='yellow' onClick={() => updateUser(user)}>
                 <Icon name='pencil' />
             </Button>
             <Button icon negative onClick={() => deleteUser(user)}>
