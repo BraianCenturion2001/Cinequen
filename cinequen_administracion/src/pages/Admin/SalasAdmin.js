@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Loader } from "semantic-ui-react"
-import { HeaderPage, TableSalas } from "../../components/Admin"
+import { HeaderPage, TableSalas, AddEditSalaForm } from "../../components/Admin"
 import { ModalBasic } from "../../components/Common"
 import { useSala } from "../../hooks"
 
@@ -19,27 +19,27 @@ export function SalasAdmin() {
         getSalas();
     }, [refetch])
 
-    /* const addEstablecimiento = () => {
-        setTitleModal("Nuevo Establecimiento");
-        setContentModal(<AddEditEstablecimientoForm onClose={openCloseModal} onRefetch={onRefetch} />);
+    const addSala = () => {
+        setTitleModal("Nueva Sala");
+        setContentModal(<AddEditSalaForm onClose={openCloseModal} onRefetch={onRefetch} />);
         openCloseModal();
     }
 
-    const updateEstablecimiento = (data) => {
-        setTitleModal("Editar Establecimiento");
-        setContentModal(<AddEditEstablecimientoForm onClose={openCloseModal} onRefetch={onRefetch} establecimiento={data} />);
+    const updateSala = (data) => {
+        setTitleModal("Editar Sala");
+        setContentModal(<AddEditSalaForm onClose={openCloseModal} onRefetch={onRefetch} sala={data} />);
         openCloseModal();
     }
-
-    const deleteEstablecimiento = (data) => {
-        setTitleModal("Eliminar Establecimiento");
-        setContentModal(<DeleteEstablecimiento onClose={openCloseModal} onRefetch={onRefetch} establecimiento={data} />);
-        openCloseModal();
-    } */
+    /*
+        const deleteEstablecimiento = (data) => {
+            setTitleModal("Eliminar Establecimiento");
+            setContentModal(<DeleteEstablecimiento onClose={openCloseModal} onRefetch={onRefetch} establecimiento={data} />);
+            openCloseModal();
+        } */
 
     return (
         <>
-            <HeaderPage title="Salas" btnTitle="Nueva Sala" /* btnClick={addEstablecimiento}  */ />
+            <HeaderPage title="Salas" btnTitle="Agregar Sala" btnClick={addSala} />
 
             {
                 loading ? (
@@ -47,11 +47,11 @@ export function SalasAdmin() {
                         Cargando
                     </Loader>
                 ) : (
-                    <TableSalas salas={salas} /* updateEstablecimiento={updateEstablecimiento} deleteEstablecimiento={deleteEstablecimiento} */ />
+                    <TableSalas salas={salas} updateSala={updateSala} /*deleteEstablecimiento={deleteEstablecimiento} */ />
                 )
             }
 
-            {/* <ModalBasic show={showModal} onClose={openCloseModal} title={titleModal} children={contentModal} /> */}
+            <ModalBasic show={showModal} onClose={openCloseModal} title={titleModal} children={contentModal} />
         </>
     )
 }

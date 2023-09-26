@@ -11,4 +11,44 @@ export async function getSalasApi() {
     }
 }
 
+export async function addSalaApi(data, token) {
+    try {
+        const url = `${BASE_API}/api/salas/`;
+        const params = {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        };
+
+        const response = await fetch(url, params);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error
+    }
+}
+
+export async function updateSalaApi(id, data, token) {
+    try {
+        const url = `${BASE_API}/api/salas/${id}/`;
+        const params = {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        };
+
+        const response = await fetch(url, params);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error
+    }
+}
+
 

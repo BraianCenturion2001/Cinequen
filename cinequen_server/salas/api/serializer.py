@@ -11,6 +11,7 @@ class SalaSerializer(ModelSerializer):
     class Meta:
         model = Sala
         fields = [
+            'id',
             'nombre',
             'tipo',
             'precio_entrada',
