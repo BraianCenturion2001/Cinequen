@@ -100,4 +100,14 @@ export async function deletePeliculaApi(id, token) {
     }
 }
 
+export async function getPeliculasExcludeEstablecimientoApi(id) {
+    try {
+        const url = `${BASE_API}/api/peliculas/?establecimiento__exclude=${id}`;
+        const response = await fetch(url);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
 

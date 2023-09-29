@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from ".";
-import { getPeliculasApi, addPeliculaApi, updatePeliculaApi, deletePeliculaApi } from "../api/peliculas";
+import { getPeliculasApi, addPeliculaApi, updatePeliculaApi, deletePeliculaApi, getPeliculasExcludeEstablecimientoApi } from "../api/peliculas";
 
 export function usePelicula() {
     const [loading, setLoading] = useState(true);
@@ -54,6 +54,18 @@ export function usePelicula() {
         }
     }
 
+    const getPEExclude = async (id) => {
+        try {
+            setLoading(true)
+            const response = await getPeliculasExcludeEstablecimientoApi(id);
+            setLoading(false)
+            setPeliculas(response);
+        } catch (error) {
+            setLoading(false);
+            setError(error)
+        }
+    };
+
     return {
         loading,
         error,
@@ -62,6 +74,7 @@ export function usePelicula() {
         addPelicula,
         updatePelicula,
         deletePelicula,
+        getPEExclude,
 
     };
 }

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import "./AddPeliculaEstablecimientoForm.scss"
 import { Form, Button, Dropdown, Checkbox } from "semantic-ui-react"
-import { usePeliculaEstablecimiento } from "../../../../hooks"
+import { usePelicula, usePeliculaEstablecimiento } from "../../../../hooks"
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { map } from 'lodash';
 
 export function AddPeliculaEstablecimientoForm(props) {
     const { onClose, onRefetch, establecimiento } = props;
-    const { loading, peliculasEstablecimientos, getPEExclude, addPeliculasEstablecimiento } = usePeliculaEstablecimiento();
+    const { loading, peliculas, getPEExclude } = usePelicula();
+    const { addPeliculasEstablecimiento } = usePeliculaEstablecimiento();
     const [peliculasOptions, setPeliculasOptions] = useState([]);
     const [isDropdownDisabled, setIsDropdownDisabled] = useState(true);
 
@@ -16,13 +17,13 @@ export function AddPeliculaEstablecimientoForm(props) {
         getPEExclude(establecimiento.id)
     }, [])
 
-    console.log(peliculasEstablecimientos)
+    console.log(peliculas)
     useEffect(() => {
         if (!loading) {
-            setPeliculasOptions(formatDropdownData(peliculasEstablecimientos));
+            setPeliculasOptions(formatDropdownData(peliculas));
             setIsDropdownDisabled(false);
         }
-    }, [loading, peliculasEstablecimientos]);
+    }, [loading, peliculas]);
 
     const tipoOptions = [
         { key: '1', value: 1, text: 'Estreno' },
@@ -77,9 +78,9 @@ export function AddPeliculaEstablecimientoForm(props) {
 
 function formatDropdownData(data) {
     return map(data, (item) => ({
-        key: item.pelicula_data.id,
-        text: item.pelicula_data.nombre,
-        value: item.pelicula_data.id
+        key: item.id,
+        text: item.nombre,
+        value: item.id
     }));
 }
 
