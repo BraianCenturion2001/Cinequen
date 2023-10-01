@@ -66,7 +66,7 @@ export function AddFuncionForm(props) {
         validationSchema: Yup.object(newSchema()),
         validateOnChange: false,
         onSubmit: async (formValue) => {
-            console.log(formValue)
+            //console.log(formValue)
             try {
                 await addFuncion(formValue);
                 onRefetch();
