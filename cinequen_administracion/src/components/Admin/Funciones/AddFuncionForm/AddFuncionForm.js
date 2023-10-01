@@ -5,9 +5,12 @@ import { useEstablecimiento, usePeliculaEstablecimiento, useSala, useFuncion } f
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { map } from 'lodash';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import dayjs from 'dayjs';
 
 export function AddFuncionForm(props) {
-    const { onClose, onRefetch, funcion } = props;
+    const { onClose, onRefetch } = props;
 
     const [establecimientosFormato, setEstablecimientosFormato] = useState([])
     const [peliculasOptions, setPeliculasOptions] = useState([]);
@@ -18,6 +21,7 @@ export function AddFuncionForm(props) {
     const { loading: loadingPE, peliculasEstablecimientos, getPEFiltro1 } = usePeliculaEstablecimiento();
     const { loading: loadingSalas, salas, getSalasEstablecimiento } = useSala();
     const { addFuncion } = useFuncion();
+
 
     useEffect(() => {
         getEstablecimientos()
@@ -58,10 +62,11 @@ export function AddFuncionForm(props) {
     };
 
     const formik = useFormik({
-        initialValues: initialValues(funcion),
+        initialValues: initialValues(),
         validationSchema: Yup.object(newSchema()),
         validateOnChange: false,
         onSubmit: async (formValue) => {
+            console.log(formValue)
             try {
                 await addFuncion(formValue);
                 onRefetch();
@@ -72,12 +77,36 @@ export function AddFuncionForm(props) {
         }
     })
 
+    const fecha = null;
+    const hora_inicio = null;
+    const hora_fin = null;
 
     return (
         <Form className='add-edit-funcion-form' onSubmit={formik.handleSubmit}>
-            <Form.Input name="fecha" placeholder="Fecha" value={formik.values.fecha} onChange={formik.handleChange} error={formik.errors.fecha}></Form.Input>
-            <Form.Input name="hora_inicio" placeholder="Hora Inicio" value={formik.values.hora_inicio} onChange={formik.handleChange} error={formik.errors.hora_inicio}></Form.Input>
-            <Form.Input name="hora_fin" placeholder="Hora Fin" value={formik.values.hora_fin} onChange={formik.handleChange} error={formik.errors.hora_fin}></Form.Input>
+            <DatePicker
+                disablePast
+                name="fecha"
+                label="Fecha"
+                value={fecha}
+                onChange={(newFecha) => formik.setFieldValue('fecha', dayjs(newFecha).format('YYYY-MM-DD'))}
+                error={formik.errors.fecha}
+            />
+
+            <TimePicker
+                label="Horario de inicio"
+                views={['hours', 'minutes']}
+                ampm={false}
+                value={hora_inicio}
+                onChange={(newHora) => formik.setFieldValue('hora_inicio', dayjs(newHora).format('HH:mm:ss'))}
+            />
+
+            <TimePicker
+                label="Horario de finalización"
+                views={['hours', 'minutes']}
+                ampm={false}
+                value={hora_fin}
+                onChange={(newHora) => formik.setFieldValue('hora_fin', dayjs(newHora).format('HH:mm:ss'))}
+            />
 
             <Dropdown
                 placeholder='Establecimiento'
@@ -105,7 +134,7 @@ export function AddFuncionForm(props) {
                 disabled={isDropdownDisabled}
             />
 
-            <Button type='submit' content={funcion ? "Actualizar" : "Registrar"} color={funcion ? "yellow" : "green"} fluid />
+            <Button type='submit' content="Registrar" color="green" fluid />
         </Form >
     )
 }
@@ -119,14 +148,14 @@ function formatDropdownData(data) {
     }));
 }
 
-function initialValues(data) {
+function initialValues() {
     return {
-        fecha: data?.fecha || "",
-        hora_fin: data?.hora_fin || "",
-        hora_inicio: data?.hora_inicio || "",
-        establecimiento: data?.establecimiento || "",
-        pelicula: data?.pelicula || "",
-        sala: data?.sala || "",
+        fecha: "",
+        hora_fin: "",
+        hora_inicio: "",
+        establecimiento: "",
+        pelicula: "",
+        sala: "",
     }
 }
 
