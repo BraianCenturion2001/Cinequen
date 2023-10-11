@@ -22,10 +22,10 @@ export function AddEditSalaForm(props) {
     }, [establecimientos])
 
     const tipoOptions = [
-        { key: '1', value: '2D', text: 'Sala 2D' },
-        { key: '2', value: '3D', text: 'Sala 3D' },
-        { key: '3', value: '4D', text: 'Sala 4D' },
-        { key: '4', value: 'MS', text: 'Sala Monster Screen' },
+        { key: '1', value: 'Sala Común', text: 'Sala Común' },
+        { key: '2', value: 'Sala Midway', text: 'Sala Midway' },
+        { key: '3', value: 'Sala Centurión', text: 'Sala Centurión' },
+        { key: '4', value: 'Sala 4-Buster', text: 'Sala 4-Buster' },
     ];
 
     const formik = useFormik({
