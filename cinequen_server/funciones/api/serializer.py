@@ -18,6 +18,8 @@ class FuncionSerializer(ModelSerializer):
             'fecha',
             'hora_inicio',
             'hora_fin',
+            'formato',
+            'idioma',
             'sala',
             'sala_data',
             'pelicula',

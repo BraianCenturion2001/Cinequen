@@ -10,4 +10,4 @@ class FuncionFilter(filters.FilterSet):
     class Meta:
         model = Funcion
         fields = ['fecha__gte', 'sala',
-                  'sala__establecimiento', 'pelicula', 'fecha']
+                  'sala__establecimiento', 'pelicula', 'fecha', 'formato', 'idioma']
