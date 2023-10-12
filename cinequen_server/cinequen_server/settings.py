@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'funciones',
     'peliculasxestablecimientos',
     'users',
+    'butacas',
 ]
 
 MIDDLEWARE = [
