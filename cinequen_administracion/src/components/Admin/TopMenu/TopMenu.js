@@ -1,31 +1,46 @@
 import React from 'react';
 import "./TopMenu.scss";
-import { useAuth } from "../../../hooks";
-import { Icon, Menu } from "semantic-ui-react";
+import { usePopover } from "../../../hooks";
+import { AppBar, Toolbar, Typography, Avatar } from "@mui/material"
+import { alpha } from '@mui/material/styles';
+import { AccountPopover } from './account-popover.js';
 
 export function TopMenu() {
-    const { auth, logout } = useAuth();
+    const accountPopover = usePopover();
 
-    const renderName = () => {
-        if (auth.me?.first_name && auth.me?.last_name) {
-            return `${auth.me.first_name} ${auth.me.last_name}`
-        }
-
-        return auth.me?.email;
-    }
+    const SIDE_NAV_WIDTH = 220;
+    const TOP_NAV_HEIGHT = 64;
 
     return (
-        <Menu fixed='top' className='top-menu-admin'>
-            <Menu.Item className='top-menu-admin__logo'>
-                <p>Cinequén Administración</p>
-            </Menu.Item>
-
-            <Menu.Menu position='right'>
-                <Menu.Item>Hola, {renderName()}</Menu.Item>
-                <Menu.Item onClick={logout}>
-                    <Icon name='sign-out' />
-                </Menu.Item>
-            </Menu.Menu>
-        </Menu>
+        <AppBar sx={{
+            position: 'sticky',
+            left: {
+                lg: `${SIDE_NAV_WIDTH}px`
+            },
+            top: 0,
+            width: {
+                lg: `calc(100% - ${SIDE_NAV_WIDTH}px)`
+            },
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+            backgroundColor: alpha('#000000', 0.8),
+            height: TOP_NAV_HEIGHT,
+            px: 2
+        }}>
+            <Toolbar sx={{ justifyContent: 'flex-end' }}>
+                <Avatar
+                    onClick={accountPopover.handleOpen}
+                    ref={accountPopover.anchorRef}
+                    size="sm"
+                    sx={{
+                        cursor: 'pointer',
+                    }}
+                />
+            </Toolbar>
+            <AccountPopover
+                anchorEl={accountPopover.anchorRef.current}
+                open={accountPopover.open}
+                onClose={accountPopover.handleClose}
+            />
+        </AppBar>
     )
 }
