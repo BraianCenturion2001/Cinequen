@@ -19,6 +19,7 @@ export function SideBar() {
       PaperProps={{
         sx: {
           backgroundColor: 'neutral.800',
+          color: 'common.white',
           width: 220
         }
       }}

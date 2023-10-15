@@ -8,7 +8,7 @@ import { AccountPopover } from './account-popover.js';
 export function TopMenu() {
     const accountPopover = usePopover();
 
-    const SIDE_NAV_WIDTH = 220;
+    const SIDE_NAV_WIDTH = 219;
     const TOP_NAV_HEIGHT = 64;
 
     return (
