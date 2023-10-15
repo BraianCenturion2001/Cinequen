@@ -63,7 +63,7 @@ export function SideBar() {
             </List>
             {auth.me?.is_staff && (
               <>
-                <Divider />
+                <Divider sx={{ borderColor: 'neutral.700' }} />
                 <List>
                   <ListItem disablePadding>
                     <ListItemButton component={Link} to={linkUsers.pathname}>
