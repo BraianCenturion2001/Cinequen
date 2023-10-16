@@ -76,7 +76,7 @@ function initialValues(data) {
         nombre: data?.nombre || "",
         precio_entrada: data?.precio_entrada || "",
         tipo: data?.tipo || "",
-        establecimiento: data?.establecimiento || "",
+        establecimiento: data?.acciones.establecimiento_data.id || "",
         activa: data?.activa ? true : false,
     }
 }
