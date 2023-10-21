@@ -65,7 +65,7 @@ export function SelectFunciones() {
                     <Box sx={{ margin: '0 40px' }}>
                         <Grid container spacing={12}>
                             {peliculasOptions.map((pelicula) => (
-                                <Grid item xs={4} sm={4} md={4} lg={4} xl={4} key={pelicula.id}>
+                                <Grid item xs={3} sm={3} md={3} lg={3} xl={3} key={pelicula.id}>
                                     <CardPelicula pelicula={pelicula} />
                                 </Grid>
                             ))}

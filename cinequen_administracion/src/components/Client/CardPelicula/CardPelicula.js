@@ -1,67 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import "./CardPelicula.scss";
-import { styled } from '@mui/material/styles';
 import { Icon } from 'semantic-ui-react';
-import { Card, CardHeader, CardMedia, CardContent, CardActions, CardActionArea, Collapse, Typography } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
-
-const useExpandMore = () => {
-    const [expanded, setExpanded] = useState(false);
-
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
-
-    return { expanded, handleExpandClick };
-};
+import { Card, CardMedia, CardContent, CardActionArea, Typography, Box } from '@mui/material';
 
 export function CardPelicula(props) {
     const { pelicula } = props;
-    const { expanded, handleExpandClick } = useExpandMore();
-
-    const ExpandMore = styled(IconButton)(({ theme }) => ({
-        transform: !expanded ? 'rotate(0deg)' : 'rotate(180deg)',
-        marginLeft: 'auto',
-        transition: theme.transitions.create('transform', {
-            duration: theme.transitions.duration.shortest,
-        }),
-    }));
 
     return (
         <Card elevation={3}>
             <CardActionArea>
-                <CardHeader
-                    title={pelicula.nombre}
-                    subheader={`Duración: ${formatDuracion(pelicula.duracion)}`}
-                    avatar={
-                        <Icon name='film' size='big' />
-                    }
-                />
-                <CardMedia component="img" height="194" image={pelicula.poster} alt={pelicula.nombre} />
+                <CardMedia component="img" height="300" image={pelicula.poster} alt={pelicula.nombre} />
                 <CardContent>
-                    <Typography variant="body2" color="text.secondary">
-                        {pelicula.descripcion_corta
-                            .split(' ')
-                            .slice(0, 20) // Cambia el número por el límite deseado de palabras
-                            .join(' ')}
-                        {pelicula.descripcion_corta.split(' ').length > 10 ? '...' : ''}
-                    </Typography>
+                    <Box display="flex" alignItems="center">
+                        <Icon name='film' size='big' />
+                        <Box ml={1}>
+                            <Typography component="div" variant="h5">
+                                {pelicula.nombre}
+                            </Typography>
+                            <Typography variant="subtitle1" color="text.secondary" component="div">
+                                {`Duración: ${formatDuracion(pelicula.duracion)}`}
+                            </Typography>
+                        </Box>
+                    </Box>
                 </CardContent>
             </CardActionArea>
-            <CardActions disableSpacing>
-                <ExpandMore
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                >
-                    <Icon name='angle down' />
-                </ExpandMore>
-            </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                    <Typography paragraph>{pelicula.descripcion_larga}</Typography>
-                </CardContent>
-            </Collapse>
         </Card>
     );
 }
