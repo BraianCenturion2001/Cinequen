@@ -1,9 +1,9 @@
 import React from 'react';
 
-export function Home() {
+export function Compras() {
     return (
         <>
-            <p>Estamos en Home</p>
+            <p>Estamos en Compras</p>
         </>
     )
 }
