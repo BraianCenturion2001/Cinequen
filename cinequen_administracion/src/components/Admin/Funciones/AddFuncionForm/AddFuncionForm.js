@@ -47,7 +47,6 @@ export function AddFuncionForm(props) {
     const handleEstablecimientoChange = async (event, data) => {
         setIsDropdownDisabled(true);
         setPeliculasOptions([]);
-        setPeliculasOptions([]);
         formik.setFieldValue('establecimiento', data.value);
         formik.setFieldValue('pelicula', null);
         formik.setFieldValue('sala', null);
