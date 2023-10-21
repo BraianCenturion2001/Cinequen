@@ -1,5 +1,6 @@
 import React from 'react';
 import "./CardPelicula.scss";
+import { Link } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 import { Card, CardMedia, CardContent, CardActionArea, Typography, Box } from '@mui/material';
 
@@ -8,7 +9,7 @@ export function CardPelicula(props) {
 
     return (
         <Card elevation={3}>
-            <CardActionArea>
+            <CardActionArea component={Link} to={`/funciones/pelicula/${pelicula.id}`}>
                 <CardMedia component="img" height="300" image={pelicula.poster} alt={pelicula.nombre} />
                 <CardContent>
                     <Box display="flex" alignItems="center">

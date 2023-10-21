@@ -1,5 +1,5 @@
 import { ClientLayout } from "../layouts";
-import { Home, Compras } from "../pages/Client";
+import { Home, Compras, FuncionesPelicula } from "../pages/Client";
 
 const routesClient = [
     {
@@ -11,6 +11,11 @@ const routesClient = [
         path: "/compras",
         layout: ClientLayout,
         component: Compras,
+    },
+    {
+        path: "/funciones/pelicula/:id",
+        layout: ClientLayout,
+        component: FuncionesPelicula,
     },
 ];
 
