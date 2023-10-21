@@ -12,8 +12,8 @@ class Pelicula(models.Model):
     genero = models.CharField(max_length=100)
     origen = models.CharField(max_length=100)
     distribuidor = models.CharField(max_length=100)
-    descripcion_corta = models.CharField(max_length=250)
-    descripcion_larga = models.CharField(max_length=500)
+    descripcion_corta = models.CharField(max_length=500)
+    descripcion_larga = models.CharField(max_length=1500)
     tipo = models.CharField(max_length=100)
 
     def __str__(self):
