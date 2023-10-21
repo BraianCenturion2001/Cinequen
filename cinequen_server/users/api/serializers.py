@@ -33,3 +33,12 @@ class ClienteSerializer(serializers.ModelSerializer):
             'verificado',
             'user_data'
         ]
+
+
+class RegistroSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    email = serializers.EmailField()
+    password = serializers.CharField()
+    rol = serializers.CharField()
+    nombre = serializers.CharField()
+    telefono = serializers.CharField()
