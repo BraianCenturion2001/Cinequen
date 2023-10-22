@@ -20,11 +20,22 @@ export function CompraEntradas() {
         }
     }, [loading, funciones]);
 
+    const [showForm, setShowForm] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowForm(true);
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    const isLoading = loading || !showForm;
 
     return (
         <>
             {
-                loading ? (
+                isLoading ? (
                     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
                         <CircularProgress color="secondary" />
                     </Box>
