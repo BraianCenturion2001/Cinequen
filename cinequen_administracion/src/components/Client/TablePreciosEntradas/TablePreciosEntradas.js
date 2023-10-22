@@ -15,7 +15,7 @@ export function TablePreciosEntradas(props) {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell align="right">Tickets</TableCell>
+                        <TableCell>Tickets</TableCell>
                         <TableCell align="right">Costo</TableCell>
                         <TableCell align="right">Cantidad</TableCell>
                         <TableCell align="right">Subtotal</TableCell>
@@ -34,6 +34,7 @@ export function TablePreciosEntradas(props) {
                                 type="number"
                                 value={cantidadEntradas}
                                 onChange={handleEntradasChange}
+                                inputProps={{ min: 0 }}
                             />
                         </TableCell>
                         <TableCell align="right">$ {precioEntradas}</TableCell>
