@@ -24,8 +24,8 @@ export function useFuncion() {
         try {
             setLoading(true)
             const response = await getFuncionApi(id);
-            setLoading(false)
             setFunciones(response);
+            setLoading(false)
         } catch (error) {
             setLoading(false);
             setError(error)

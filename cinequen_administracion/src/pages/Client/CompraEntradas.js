@@ -16,7 +16,7 @@ export function CompraEntradas() {
 
     useEffect(() => {
         if (!loading) {
-            setFuncion(funciones)
+            setFuncion(funciones);
         }
     }, [loading, funciones]);
 
