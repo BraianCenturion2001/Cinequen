@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import "./AccordionFunciones.scss"
+import { BASE_REACT } from "../../../utils/constants"
 import { Accordion, AccordionSummary, AccordionDetails, Typography, Button } from '@mui/material'
 import { Icon } from 'semantic-ui-react'
 import { map } from 'lodash'
@@ -34,7 +35,7 @@ export function AccordionFunciones(props) {
                                 key={funcion.id}
                                 variant="outlined"
                                 sx={{ marginRight: '10px' }}
-                                href={`funcion/compra/${funcion.id}`}
+                                href={`${BASE_REACT}/funcion/compra/${funcion.id}`}
                             >
                                 {funcion.hora_inicio.substring(0, 5)}
                             </Button>
