@@ -1,5 +1,16 @@
 import { BASE_API } from "../utils/constants";
 
+export async function getFuncionApi(id) {
+    try {
+        const url = `${BASE_API}/api/funciones/${id}`;
+        const response = await fetch(url);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export async function getFuncionesApi() {
     try {
         const url = `${BASE_API}/api/funciones/`;
