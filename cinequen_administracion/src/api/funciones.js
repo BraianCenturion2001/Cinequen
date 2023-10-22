@@ -22,6 +22,17 @@ export async function getFuncionesEstablecimientoApi(id) {
     }
 }
 
+export async function getFuncionesPeliculaApi(id) {
+    try {
+        const url = `${BASE_API}/api/funciones/?pelicula=${id}`;
+        const response = await fetch(url);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export async function addFuncionApi(data, token) {
     try {
         const url = `${BASE_API}/api/funciones/`;

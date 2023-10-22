@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getFuncionesApi, addFuncionApi, getFuncionesEstablecimientoApi } from "../api/funciones";
+import { getFuncionesApi, addFuncionApi, getFuncionesEstablecimientoApi, getFuncionesPeliculaApi } from "../api/funciones";
 import { useAuth } from ".";
 
 export function useFuncion() {
@@ -32,6 +32,18 @@ export function useFuncion() {
         }
     };
 
+    const getFuncionesPelicula = async (id) => {
+        try {
+            setLoading(true)
+            const response = await getFuncionesPeliculaApi(id);
+            setLoading(false)
+            setFunciones(response);
+        } catch (error) {
+            setLoading(false);
+            setError(error)
+        }
+    };
+
     const addFuncion = async (data) => {
         try {
             setLoading(true)
@@ -50,6 +62,7 @@ export function useFuncion() {
         getFunciones,
         addFuncion,
         getFuncionesEstablecimiento,
+        getFuncionesPelicula,
 
     };
 }
