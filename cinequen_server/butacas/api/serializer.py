@@ -17,3 +17,14 @@ class ButacaSerializer(ModelSerializer):
             'sala',
             'sala_data'
         ]
+
+
+class ButacaSimpleSerializer(ModelSerializer):
+    class Meta:
+        model = Butaca
+        fields = [
+            'id',
+            'fila',
+            'numero',
+            'sala',
+        ]
