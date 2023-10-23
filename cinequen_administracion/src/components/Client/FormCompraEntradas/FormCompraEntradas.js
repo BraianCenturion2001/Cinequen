@@ -40,6 +40,7 @@ export function FormCompraEntradas(props) {
             case 1:
                 return (
                     <Paso2Butacas
+                        cantidadEntradas={cantidadEntradas}
                         setCantidadEntradas={setCantidadEntradas}
                         butacasIds={butacasIds}
                         setButacasIds={setButacasIds}
