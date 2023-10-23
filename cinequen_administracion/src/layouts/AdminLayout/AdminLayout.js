@@ -1,14 +1,21 @@
 import React from 'react';
 import "./AdminLayout.scss";
-import { LoginAdmin } from "../../pages/Admin"
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks"
 import { TopMenu, SideBar } from "../../components/Admin"
-import { Box, CssBaseline, Toolbar } from "@mui/material"
+import { CssBaseline } from "@mui/material"
 import { styled } from '@mui/material/styles';
 
 export function AdminLayout(props) {
-    const { children } = props;
+    const navigate = useNavigate();
     const { auth } = useAuth();
+
+    if (!auth) {
+        navigate('/admin/login');
+        return null;
+    }
+
+    const { children } = props;
 
     const AdminLayoutRoot = styled('div')(({ theme }) => ({
         display: 'flex',
@@ -27,8 +34,6 @@ export function AdminLayout(props) {
         padding: theme.spacing(4)
     }));
 
-
-    if (!auth) return <LoginAdmin />
 
     return (
         <>
