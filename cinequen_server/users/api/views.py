@@ -60,7 +60,7 @@ class RegistroView(APIView):
     def post(self, request):
         # Verificar que el campo 'rol' sea igual a 'CLIENTE'
         if request.data.get('rol') != 'CLIENTE':
-            return Response({'error': 'El valor del campo "rol" debe ser "CLIENTE".'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
         # Validar los datos del usuario y el cliente
         user_serializer = UserSerializer(data=request.data)
         cliente_serializer = ClienteSerializer(data=request.data)
@@ -69,7 +69,7 @@ class RegistroView(APIView):
             user = user_serializer.save(
                 password=make_password(request.data['password']))
             cliente = cliente_serializer.save(user=user)
-            return Response({'message': 'Registro exitoso'}, status=status.HTTP_201_CREATED)
+            return Response(status=status.HTTP_201_CREATED)
         else:
             # Devolver los errores de validación
             errors = {}

@@ -23,6 +23,29 @@ export async function loginApi(formValue) {
     }
 }
 
+export async function RegisterApi(formValue) {
+    try {
+        const url = `${BASE_API}/api/auth/register/`
+        const params = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formValue)
+        }
+
+        const response = await fetch(url, params)
+
+        if (response.status !== 201) {
+            throw new Error("Valores ingresados inválidos")
+        }
+
+        return response.status
+    } catch (error) {
+        throw error
+    }
+}
+
 export async function getMeApi(token) {
     try {
         const url = `${BASE_API}/api/auth/me/`;
@@ -94,7 +117,6 @@ export async function updateUserApi(id, data, token) {
         throw error
     }
 }
-
 
 export async function deleteUserApi(id, token) {
     try {
