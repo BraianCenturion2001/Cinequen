@@ -1,16 +1,11 @@
 import { ClientLayout, LoginRegisterClientLayout } from "../layouts";
-import { Home, Compras, FuncionesPelicula, CompraEntradas, LoginRegister } from "../pages/Client";
+import { Home, Compras, FuncionesPelicula, CompraEntradas, LoginRegister, Canjes, Perfil } from "../pages/Client";
 
 const routesClient = [
     {
         path: "/",
         layout: ClientLayout,
         component: Home,
-    },
-    {
-        path: "/compras",
-        layout: ClientLayout,
-        component: Compras,
     },
     {
         path: "/funciones/pelicula/:id",
@@ -21,6 +16,21 @@ const routesClient = [
         path: "/funcion/compra/:id",
         layout: ClientLayout,
         component: CompraEntradas,
+    },
+    {
+        path: "/mi-perfil",
+        layout: ClientLayout,
+        component: Perfil,
+    },
+    {
+        path: "/mis-canjes",
+        layout: ClientLayout,
+        component: Canjes,
+    },
+    {
+        path: "/mis-entradas",
+        layout: ClientLayout,
+        component: Compras,
     },
     {
         path: "/register",
