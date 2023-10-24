@@ -22,6 +22,16 @@ export function AddFuncionForm(props) {
     const { loading: loadingSalas, salas, getSalasEstablecimiento } = useSala();
     const { addFuncion } = useFuncion();
 
+    const formatoOptions = [
+        { key: '1', value: '2-D', text: '2-D' },
+        { key: '2', value: '3-D', text: '3-D' },
+    ];
+
+    const idiomaOptions = [
+        { key: '1', value: 'Español', text: 'Español' },
+        { key: '2', value: 'Subtitulado', text: 'Subtitulado' },
+    ];
+
 
     useEffect(() => {
         getEstablecimientos()
@@ -133,6 +143,11 @@ export function AddFuncionForm(props) {
                 disabled={isDropdownDisabled}
             />
 
+            <Dropdown placeholder='Formato' fluid selection search options={formatoOptions} value={formik.values.formato} onChange={(_, data) => formik.setFieldValue('formato', data.value)} error={formik.errors.formato} />
+
+            <Dropdown placeholder='Idioma' fluid selection search options={idiomaOptions} value={formik.values.idioma} onChange={(_, data) => formik.setFieldValue('idioma', data.value)} error={formik.errors.idioma} />
+
+
             <Button type='submit' content="Registrar" color="green" fluid />
         </Form >
     )
@@ -155,6 +170,8 @@ function initialValues() {
         establecimiento: "",
         pelicula: "",
         sala: "",
+        formato: "",
+        idioma: "",
     }
 }
 
@@ -166,6 +183,8 @@ function newSchema() {
         establecimiento: Yup.string().required(true),
         pelicula: Yup.string().required(true),
         sala: Yup.string().required(true),
+        formato: Yup.string().required(true),
+        idioma: Yup.string().required(true),
     }
 }
 
