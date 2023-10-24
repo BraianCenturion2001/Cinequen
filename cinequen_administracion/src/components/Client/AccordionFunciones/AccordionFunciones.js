@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import "./AccordionFunciones.scss";
-import { BASE_REACT } from "../../../utils/constants";
 import { Box, Accordion, AccordionSummary, AccordionDetails, Typography, Button } from '@mui/material';
 import { Icon } from 'semantic-ui-react';
 import { map, groupBy } from 'lodash';
+import { useNavigate } from 'react-router-dom';
 
 export function AccordionFunciones(props) {
     const { gruposFunciones, expanded, handleChange } = props;
+    const navigate = useNavigate();
+
+    const handleButtonClick = (funcionId) => {
+        navigate(`/funcion/compra/${funcionId}`);
+    };
 
     function renderFunciones(funciones) {
         return (
@@ -16,7 +21,7 @@ export function AccordionFunciones(props) {
                         key={funcion.id}
                         variant="outlined"
                         sx={{ marginRight: '10px' }}
-                        href={`${BASE_REACT}/funcion/compra/${funcion.id}`}
+                        onClick={() => handleButtonClick(funcion.id)}
                     >
                         {funcion.hora_inicio.substring(0, 5)}
                     </Button>
