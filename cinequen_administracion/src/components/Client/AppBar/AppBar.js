@@ -20,10 +20,6 @@ export function ClientAppBar() {
         }
     };
 
-    const handleLogout = () => {
-        logout(); // Llama a la función de cierre de sesión del contexto de autenticación
-    };
-
     const renderAuthLinks = () => {
         return (
             <>
@@ -56,7 +52,7 @@ export function ClientAppBar() {
                     onClose={accountPopover.handleClose}
                 >
                     {settings.map((setting) => (
-                        <MenuItem key={setting.title} onClick={setting.logout ? () => handleLinkClick(setting.route, setting.logout) : handleLogout}>
+                        <MenuItem key={setting.title} onClick={setting.logout ? handleLinkClick(setting.route, setting.logout) : logout()}>
                             <Typography textAlign="center">
                                 <i className={setting.icon} style={{ marginRight: '8px' }}></i>
                                 {setting.title}

@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'users',
     'butacas',
     'butacasxfuncion',
+    'entradas',
+
 ]
 
 MIDDLEWARE = [
