@@ -14,8 +14,10 @@ export function ClientAppBar() {
     const accountPopover = usePopover();
     const navigate = useNavigate();
 
-    const handleLinkClick = (route, logout) => {
-        if (!logout) {
+    const handleLinkClick = (route, cerrar) => {
+        if (cerrar) {
+            logout();
+        } else {
             navigate(route);
         }
     };
@@ -52,7 +54,7 @@ export function ClientAppBar() {
                     onClose={accountPopover.handleClose}
                 >
                     {settings.map((setting) => (
-                        <MenuItem key={setting.title} onClick={setting.logout ? handleLinkClick(setting.route, setting.logout) : logout()}>
+                        <MenuItem key={setting.title} onClick={() => handleLinkClick(setting.route, setting.cerrar)}>
                             <Typography textAlign="center">
                                 <i className={setting.icon} style={{ marginRight: '8px' }}></i>
                                 {setting.title}
