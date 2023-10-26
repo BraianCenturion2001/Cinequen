@@ -4,9 +4,10 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 
 from entradas.models import Entrada
-from entradas.api.serializer import EntradaClienteSerializer, EntradaSerializer, RegistroEntradaSerializer
+from entradas.api.serializer import EntradaClienteSerializer, EntradaSerializer, RegistroEntradaSerializer, EntradaCompletaSerializer
 from entradas.api.filter import EntradaFilter
 
+from butacasxfuncion.api.serializer import ButacaxFuncionSerializer
 from butacasxfuncion.models import ButacaxFuncion
 from users.models import Cliente
 
@@ -20,13 +21,25 @@ class EntradaApiViewSet(ModelViewSet):
     def get_serializer_class(self):
         if self.request.method == 'POST':
             return RegistroEntradaSerializer
-        elif 'user' in self.request.query_params:
+        elif self.request.query_params.get('user'):
             return EntradaSerializer
+        elif self.request.query_params.get('id'):
+            return EntradaCompletaSerializer
         return EntradaClienteSerializer
 
     queryset = Entrada.objects.all()
     filter_backends = [DjangoFilterBackend]
     filterset_class = EntradaFilter
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        entrada_data = serializer.data
+        ids = instance.idsButacasxFuncion.split(',')
+        butacas = ButacaxFuncion.objects.filter(id__in=ids)
+        butacas_data = ButacaxFuncionSerializer(butacas, many=True).data
+        entrada_data['butacas_data'] = butacas_data
+        return Response(entrada_data)
 
     def perform_create(self, serializer):
         entrada = serializer.save()  # Guardar la nueva instancia de Entrada
