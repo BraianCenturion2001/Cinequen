@@ -1,7 +1,7 @@
-from django.urls import path
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import status
 
 from entradas.models import Entrada
 from entradas.api.serializer import EntradaClienteSerializer, EntradaSerializer, RegistroEntradaSerializer, EntradaCompletaSerializer
@@ -12,11 +12,10 @@ from butacasxfuncion.models import ButacaxFuncion
 from users.models import Cliente
 
 from rest_framework.response import Response
-from rest_framework import status
 
 
 class EntradaApiViewSet(ModelViewSet):
-    permissions_classes = [IsAuthenticatedOrReadOnly]
+    permissions_classes = []
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
@@ -40,6 +39,14 @@ class EntradaApiViewSet(ModelViewSet):
         butacas_data = ButacaxFuncionSerializer(butacas, many=True).data
         entrada_data['butacas_data'] = butacas_data
         return Response(entrada_data)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        entrada = self.perform_create(serializer)
+        qr_value = f"http://127.0.0.1:8000/api/entradas/{entrada.pk}/"
+        headers = self.get_success_headers(serializer.data)
+        return Response({'qr_value': qr_value}, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
         entrada = serializer.save()  # Guardar la nueva instancia de Entrada
@@ -72,37 +79,4 @@ class EntradaApiViewSet(ModelViewSet):
 
         cliente.save()
 
-        return Response(status=status.HTTP_201_CREATED)
-
-
-""" shell
-pip install reportlab django-qrcode
-from django.http import HttpResponse
-from django.template.loader import get_template
-from django_qrcode.views import QRCodeView
-from reportlab.pdfgen import canvas
-
-def generate_pdf_with_qr(request, entrada_id):
-    # Obtener la entrada según el ID
-    entrada = Entrada.objects.get(id=entrada_id)
-
-    # Generar el código QR
-    qr_code = QRCodeView.as_view()(request, text=entrada_id)
-
-    # Crear el PDF
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="entrada.pdf"'
-
-    p = canvas.Canvas(response)
-    p.drawImage(qr_code, 100, 100, width=200, height=200)
-    p.showPage()
-    p.save()
-
-    return response
-urlpatterns = [
-    # ...
-    path('entradas/<int:entrada_id>/pdf/', generate_pdf_with_qr, name='pdf'),
-    # ...
-]
-jsx
-<a href="/api/entradas/1/pdf/">Descargar PDF</a> """
+        return entrada
