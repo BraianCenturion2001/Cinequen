@@ -1,11 +1,16 @@
 import { ClientLayout, LoginRegisterClientLayout } from "../layouts";
-import { Home, Compras, FuncionesPelicula, CompraEntradas, LoginRegister, Canjes, Perfil } from "../pages/Client";
+import { Home, Compras, FuncionesPelicula, CompraEntradas, LoginRegister, Canjes, Perfil, Mapa } from "../pages/Client";
 
 const routesClient = [
     {
         path: "/",
         layout: ClientLayout,
         component: Home,
+    },
+    {
+        path: "/mapa",
+        layout: ClientLayout,
+        component: Mapa,
     },
     {
         path: "/funciones/pelicula/:id",
