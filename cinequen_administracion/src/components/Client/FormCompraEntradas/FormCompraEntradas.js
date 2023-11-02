@@ -86,14 +86,15 @@ export function FormCompraEntradas(props) {
                     disabled={activeStep === 0}
                     onClick={handleBack}
                     sx={{ mr: 1 }}
+
                 >
-                    Volver
+                    <i class="fa-duotone fa-backward" style={{ marginRight: '15px' }}></i> Volver
                 </Button>
                 <Box sx={{ flex: '1 1 auto' }} />
                 {activeStep === steps.length - 1 ? (
-                    <Button onClick={handleComprar}>Finalizar</Button>
+                    <Button onClick={handleComprar}><i class="fa-duotone fa-check" style={{ marginRight: '15px' }}></i>Finalizar</Button>
                 ) : (
-                    <Button onClick={handleNext}>Siguiente</Button>
+                    <Button onClick={handleNext}><i class="fa-duotone fa-forward" style={{ marginRight: '15px' }}></i> Siguiente</Button>
                 )}
             </Box>
         </Box>
