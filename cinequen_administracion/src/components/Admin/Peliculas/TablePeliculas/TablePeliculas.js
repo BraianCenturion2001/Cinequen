@@ -40,13 +40,7 @@ function Actions(props) {
     return (
         <Table.Cell>
             <ButtonEdit funcion={editPelicula} objeto={pelicula} />
-            <ButtonDelete funcion={editPelicula} objeto={pelicula} />
-            {/* <Button icon color='yellow' onClick={() => editPelicula(pelicula)} >
-                <Icon name='pencil' />
-            </Button>
-            <Button icon negative onClick={() => deletePelicula(pelicula)}>
-                <Icon name='trash alternate' />
-            </Button> */}
+            <ButtonDelete funcion={deletePelicula} objeto={pelicula} />
         </Table.Cell>
     )
 }
