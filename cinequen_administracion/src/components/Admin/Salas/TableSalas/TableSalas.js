@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-import { Button, Icon } from "semantic-ui-react";
+import { ButtonDelete, ButtonEdit } from "../../Buttons"
 import { map } from "lodash";
 
 const columns: GridColDef[] = [
@@ -19,7 +19,11 @@ const columns: GridColDef[] = [
         align: 'center',
         disableColumnMenu: true,
         renderCell: (params: GridValueGetterParams) => (
-            <Icon name={params.value ? 'check' : 'close'} />
+            params.value ? (
+                <i className="fa-duotone fa-thumbs-up fa-lg" style={{ "--fa-primary-color": "#449f38", "--fa-secondary-color": "#30f915" }}></i>
+            ) : (
+                <i className="fa-duotone fa-thumbs-down fa-lg" style={{ "--fa-primary-color": "#8d3a3a", "--fa-secondary-color": "#ff0000" }}></i>
+            )
         ),
     },
     { field: 'establecimiento_data.nombre', headerName: 'Establecimiento', width: 200, disableColumnMenu: true, },
@@ -39,12 +43,8 @@ const Actions = (props) => {
     const { sala, updateSala, deleteSala } = props;
     return (
         <>
-            <Button icon color='yellow' onClick={() => updateSala(sala)}>
-                <Icon name='pencil' />
-            </Button>
-            <Button icon negative onClick={() => deleteSala(sala)}>
-                <Icon name='trash alternate' />
-            </Button>
+            <ButtonEdit funcion={updateSala} objeto={sala} />
+            <ButtonDelete funcion={deleteSala} objeto={sala} />
         </>
     );
 };
