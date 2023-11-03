@@ -52,7 +52,7 @@ export const AccountPopover = (props) => {
                 }}
             >
                 <MenuItem onClick={logout}>
-                    Cerrar Sesión
+                    <i class="fa-duotone fa-right-from-bracket" style={{ marginRight: '5px' }}></i>Cerrar Sesión
                 </MenuItem>
             </MenuList>
         </Popover>

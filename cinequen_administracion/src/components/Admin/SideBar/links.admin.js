@@ -1,27 +1,27 @@
 const linksAdmin = [
     {
         pathname: "/admin",
-        iconName: "home",
+        iconName: "fa-duotone fa-chart-user",
         title: "Escritorio",
     },
     {
         pathname: "/admin/peliculas",
-        iconName: "film",
+        iconName: "fa-duotone fa-films",
         title: "Peliculas",
     },
     {
         pathname: "/admin/establecimientos",
-        iconName: "building",
+        iconName: "fa-duotone fa-buildings",
         title: "Establecimientos",
     },
     {
         pathname: "/admin/salas",
-        iconName: "computer",
+        iconName: "fa-duotone fa-screen-users",
         title: "Salas",
     },
     {
         pathname: "/admin/funciones",
-        iconName: "calendar alternate",
+        iconName: "fa-duotone fa-calendars",
         title: "Funciones",
     },
 ];
@@ -29,7 +29,7 @@ const linksAdmin = [
 const linkUsers =
 {
     pathname: "/admin/users",
-    iconName: "users",
+    iconName: "fa-duotone fa-users",
     title: "Usuarios",
 }
 

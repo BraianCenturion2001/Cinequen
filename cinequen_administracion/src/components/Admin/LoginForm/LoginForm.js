@@ -1,6 +1,6 @@
 import React from 'react';
 import "./LoginForm.scss";
-import { Button, Form, Icon } from "semantic-ui-react";
+import { Button, Form } from "semantic-ui-react";
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import { toast } from "react-toastify"
@@ -43,7 +43,7 @@ export function LoginForm() {
                 error={formik.errors.password}
             />
             <Button type='submit' content="Iniciar Sesión" inverted fluid>
-                <Icon name="sign-in" />
+                <i class="fa-duotone fa-right-to-bracket" style={{ marginRight: '5px' }}></i>
                 Iniciar Sesión
             </Button>
         </ Form>

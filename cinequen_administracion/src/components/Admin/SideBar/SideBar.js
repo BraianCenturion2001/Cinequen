@@ -1,9 +1,8 @@
 import React from 'react'
-import { Icon } from "semantic-ui-react"
 import { Link, useLocation } from "react-router-dom"
 import { useAuth } from "../../../hooks"
 import "./SideBar.scss"
-import { Drawer, Box, List, ListItem, ListItemIcon, ListItemButton, ListItemText, Divider, Typography } from "@mui/material"
+import { Drawer, Box, List, ListItem, ListItemIcon, ListItemButton, ListItemText, Divider } from "@mui/material"
 import { linkUsers, linksAdmin } from './links.admin'
 import { map } from 'lodash'
 import { Scrollbar } from "./scrollbar";
@@ -54,7 +53,7 @@ export function SideBar() {
                 <ListItem key={index} disablePadding>
                   <ListItemButton component={Link} to={link.pathname} selected={link.pathname === pathname}>
                     <ListItemIcon>
-                      <Icon name={link.iconName} />
+                      <i class={link.iconName}></i>
                     </ListItemIcon>
                     <ListItemText primary={link.title} />
                   </ListItemButton>
@@ -68,7 +67,7 @@ export function SideBar() {
                   <ListItem disablePadding>
                     <ListItemButton component={Link} to={linkUsers.pathname}>
                       <ListItemIcon>
-                        <Icon name={linkUsers.iconName} />
+                        <i class={linkUsers.iconName}></i>
                       </ListItemIcon>
                       <ListItemText primary={linkUsers.title} />
                     </ListItemButton>
