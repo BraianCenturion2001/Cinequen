@@ -1,11 +1,25 @@
 import React from 'react'
 import "./TableUsers.scss"
-import { Table, Button, Icon } from "semantic-ui-react"
+import { Table } from "semantic-ui-react"
+import { ButtonDelete, ButtonEdit } from "../../Buttons"
 import { map } from "lodash"
 
 
 export function TableUsers(props) {
     const { users, updateUser, deleteUser } = props;
+
+    function renderIcon(isPositive, isActive) {
+        if (isPositive) {
+            return (
+                <i className="fa-duotone fa-thumbs-up fa-lg" style={{ "--fa-primary-color": "#449f38", "--fa-secondary-color": "#30f915" }}></i>
+            );
+        } else {
+            return (
+                <i className="fa-duotone fa-thumbs-down fa-lg" style={{ "--fa-primary-color": "#8d3a3a", "--fa-secondary-color": "#ff0000" }}></i>
+            );
+        }
+    }
+
     return (
         <Table className='table-users-admin'>
             <Table.Header>
@@ -27,10 +41,10 @@ export function TableUsers(props) {
                         <Table.Cell>{user.first_name}</Table.Cell>
                         <Table.Cell>{user.last_name}</Table.Cell>
                         <Table.Cell className='status'>
-                            {user.is_active ? <Icon name='check' /> : <Icon name='close' />}
+                            {renderIcon(user.is_active)}
                         </Table.Cell>
                         <Table.Cell className='status'>
-                            {user.is_staff ? <Icon name='check' /> : <Icon name='close' />}
+                            {renderIcon(user.is_staff)}
                         </Table.Cell>
                         <Actions user={user} updateUser={updateUser} deleteUser={deleteUser} />
                     </Table.Row>
@@ -45,12 +59,8 @@ function Actions(props) {
 
     return (
         <Table.Cell textAlign='right'>
-            <Button icon color='yellow' onClick={() => updateUser(user)}>
-                <Icon name='pencil' />
-            </Button>
-            <Button icon negative onClick={() => deleteUser(user)}>
-                <Icon name='trash alternate' />
-            </Button>
+            <ButtonEdit funcion={updateUser} objeto={user} />
+            <ButtonDelete funcion={deleteUser} objeto={user} />
         </Table.Cell>
     )
 }
