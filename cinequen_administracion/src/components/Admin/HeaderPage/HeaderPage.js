@@ -11,7 +11,7 @@ export function HeaderPage(props) {
             <div>
                 {btnTitle && (
                     <Button positive onClick={btnClick}>
-                        {btnTitle}
+                        <i class="fa-duotone fa-plus-large" style={{ marginRight: '15px' }}></i>{btnTitle}
                     </Button>
                 )}
 
