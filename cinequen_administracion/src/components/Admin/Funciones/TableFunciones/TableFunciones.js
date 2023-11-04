@@ -1,6 +1,7 @@
 import React from 'react'
 import "./TableFunciones.scss"
-import { Table, Button, Icon } from "semantic-ui-react"
+import { Table } from "semantic-ui-react"
+import { ButtonDelete, ButtonEdit } from "../../Buttons"
 import { map } from "lodash"
 
 export function TableFunciones(props) {
@@ -43,12 +44,8 @@ function Actions(props) {
 
     return (
         <Table.Cell>
-            <Button icon color='yellow' /* onClick={() => updateSala(sala)} */>
-                <Icon name='pencil' />
-            </Button>
-            <Button icon negative /* onClick={() => deleteSala(sala)}  */>
-                <Icon name='trash alternate' />
-            </Button>
+            <ButtonEdit /* funcion={updateSala} */ objeto={funcion} />
+            <ButtonDelete /* funcion={deleteSala} */ objeto={funcion} />
         </Table.Cell>
     )
 }
