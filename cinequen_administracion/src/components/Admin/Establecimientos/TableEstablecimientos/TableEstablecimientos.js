@@ -1,6 +1,6 @@
 import React from 'react'
 import "./TableEstablecimientos.scss"
-import { Table, Button, Icon } from "semantic-ui-react"
+import { Table, Button } from "semantic-ui-react"
 import { ButtonDelete, ButtonEdit } from "../../Buttons"
 import { map } from "lodash"
 
@@ -50,13 +50,13 @@ function Actions(props) {
             <ButtonEdit funcion={updateEstablecimiento} objeto={establecimiento} />
             <ButtonDelete funcion={deleteEstablecimiento} objeto={establecimiento} />
             <Button title="Ver Funciones" icon color="orange" onClick={() => listFuncionesEstablecimiento(establecimiento)} >
-                <Icon name='calendar alternate' />
+                <i class="fa-duotone fa-calendars fa-lg"></i>
             </Button>
             <Button title="Ver Peliculas" icon color="purple" onClick={() => listPeliculasEstablecimiento(establecimiento)} >
-                <Icon name='list' />
+                <i class="fa-duotone fa-list fa-lg"></i>
             </Button>
             <Button title="Eliminar Establecimiento" icon color='teal' onClick={() => addPeliculaEstablecimiento(establecimiento)}>
-                <Icon name='linkify' />
+                <i class="fa-duotone fa-link fa-lg"></i>
             </Button>
         </Table.Cell>
 
