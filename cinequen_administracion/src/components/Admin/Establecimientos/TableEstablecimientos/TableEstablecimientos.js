@@ -1,53 +1,16 @@
 import React from 'react'
 import "./TableEstablecimientos.scss"
-import { Table, Button } from "semantic-ui-react"
+import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { Button } from "semantic-ui-react"
 import { ButtonDelete, ButtonEdit } from "../../Buttons"
 import { map } from "lodash"
 
-export function TableEstablecimientos(props) {
-    const { establecimientos, updateEstablecimiento, deleteEstablecimiento, listFuncionesEstablecimiento, listPeliculasEstablecimiento, addPeliculaEstablecimiento } = props;
 
-    return (
-        <Table className='table-establecimientos-admin'>
-            <Table.Header>
-                <Table.Row>
-                    <Table.HeaderCell>Nombre</Table.HeaderCell>
-                    <Table.HeaderCell>Dirección</Table.HeaderCell>
-                    <Table.HeaderCell>Ciudad</Table.HeaderCell>
-                    <Table.HeaderCell>Provincia</Table.HeaderCell>
-                    <Table.HeaderCell>Horarios</Table.HeaderCell>
-                    <Table.HeaderCell>Acciones</Table.HeaderCell>
-                </Table.Row>
-            </Table.Header>
-            <Table.Body>
-                {map(establecimientos, (establecimiento, index) => (
-                    <Table.Row key={index}>
-                        <Table.Cell>{establecimiento.nombre}</Table.Cell>
-                        <Table.Cell>{establecimiento.direccion}</Table.Cell>
-                        <Table.Cell>{establecimiento.ciudad}</Table.Cell>
-                        <Table.Cell>{establecimiento.provincia}</Table.Cell>
-                        <Table.Cell>{establecimiento.horario_apertura}</Table.Cell>
-                        <Actions
-                            establecimiento={establecimiento}
-                            updateEstablecimiento={updateEstablecimiento}
-                            deleteEstablecimiento={deleteEstablecimiento}
-                            listFuncionesEstablecimiento={listFuncionesEstablecimiento}
-                            listPeliculasEstablecimiento={listPeliculasEstablecimiento}
-                            addPeliculaEstablecimiento={addPeliculaEstablecimiento}
-                        />
-                    </Table.Row>
-                ))}
-            </Table.Body>
-        </Table>
-    )
-}
-
-function Actions(props) {
+const Actions = (props) => {
     const { establecimiento, updateEstablecimiento, deleteEstablecimiento, listFuncionesEstablecimiento, listPeliculasEstablecimiento, addPeliculaEstablecimiento } = props;
-
     return (
-        <Table.Cell textAlign='right'>
-            <ButtonEdit funcion={updateEstablecimiento} objeto={establecimiento} />
+        <>
+            <ButtonEdit funcion={updateEstablecimiento} objeto={establecimiento.acciones} />
             <ButtonDelete funcion={deleteEstablecimiento} objeto={establecimiento} />
             <Button title="Ver Funciones" icon color="orange" onClick={() => listFuncionesEstablecimiento(establecimiento)} >
                 <i class="fa-duotone fa-calendars fa-lg"></i>
@@ -58,7 +21,67 @@ function Actions(props) {
             <Button title="Eliminar Establecimiento" icon color='teal' onClick={() => addPeliculaEstablecimiento(establecimiento)}>
                 <i class="fa-duotone fa-link fa-lg"></i>
             </Button>
-        </Table.Cell>
+        </>
+    );
+};
 
-    )
+const columns: GridColDef[] = [
+    { field: 'nombre', headerName: 'Nombre', width: 200, disableColumnMenu: true, },
+    { field: 'direccion', headerName: 'Dirección', width: 170, disableColumnMenu: true, },
+    {
+        field: 'provincia', headerName: 'Locación', width: 200, disableColumnMenu: true,
+        renderCell: (params: GridValueGetterParams) => (
+            <>
+                {`${params.value}, ${params.row.provincia}`}
+            </>
+        ),
+    },
+    { field: 'horario_apertura', headerName: 'Horarios', width: 130, disableColumnMenu: true, },
+    {
+        field: 'acciones',
+        headerName: 'Acciones',
+        width: 250,
+        align: 'center',
+        disableColumnMenu: true,
+        renderCell: (params: GridValueGetterParams) => (
+            <Actions
+                establecimiento={params.row}
+                updateEstablecimiento={params.row.updateEstablecimiento}
+                deleteEstablecimiento={params.row.deleteEstablecimiento}
+                listFuncionesEstablecimiento={params.row.listFuncionesEstablecimiento}
+                listPeliculasEstablecimiento={params.row.listPeliculasEstablecimiento}
+                addPeliculaEstablecimiento={params.row.addPeliculaEstablecimiento}
+            />
+        ),
+    }
+];
+
+export function TableEstablecimientos(props) {
+    const { establecimientos, updateEstablecimiento, deleteEstablecimiento, listFuncionesEstablecimiento, listPeliculasEstablecimiento, addPeliculaEstablecimiento } = props;
+
+
+    const rows = map(establecimientos, (establecimiento, index) => ({
+        id: establecimiento.id,
+        nombre: establecimiento.nombre,
+        direccion: establecimiento.direccion,
+        provincia: establecimiento.provincia,
+        horario_apertura: establecimiento.horario_apertura,
+        acciones: establecimiento,
+        updateEstablecimiento,
+        deleteEstablecimiento,
+        listFuncionesEstablecimiento,
+        listPeliculasEstablecimiento,
+        addPeliculaEstablecimiento,
+    }));
+
+    return (
+        <div style={{ width: '100%' }}>
+            <DataGrid
+                rows={rows}
+                columns={columns}
+                pageSize={5}
+            />
+        </div>
+    );
+
 }
