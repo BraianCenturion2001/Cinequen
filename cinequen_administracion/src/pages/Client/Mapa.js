@@ -1,10 +1,11 @@
 import React from 'react';
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
+import { GOOGLE_MAPS_API_KEY } from "../../utils/constants"
 
 const mapContainerStyle = {
     width: '90%',
     height: '500px',
-    margin: '0 auto'
+    margin: '15px auto'
 };
 
 const center = {
@@ -12,12 +13,9 @@ const center = {
     lng: -68.0591,
 };
 
-const libraries = ['places'];
-
 export function Mapa() {
     const { isLoaded } = useLoadScript({
-        googleMapsApiKey: "AIzaSyBV5_LGEUMJT_B9eOLpPXsEOrYy6qj8kOE",
-        libraries
+        googleMapsApiKey: GOOGLE_MAPS_API_KEY
     });
 
     return (
@@ -28,7 +26,7 @@ export function Mapa() {
                 <GoogleMap
                     mapContainerStyle={mapContainerStyle}
                     center={center}
-                    zoom={10}
+                    zoom={15}
                 />
             )}
         </>
