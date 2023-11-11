@@ -1,66 +1,88 @@
 import React from 'react'
 import "./TableUsers.scss"
-import { Table } from "semantic-ui-react"
+import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { ButtonDelete, ButtonEdit } from "../../Buttons"
 import { map } from "lodash"
+
+function renderIcon(value) {
+    if (value) {
+        return (
+            <i className="fa-duotone fa-thumbs-up fa-lg" style={{ "--fa-primary-color": "#449f38", "--fa-secondary-color": "#30f915" }}></i>
+        );
+    } else {
+        return (
+            <i className="fa-duotone fa-thumbs-down fa-lg" style={{ "--fa-primary-color": "#8d3a3a", "--fa-secondary-color": "#ff0000" }}></i>
+        );
+    }
+}
+
+const columns: GridColDef[] = [
+    { field: 'username', headerName: 'Nombre de Usuario', width: 200, disableColumnMenu: true, },
+    { field: 'email', headerName: 'Correo', width: 150, disableColumnMenu: true, },
+    {
+        field: 'nombre', headerName: 'Nombre Completo', type: 'number', width: 200, disableColumnMenu: true,
+        renderCell: (params: GridValueGetterParams) => (
+            <span>{params.value} {params.row.acciones.last_name}</span>
+        ),
+    },
+    {
+        field: 'is_active', headerName: 'Activo', width: 120, align: 'center', disableColumnMenu: true,
+        renderCell: (params: GridValueGetterParams) => (
+            <>{renderIcon(params.value)}</>
+        ),
+    },
+    {
+        field: 'is_staff', headerName: 'Staff', width: 120, align: 'center', disableColumnMenu: true,
+        renderCell: (params: GridValueGetterParams) => (
+            <>{renderIcon(params.value)}</>
+        ),
+    },
+    {
+        field: 'acciones',
+        headerName: 'Acciones',
+        width: 150,
+        align: 'center',
+        disableColumnMenu: true,
+        renderCell: (params: GridValueGetterParams) => (
+            < Actions user={params.row.acciones} updateUser={params.row.updateUser} deleteUser={params.row.deleteUser} />
+        ),
+    }
+];
+
+
+const Actions = (props) => {
+    const { user, updateUser, deleteUser } = props;
+    return (
+        <>
+            <ButtonEdit funcion={updateUser} objeto={user} />
+            <ButtonDelete funcion={deleteUser} objeto={user} />
+        </>
+    );
+};
 
 
 export function TableUsers(props) {
     const { users, updateUser, deleteUser } = props;
 
-    function renderIcon(isPositive, isActive) {
-        if (isPositive) {
-            return (
-                <i className="fa-duotone fa-thumbs-up fa-lg" style={{ "--fa-primary-color": "#449f38", "--fa-secondary-color": "#30f915" }}></i>
-            );
-        } else {
-            return (
-                <i className="fa-duotone fa-thumbs-down fa-lg" style={{ "--fa-primary-color": "#8d3a3a", "--fa-secondary-color": "#ff0000" }}></i>
-            );
-        }
-    }
+    const rows = map(users, (user, index) => ({
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        nombre: user.first_name,
+        is_active: user.is_active,
+        is_staff: user.is_staff,
+        acciones: user,
+        updateUser,
+        deleteUser,
+    }));
 
     return (
-        <Table className='table-users-admin'>
-            <Table.Header>
-                <Table.Row>
-                    <Table.HeaderCell>Nombre de Usuario</Table.HeaderCell>
-                    <Table.HeaderCell>Correo</Table.HeaderCell>
-                    <Table.HeaderCell>Nombres</Table.HeaderCell>
-                    <Table.HeaderCell>Apellidos</Table.HeaderCell>
-                    <Table.HeaderCell>Activo</Table.HeaderCell>
-                    <Table.HeaderCell>Staff</Table.HeaderCell>
-                    <Table.HeaderCell>Acciones</Table.HeaderCell>
-                </Table.Row>
-            </Table.Header>
-            <Table.Body>
-                {map(users, (user, index) => (
-                    <Table.Row key={index}>
-                        <Table.Cell>{user.username}</Table.Cell>
-                        <Table.Cell>{user.email}</Table.Cell>
-                        <Table.Cell>{user.first_name}</Table.Cell>
-                        <Table.Cell>{user.last_name}</Table.Cell>
-                        <Table.Cell className='status'>
-                            {renderIcon(user.is_active)}
-                        </Table.Cell>
-                        <Table.Cell className='status'>
-                            {renderIcon(user.is_staff)}
-                        </Table.Cell>
-                        <Actions user={user} updateUser={updateUser} deleteUser={deleteUser} />
-                    </Table.Row>
-                ))}
-            </Table.Body>
-        </Table>
-    )
-}
-
-function Actions(props) {
-    const { user, updateUser, deleteUser } = props;
-
-    return (
-        <Table.Cell textAlign='right'>
-            <ButtonEdit funcion={updateUser} objeto={user} />
-            <ButtonDelete funcion={deleteUser} objeto={user} />
-        </Table.Cell>
-    )
+        <div style={{ width: '100%' }}>
+            <DataGrid
+                rows={rows}
+                columns={columns}
+                pageSize={5}
+            />
+        </div>
+    );
 }
