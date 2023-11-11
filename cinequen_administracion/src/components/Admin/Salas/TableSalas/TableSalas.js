@@ -3,6 +3,18 @@ import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { ButtonDelete, ButtonEdit } from "../../Buttons"
 import { map } from "lodash";
 
+function renderIcon(value) {
+    if (value) {
+        return (
+            <i className="fa-duotone fa-thumbs-up fa-lg" style={{ "--fa-primary-color": "#449f38", "--fa-secondary-color": "#30f915" }}></i>
+        );
+    } else {
+        return (
+            <i className="fa-duotone fa-thumbs-down fa-lg" style={{ "--fa-primary-color": "#8d3a3a", "--fa-secondary-color": "#ff0000" }}></i>
+        );
+    }
+}
+
 const columns: GridColDef[] = [
     { field: 'nombre', headerName: 'Nombre', width: 200, disableColumnMenu: true, },
     { field: 'tipo', headerName: 'Tipo', width: 130, disableColumnMenu: true, },
@@ -19,11 +31,7 @@ const columns: GridColDef[] = [
         align: 'center',
         disableColumnMenu: true,
         renderCell: (params: GridValueGetterParams) => (
-            params.value ? (
-                <i className="fa-duotone fa-thumbs-up fa-lg" style={{ "--fa-primary-color": "#449f38", "--fa-secondary-color": "#30f915" }}></i>
-            ) : (
-                <i className="fa-duotone fa-thumbs-down fa-lg" style={{ "--fa-primary-color": "#8d3a3a", "--fa-secondary-color": "#ff0000" }}></i>
-            )
+            <>{renderIcon(params.value)}</>
         ),
     },
     { field: 'establecimiento_data.nombre', headerName: 'Establecimiento', width: 200, disableColumnMenu: true, },
