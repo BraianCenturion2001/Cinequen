@@ -1,14 +1,15 @@
 import React, { useCallback, useState } from 'react'
-import { Form, Button, Select, TextArea, Image } from "semantic-ui-react"
+import { Form, Button, TextArea, Image, Dropdown } from "semantic-ui-react"
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDropzone } from "react-dropzone"
 import { usePelicula } from "../../../../hooks"
+import { RenderGeneros } from "./RenderGeneros"
 
 export function AddEditPeliculaForm(props) {
-
     const { onClose, onRefetch, pelicula } = props;
     const { addPelicula, updatePelicula } = usePelicula();
+    const [generos, setGeneros] = useState(pelicula?.genero || null);
     const [previewImage, setPreviewImage] = useState(pelicula?.poster || null)
 
     const onDrop = useCallback(async (acceptedFile) => {
@@ -24,12 +25,26 @@ export function AddEditPeliculaForm(props) {
         onDrop // La funcion se llama igual a la propiedad, por eso solo se pone onDrop y no onDrop: onDrop()
     });
 
+    const clasificacionOptions = [
+        { key: '1', value: 'ATP', text: 'ATP' },
+        { key: '2', value: 'PG-13', text: 'PG-13' },
+        { key: '3', value: 'PG-16', text: 'PG-16' },
+        { key: '4', value: 'PG-18', text: 'PG-18' },
+    ];
+
+    const tipoOptions = [
+        { key: '1', value: 'Estreno', text: 'Estreno' },
+        { key: '2', value: 'Pre-Venta', text: 'Pre-Venta' },
+        { key: '3', value: 'Ultimas Semanas', text: 'Ultimas Semanas' },
+    ];
+
     const formik = useFormik({
         initialValues: initialValues(pelicula),
         validationSchema: Yup.object(pelicula ? updateSchema() : newSchema()),
         validateOnChange: false,
         onSubmit: async (formValue) => {
             try {
+                formValue.genero = generos;
                 if (pelicula) await updatePelicula(pelicula.id, formValue);
                 else await addPelicula(formValue);
                 onRefetch();
@@ -47,11 +62,28 @@ export function AddEditPeliculaForm(props) {
             <Form.Input name="video_trailer" value={formik.values.video_trailer} onChange={formik.handleChange} error={formik.errors.video_trailer} placeholder="Enlace trailer Youtube"></Form.Input>
             <Form.Input name="actores" value={formik.values.actores} onChange={formik.handleChange} error={formik.errors.actores} placeholder="Actores"></Form.Input>
             <Form.Input name="director" value={formik.values.director} onChange={formik.handleChange} error={formik.errors.director} placeholder="Director"></Form.Input>
-            <Form.Input name="genero" value={formik.values.genero} onChange={formik.handleChange} error={formik.errors.genero} placeholder="Género"></Form.Input>
+            <RenderGeneros generos={generos} setGeneros={setGeneros} />
+
+            <Dropdown
+                style={{ marginBottom: '15px' }}
+                placeholder='Clasificación'
+                fluid selection search
+                options={clasificacionOptions}
+                value={formik.values.clasificacion}
+                error={formik.errors.clasificacion}
+                onChange={(_, data) => formik.setFieldValue('clasificacion', data.value)} />
+
+            <Dropdown
+                style={{ marginBottom: '15px' }}
+                placeholder='Tipo'
+                fluid selection search
+                options={tipoOptions}
+                value={formik.values.tipo}
+                error={formik.errors.tipo}
+                onChange={(_, data) => formik.setFieldValue('tipo', data.value)} />
+
             <Form.Input name="origen" value={formik.values.origen} onChange={formik.handleChange} error={formik.errors.origen} placeholder="Lugar Origen"></Form.Input>
             <Form.Input name="distribuidor" value={formik.values.distribuidor} onChange={formik.handleChange} error={formik.errors.distribuidor} placeholder="Distribuidor"></Form.Input>
-            <Form.Input name="tipo" placeholder='Tipo' value={formik.values.tipo} onChange={formik.handleChange} error={formik.errors.tipo} />
-            <Form.Input name="clasificacion" placeholder='Clasificación' value={formik.values.clasificacion} onChange={formik.handleChange} error={formik.errors.clasificacion} />
             <TextArea rows={2} placeholder='Descripción corta' name='descripcion_corta' value={formik.values.descripcion_corta} onChange={formik.handleChange} error={formik.errors.descripcion_corta} />
             <TextArea rows={3} placeholder='Descripción larga' name='descripcion_larga' value={formik.values.descripcion_larga} onChange={formik.handleChange} error={formik.errors.descripcion_larga} />
 
