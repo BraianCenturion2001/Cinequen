@@ -91,7 +91,7 @@ export function RegisterForm() {
                             fullWidth
                             label="Teléfono"
                             variant="outlined"
-                            type="text"
+                            type="number"
                             name="telefono"
                             value={formik.values.telefono}
                             onChange={formik.handleChange}
@@ -153,10 +153,9 @@ function initialValues() {
 function validationSchema() {
     return Yup.object({
         username: Yup.string().required('El nombre de usuario es requerido').matches(/^@/, 'El nombre de usuario debe empezar con "@"'),
-        email: Yup.string().email('Ingrese un correo electrónico válido').required('El correo electrónico es requerido'),
-        password: Yup.string().required('La contraseña es requerida'),
+        email: Yup.string().required('El correo electrónico es requerido').matches(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/, 'Ingrese un correo electrónico válido'), password: Yup.string().required('La contraseña es requerida'),
         nombre: Yup.string().required('El nombre es requerido'),
-        telefono: Yup.string().required('El número de teléfono es requerido'),
+        telefono: Yup.string().required('El número de teléfono es requerido').matches(/^[0-9]+$/, 'Ingrese solo números en el campo de teléfono'),
         rol: Yup.string().required(true),
     });
 }
