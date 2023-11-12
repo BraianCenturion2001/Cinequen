@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     'butacas',
     'butacasxfuncion',
     'entradas',
-
+    'productos_canje',
+    
 ]
 
 MIDDLEWARE = [
