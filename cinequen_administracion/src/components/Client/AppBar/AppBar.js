@@ -99,7 +99,7 @@ export function ClientAppBar() {
                                 to={link.pathname}
                                 sx={{ my: 2, color: 'white', display: 'block', textTransform: 'uppercase', fontSize: '1.2rem' }}
                             >
-                                {link.title}
+                                <i class={link.icon} style={{ marginRight: '10px' }}></i>{link.title}
                             </Button>
                         ))}
                     </Box>

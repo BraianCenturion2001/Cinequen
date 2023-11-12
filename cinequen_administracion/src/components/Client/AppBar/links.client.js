@@ -1,12 +1,14 @@
 const linksClient = [
     {
         pathname: "/",
-        title: "Inicio",
+        title: "Películas",
+        icon: "fa-duotone fa-films"
     },
-    /* {
+    {
         pathname: "/compras",
-        title: "Compras",
-    }, */
+        title: "Productos de Canje",
+        icon: "fa-duotone fa-popcorn"
+    },
 ];
 
 const linksLog = [
