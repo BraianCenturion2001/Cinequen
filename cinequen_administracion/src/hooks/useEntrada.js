@@ -12,10 +12,10 @@ export function useEntrada() {
     const [entradas, setEntradas] = useState(null);
     const { auth } = useAuth();
 
-    const getEntradas = async (id) => {
+    const getEntradas = async (params) => {
         try {
             setLoading(true)
-            const response = await getEntradasApi(id);
+            const response = await getEntradasApi(params);
             setEntradas(response);
             setLoading(false);
         } catch (error) {
