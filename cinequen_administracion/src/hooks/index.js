@@ -8,3 +8,4 @@ export * from "./usePeliculaEstablecimiento";
 export * from "./use-popover";
 export * from "./useButacasFuncion";
 export * from "./useEntrada";
+export * from "./useProductoCanje";

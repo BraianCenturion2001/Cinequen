@@ -24,6 +24,11 @@ const linksAdmin = [
         iconName: "fa-duotone fa-calendars",
         title: "Funciones",
     },
+    {
+        pathname: "/admin/productos",
+        iconName: "fa-duotone fa-popcorn",
+        title: "Productos de Canje",
+    },
 ];
 
 const linkUsers =
