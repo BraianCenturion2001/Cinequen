@@ -1,7 +1,7 @@
 import React from 'react'
 import "./TablePeliculas.scss"
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-import { Table, Image } from "semantic-ui-react"
+import { Image } from "semantic-ui-react"
 import { ButtonDelete, ButtonEdit } from "../../Buttons"
 import { map } from "lodash"
 
