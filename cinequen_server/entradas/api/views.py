@@ -20,9 +20,7 @@ class EntradaApiViewSet(ModelViewSet):
     def get_serializer_class(self):
         if self.request.method == 'POST':
             return RegistroEntradaSerializer
-        elif self.request.query_params.get('user'):
-            return EntradaSerializer
-        elif self.request.query_params.get('id'):
+        elif self.request.query_params.get('user') is not None or self.request.query_params.get('id') is not None:
             return EntradaCompletaSerializer
         return EntradaClienteSerializer
 
