@@ -11,6 +11,7 @@ class ProductoCanjeSerializer(ModelSerializer):
             'id',
             'nombre',
             'imagen',
+            'tipo',
             'descripcion',
             'precio_puntos',
             'stock',
