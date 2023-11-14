@@ -45,8 +45,6 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
     'django_filters',
-    'reportlab',
-    'qrcode',
     'establecimientos',
     'peliculas',
     'salas',
@@ -57,7 +55,7 @@ INSTALLED_APPS = [
     'butacasxfuncion',
     'entradas',
     'productos_canje',
-    
+
 ]
 
 MIDDLEWARE = [
