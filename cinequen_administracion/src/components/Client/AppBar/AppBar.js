@@ -10,7 +10,6 @@ import "./AppBar.scss";
 
 export function ClientAppBar() {
     const { auth, logout } = useAuth();
-    console.log(auth)
     const accountPopover = usePopover();
     const navigate = useNavigate();
 
