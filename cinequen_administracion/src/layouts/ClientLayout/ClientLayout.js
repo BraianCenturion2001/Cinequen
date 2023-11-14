@@ -7,9 +7,9 @@ export function ClientLayout(props) {
     const { children } = props;
 
     return (
-        <>
+        <div className='container-client'>
             <ClientAppBar />
             {children}
-        </>
+        </div>
     )
 }
