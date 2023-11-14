@@ -5,6 +5,8 @@ from users.api.serializers import ClienteSerializer
 from butacasxfuncion.api.serializer import ButacaxFuncionSerializer
 from butacasxfuncion.models import ButacaxFuncion
 from entradas.models import Entrada
+from funciones.api.serializer import FuncionSerializer
+from funciones.models import Funcion
 
 
 class EntradaClienteSerializer(ModelSerializer):
@@ -50,6 +52,7 @@ class EntradaSerializer(ModelSerializer):
 
 class EntradaCompletaSerializer(ModelSerializer):
     butacas_data = SerializerMethodField()
+    funcion_data = SerializerMethodField()
 
     class Meta:
         model = Entrada
@@ -61,6 +64,7 @@ class EntradaCompletaSerializer(ModelSerializer):
             'created_at',
             'updated_at',
             'butacas_data',
+            'funcion_data'
         ]
 
     def get_butacas_data(self, obj):
@@ -68,3 +72,13 @@ class EntradaCompletaSerializer(ModelSerializer):
         butacas = ButacaxFuncion.objects.filter(id__in=ids)
         serializer = ButacaxFuncionSerializer(butacas, many=True)
         return serializer.data
+
+    def get_funcion_data(self, obj):
+        ids = obj.idsButacasxFuncion.split(',')
+        butaca = ButacaxFuncion.objects.filter(id__in=ids).first()
+        if butaca:
+            funcion = Funcion.objects.get(id=butaca.funcion.id)
+            serializer = FuncionSerializer(funcion)
+            return serializer.data
+        else:
+            return None

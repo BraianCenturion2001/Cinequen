@@ -8,6 +8,8 @@ from entradas.api.serializer import EntradaClienteSerializer, EntradaSerializer,
 from entradas.api.filter import EntradaFilter
 
 from butacasxfuncion.api.serializer import ButacaxFuncionSerializer
+from funciones.api.serializer import FuncionSerializer
+from funciones.models import Funcion
 from butacasxfuncion.models import ButacaxFuncion
 from users.models import Cliente
 
@@ -36,6 +38,10 @@ class EntradaApiViewSet(ModelViewSet):
         butacas = ButacaxFuncion.objects.filter(id__in=ids)
         butacas_data = ButacaxFuncionSerializer(butacas, many=True).data
         entrada_data['butacas_data'] = butacas_data
+        id_funcion = butacas_data[0]['funcion']
+        funcion = Funcion.objects.get(id=id_funcion)
+        funcion_data = FuncionSerializer(funcion).data
+        entrada_data['funcion_data'] = funcion_data
         return Response(entrada_data)
 
     def create(self, request, *args, **kwargs):
