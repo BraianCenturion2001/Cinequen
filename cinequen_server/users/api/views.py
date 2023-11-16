@@ -8,6 +8,8 @@ from users.api.serializers import ClienteSerializer, UserSerializer, RegistroSer
 from django.contrib.auth.hashers import make_password
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 class UserApiViewSet(ModelViewSet):
@@ -69,6 +71,21 @@ class RegistroView(APIView):
             user = user_serializer.save(
                 password=make_password(request.data['password']))
             cliente = cliente_serializer.save(user=user)
+            # Construir la URL para el enlace en el correo electrónico
+            url = 'http://localhost:3000/register'
+
+            # Construir el contenido del correo electrónico con la URL
+            contenido = f'Hola {cliente.nombre}, gracias por registrarte. Haz clic en el siguiente enlace para activar tu cuenta: {url}'
+            print("Correo: ", user.email)
+            # Enviar el correo electrónico
+            send_mail(
+                'Activación de cuenta',
+                contenido,
+                settings.EMAIL_HOST_USER,
+                [user.email],
+                fail_silently=False,
+            )
+
             return Response(status=status.HTTP_201_CREATED)
         else:
             # Devolver los errores de validación
