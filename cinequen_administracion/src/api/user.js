@@ -13,11 +13,18 @@ export async function loginApi(formValue) {
 
         const response = await fetch(url, params)
 
+        console.log(response.status)
+
         if (response.status !== 200) {
-            throw new Error("Usuario o contraseña inválidos")
+            if (response.status === 401) {
+                throw new Error("Usuario o contraseña inválidos")
+            } else if (response.status === 400) {
+                throw new Error("Usuario no verificado, por favor revise su bandeja de entrada.")
+            }
         }
 
-        return await response.json()
+        var respuesta = await response.json()
+        return respuesta
     } catch (error) {
         throw error
     }
