@@ -115,31 +115,6 @@ class UserView(APIView):
         return Response(serializer.data)
 
 
-""" class LoginTokenObtainPairView(TokenObtainPairView):
-    def post(self, request, *args, **kwargs):
-        # Obtener el usuario del token
-        user = User.objects.get(email=request.data['email'])
-        # Verificar que el usuario esté verificado
-        if user.rol == 'CLIENTE':
-            cliente = Cliente.objects.get(user=user)
-            if not cliente.verificado:
-                return Response(status=400)
-
-         # Comparar la contraseña
-        if not check_password(request.data['password'], user.password):
-            return Response(status=401)
-
-        # Generar el token
-        serializer = TokenObtainPairSerializer(data={'email': user.email})
-        token = serializer.get_token(user)
-
-        # Convertir el objeto RefreshToken a una cadena
-        refresh_token = str(token)
-
-        # Devolver la respuesta
-        return Response({'token': str(token), 'refresh_token': refresh_token}) """
-
-
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         email = attrs.get("email")
