@@ -74,12 +74,12 @@ class RegistroView(APIView):
             user = user_serializer.save(
                 password=make_password(request.data['password']))
             cliente = cliente_serializer.save(user=user)
+            cliente_id = cliente.user_id
             # Construir la URL para el enlace en el correo electrónico
-            url = 'http://localhost:3000/register'
+            url = 'http://localhost:3000/auth/validate_user/?id='+ str(cliente_id)
 
             # Construir el contenido del correo electrónico con la URL
             contenido = f'Hola {cliente.nombre}, gracias por registrarte. Haz clic en el siguiente enlace para activar tu cuenta: {url}'
-            print("Correo: ", user.email)
             # Enviar el correo electrónico
             send_mail(
                 'Activación de cuenta',
@@ -129,3 +129,20 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class LoginTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
+
+class ValidateUserView(APIView):
+    def get(self, request):
+        # Obtener el ID del usuario de los parámetros de consulta
+        user_id = request.query_params.get('id')
+        try:
+            user = User.objects.get(pk=user_id)
+            if user.rol == 'CLIENTE':
+                cliente = Cliente.objects.get(user=user)
+                cliente.verificado = True
+                cliente.save()
+                return Response(status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        except User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)

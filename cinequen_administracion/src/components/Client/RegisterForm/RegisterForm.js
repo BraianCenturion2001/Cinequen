@@ -3,13 +3,13 @@ import { Box, TextField, Button, Grid } from '@mui/material';
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import { toast } from "react-toastify"
-import { RegisterApi, loginApi } from "../../../api/user";
-import { useAuth } from "../../../hooks"
+import { RegisterApi } from "../../../api/user";
 import { Image } from 'semantic-ui-react';
 import { BASE_REACT } from "../../../utils/constants"
+import { useNavigate } from "react-router-dom";
 
 export function RegisterForm() {
-    const { login } = useAuth();
+    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: initialValues(),
@@ -18,9 +18,7 @@ export function RegisterForm() {
             try {
                 const response = await RegisterApi(formValues);
                 if (response === 201) {
-                    const response = await loginApi(formValues);
-                    const { access } = response;
-                    login(access);
+                    navigate('/login');
                 }
             } catch (error) {
                 console.log(error);
