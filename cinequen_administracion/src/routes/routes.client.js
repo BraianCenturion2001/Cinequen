@@ -1,5 +1,5 @@
 import { ClientLayout, LoginRegisterClientLayout } from "../layouts";
-import { Home, EntradasCliente, FuncionesPelicula, CompraEntradas, LoginRegister, Canjes, Perfil, Mapa, ProductosCanje } from "../pages/Client";
+import { Home, EntradasCliente, FuncionesPelicula, CompraEntradas, LoginRegister, Canjes, Perfil, Mapa, ProductosCanje, Verificacion } from "../pages/Client";
 
 const routesClient = [
     {
@@ -41,6 +41,11 @@ const routesClient = [
         path: "/mis-entradas",
         layout: ClientLayout,
         component: EntradasCliente,
+    },
+    {
+        path: "/verificacion/:id",
+        layout: ClientLayout,
+        component: Verificacion,
     },
     {
         path: "/register",

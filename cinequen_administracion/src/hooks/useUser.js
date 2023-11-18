@@ -1,4 +1,4 @@
-import { getMeApi, getUsersApi, addUserApi, updateUserApi, deleteUserApi } from "../api/user";
+import { getMeApi, getUsersApi, addUserApi, updateUserApi, deleteUserApi, validateUserApi } from "../api/user";
 import { useState } from "react";
 import { useAuth } from ".";
 
@@ -62,6 +62,17 @@ export function useUser() {
         }
     }
 
+    const validateUser = async (id) => {
+        try {
+            setLoading(true)
+            await validateUserApi(id);
+            setLoading(false)
+        } catch (error) {
+            setLoading(false);
+            setError(error)
+        }
+    }
+
     return {
         loading,
         error,
@@ -71,5 +82,7 @@ export function useUser() {
         addUser,
         updateUser,
         deleteUser,
+        validateUser,
+
     };
 }

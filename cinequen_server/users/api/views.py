@@ -76,7 +76,7 @@ class RegistroView(APIView):
             cliente = cliente_serializer.save(user=user)
             cliente_id = cliente.user_id
             # Construir la URL para el enlace en el correo electrónico
-            url = 'http://localhost:3000/auth/validate_user/?id='+ str(cliente_id)
+            url = 'http://localhost:3000/verificacion/'+ str(cliente_id)
 
             # Construir el contenido del correo electrónico con la URL
             contenido = f'Hola {cliente.nombre}, gracias por registrarte. Haz clic en el siguiente enlace para activar tu cuenta: {url}'

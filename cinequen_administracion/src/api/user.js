@@ -143,3 +143,14 @@ export async function deleteUserApi(id, token) {
         throw error
     }
 }
+
+export async function validateUserApi(id) {
+    try {
+        const url = `${BASE_API}/api/auth/validate_user/?id=${id}`;
+        const response = await fetch(url);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error
+    }
+}

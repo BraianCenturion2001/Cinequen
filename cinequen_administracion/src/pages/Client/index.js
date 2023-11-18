@@ -7,3 +7,4 @@ export * from "./Perfil"
 export * from "./Canjes"
 export * from "./Mapa.js"
 export * from "./ProductosCanje"
+export * from "./Verificacion";
