@@ -1,6 +1,6 @@
 import React from 'react';
 import './ClientLayout.scss';
-import { ClientAppBar } from '../../components/Client';
+import { ClientAppBar, Footer } from '../../components/Client';
 
 export function ClientLayout(props) {
 
@@ -10,6 +10,7 @@ export function ClientLayout(props) {
         <div className='container-client'>
             <ClientAppBar />
             {children}
+            <Footer />
         </div>
     )
 }
