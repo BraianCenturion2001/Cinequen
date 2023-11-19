@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getPeliculasEstablecimientosApi, getPeliculasEstablecimientosFiltro1Api, getPeliculasEstablecimientosFiltro2Api, addPeliculasEstablecimientoApi } from "../api/funcionesxestablecimientos";
+import { getPeliculasEstablecimientosApi, getPeliculasEstablecimientosFiltro1Api, getPeliculasEstablecimientoApi, getPeliculasEstablecimientosFiltro2Api, addPeliculasEstablecimientoApi } from "../api/funcionesxestablecimientos";
 import { useAuth } from ".";
 
 export function usePeliculaEstablecimiento() {
@@ -12,6 +12,18 @@ export function usePeliculaEstablecimiento() {
         try {
             setLoading(true)
             const response = await getPeliculasEstablecimientosApi();
+            setLoading(false)
+            setPeliculasEstablecimientos(response);
+        } catch (error) {
+            setLoading(false);
+            setError(error)
+        }
+    };
+
+    const getPeliculasEstablecimiento = async (params) => {
+        try {
+            setLoading(true)
+            const response = await getPeliculasEstablecimientoApi(params);
             setLoading(false)
             setPeliculasEstablecimientos(response);
         } catch (error) {
@@ -63,6 +75,7 @@ export function usePeliculaEstablecimiento() {
         getPEFiltro1,
         getPEFiltro2,
         addPeliculasEstablecimiento,
+        getPeliculasEstablecimiento,
 
     };
 }

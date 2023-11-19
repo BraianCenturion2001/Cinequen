@@ -12,7 +12,7 @@ export function SelectFunciones() {
 
     const { establecimientos, getEstablecimientos } = useEstablecimiento();
     const { loading: loadingPeliculas, peliculas, getPeliculas } = usePelicula();
-    const { loading: loadingPE, peliculasEstablecimientos, getPEFiltro1 } = usePeliculaEstablecimiento();
+    const { loading: loadingPE, peliculasEstablecimientos, getPEFiltro1, getPeliculasEstablecimiento } = usePeliculaEstablecimiento();
 
     useEffect(() => {
         getEstablecimientos()
@@ -39,7 +39,7 @@ export function SelectFunciones() {
     const handleEstablecimientoChange = async (event, data) => {
         setPeliculasOptions([]);
         try {
-            await getPEFiltro1(data.value);
+            await getPeliculasEstablecimiento({ establecimiento: data.value });
         } catch (error) {
             console.error(error);
         }

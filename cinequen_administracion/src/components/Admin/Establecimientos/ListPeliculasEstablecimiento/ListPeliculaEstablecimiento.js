@@ -5,11 +5,11 @@ import { map } from "lodash"
 import { usePeliculaEstablecimiento } from "../../../../hooks"
 
 export function ListPeliculaEstablecimiento(props) {
-    const { loading, peliculasEstablecimientos, getPEFiltro1 } = usePeliculaEstablecimiento();
+    const { loading, peliculasEstablecimientos, getPeliculasEstablecimiento } = usePeliculaEstablecimiento();
     const { establecimiento } = props;
 
     useEffect(() => {
-        getPEFiltro1(establecimiento.id);
+        getPeliculasEstablecimiento({ establecimiento: establecimiento.id });
     }, [])
 
     return (
