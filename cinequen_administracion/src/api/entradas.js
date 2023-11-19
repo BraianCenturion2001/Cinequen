@@ -5,7 +5,6 @@ export async function getEntradasApi(params = {}) {
         const url = new URL(`${BASE_API}/api/entradas/`);
         // Agregar parámetros a la URL
         Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
-        console.log(url)
         const response = await fetch(url);
         const result = await response.json();
         return result;
