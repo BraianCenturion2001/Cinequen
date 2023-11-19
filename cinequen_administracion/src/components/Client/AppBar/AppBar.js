@@ -16,6 +16,7 @@ export function ClientAppBar() {
     const handleLinkClick = (route, cerrar) => {
         if (cerrar) {
             logout();
+            navigate('/');
         } else {
             navigate(route);
         }
