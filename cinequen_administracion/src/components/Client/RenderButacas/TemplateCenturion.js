@@ -73,30 +73,13 @@ export function TemplateCenturion(props) {
         )
     }
 
-    /* function renderFilas() {
-        const filas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S'];
-        const filasInvertidas = filas.reverse();
-        return (
-            <>
-                {filasInvertidas.map((fila) => (
-                    <TableRow>
-                        <TableCell sx={{ border: 'none' }}>
-                            {fila}
-                        </TableCell>
-                    </TableRow>
-                ))}
-            </>
-        );
-    } */
-
     return (
         <>
             <TableContainer>
-                {cantidadEntradas} - {butacasIds}
                 <Table sx={{ marginBottom: '50px' }}>
                     <TableHead>
                         <TableRow>
-                            <TableCell colSpan={32} sx={{ textAlign: 'center' }}>
+                            <TableCell colSpan={32} sx={{ textAlign: 'center', borderRadius: 1 }}>
                                 <Typography variant="h3">
                                     PANTALLA
                                 </Typography>

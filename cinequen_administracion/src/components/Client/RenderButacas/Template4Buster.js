@@ -4,7 +4,6 @@ import { map } from 'lodash';
 
 export function Template4Buster(props) {
     const { butacasPorFila, cantidadEntradas, butacasIds, setButacasIds } = props;
-    console.log(butacasPorFila);
 
     function agregarButacaSeleccionada(id) {
         if (butacasIds.length < cantidadEntradas) {
@@ -64,13 +63,13 @@ export function Template4Buster(props) {
             </>
         )
     }
+
     return (
         <TableContainer>
-            {cantidadEntradas} - {butacasIds}
             <Table sx={{ marginBottom: '50px' }}>
                 <TableHead>
                     <TableRow>
-                        <TableCell colSpan={32} sx={{ textAlign: 'center' }}>
+                        <TableCell colSpan={32} sx={{ textAlign: 'center', borderRadius: 1 }}>
                             <Typography variant="h3">
                                 PANTALLA
                             </Typography>

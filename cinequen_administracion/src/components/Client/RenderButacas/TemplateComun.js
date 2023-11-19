@@ -44,11 +44,10 @@ export function TemplateComun(props) {
 
     return (
         <TableContainer>
-            {cantidadEntradas} - {butacasIds}
             <Table sx={{ marginBottom: '50px' }}>
                 <TableHead>
                     <TableRow>
-                        <TableCell colSpan={10} sx={{ textAlign: 'center' }}>
+                        <TableCell colSpan={10} sx={{ textAlign: 'center', borderRadius: 1 }}>
                             <Typography variant="h3">
                                 PANTALLA
                             </Typography>

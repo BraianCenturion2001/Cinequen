@@ -24,8 +24,8 @@ export function FormCompraEntradas(props) {
     };
 
     const handleComprar = () => {
-        const idsButacasString = butacasIds.join(','); // Convertir el arreglo en una cadena separada por comas
-        insertEntrada({ 'idsButacasxFuncion': idsButacasString, 'tipo_sala': funcion.sala_data.tipo });
+        const idsButacasString = butacasIds.join(',');
+        return insertEntrada({ 'idsButacasxFuncion': idsButacasString, 'tipo_sala': funcion.sala_data.tipo });
     };
 
     const getStepContent = (step) => {
@@ -54,6 +54,7 @@ export function FormCompraEntradas(props) {
                 return (
                     <Paso3Pago
                         precioEntradas={precioEntradas}
+                        handleComprar={handleComprar}
                     />
                 );
             default:
@@ -62,7 +63,7 @@ export function FormCompraEntradas(props) {
     };
 
     return (
-        <Box sx={{ width: '90%', margin: '30px auto' }}>
+        <Box sx={{ width: '95%', margin: '0 auto', backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: 1, mt: '20px', mb: '20px', padding: '30px' }}>
             <Stepper activeStep={activeStep}>
                 {steps.map((label, index) => (
                     <Step key={label}>
@@ -70,31 +71,23 @@ export function FormCompraEntradas(props) {
                     </Step>
                 ))}
             </Stepper>
-            <Box sx={{ mt: 2, mb: 1 }}>
-                {activeStep === steps.length ? (
-                    <Typography>Todos los pasos fueron finalizados.</Typography>
-                ) : (
-                    <Typography>Paso {activeStep + 1}</Typography>
-                )}
-            </Box>
             <Box sx={{ margin: '30px 0' }}>
                 {getStepContent(activeStep)}
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                 <Button
                     color="inherit"
                     disabled={activeStep === 0}
                     onClick={handleBack}
                     sx={{ mr: 1 }}
-
                 >
                     <i class="fa-duotone fa-backward" style={{ marginRight: '15px' }}></i> Volver
                 </Button>
                 <Box sx={{ flex: '1 1 auto' }} />
-                {activeStep === steps.length - 1 ? (
-                    <Button onClick={handleComprar}><i class="fa-duotone fa-check" style={{ marginRight: '15px' }}></i>Finalizar</Button>
-                ) : (
-                    <Button onClick={handleNext}><i class="fa-duotone fa-forward" style={{ marginRight: '15px' }}></i> Siguiente</Button>
+                {activeStep < steps.length - 1 && (
+                    <Button onClick={handleNext}>
+                        <i className="fa-duotone fa-forward" style={{ marginRight: '15px' }}></i> Siguiente
+                    </Button>
                 )}
             </Box>
         </Box>
