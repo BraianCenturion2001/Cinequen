@@ -23,18 +23,19 @@ export function FuncionesAdmin() {
         setContentModal(<AddFuncionForm onClose={openCloseModal} onRefetch={onRefetch} />);
         openCloseModal();
     }
+
+    const updateFuncion = (data) => {
+        setTitleModal("Editar Funcón");
+        setContentModal(<AddFuncionForm onClose={openCloseModal} onRefetch={onRefetch} funcion={data} />);
+        openCloseModal();
+    }
+
     /*
-        const updateEstablecimiento = (data) => {
-            setTitleModal("Editar Establecimiento");
-            setContentModal(<AddEditEstablecimientoForm onClose={openCloseModal} onRefetch={onRefetch} establecimiento={data} />);
-            openCloseModal();
-        }
-    
-        const deleteEstablecimiento = (data) => {
-            setTitleModal("Eliminar Establecimiento");
-            setContentModal(<DeleteEstablecimiento onClose={openCloseModal} onRefetch={onRefetch} establecimiento={data} />);
-            openCloseModal();
-        } */
+    const deleteEstablecimiento = (data) => {
+        setTitleModal("Eliminar Establecimiento");
+        setContentModal(<DeleteEstablecimiento onClose={openCloseModal} onRefetch={onRefetch} establecimiento={data} />);
+        openCloseModal();
+    } */
 
     return (
         <>
@@ -46,7 +47,7 @@ export function FuncionesAdmin() {
                         Cargando
                     </Loader>
                 ) : (
-                    <TableFunciones funciones={funciones} /* updateSala={updateSala} deleteSala={deleteSala} */ />
+                    <TableFunciones funciones={funciones} updateFuncion={updateFuncion} /* deleteSala={deleteSala} */ />
                 )
             }
 
