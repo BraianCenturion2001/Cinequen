@@ -1,16 +1,17 @@
 import React from 'react'
 import "./TableFunciones.scss"
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-import { ButtonDelete, ButtonEdit } from "../../Buttons"
+import { ButtonEdit } from "../../Buttons"
 import { map } from "lodash"
+import dayjs from 'dayjs'
 
 
 const Actions = (props) => {
-    const { funcion } = props;
+    const { funcion, updateFuncion } = props;
+
     return (
         <>
-            <ButtonEdit objeto={funcion} />
-            <ButtonDelete objeto={funcion} />
+            <ButtonEdit funcion={updateFuncion} objeto={funcion} />
         </>
     );
 };
@@ -24,8 +25,18 @@ const convertirFormatoHora = (hora) => {
     return '';
 };
 
+const formatearFecha = (fecha) => {
+    const fechaFormateada = dayjs(fecha).format('MMM DD, YYYY');
+    return fechaFormateada;
+};
+
 const columns: GridColDef[] = [
-    { field: 'fecha', headerName: 'Fecha', width: 200, disableColumnMenu: true, },
+    {
+        field: 'fecha', headerName: 'Fecha', width: 200, disableColumnMenu: true,
+        renderCell: (params: GridValueGetterParams) => (
+            <span>{formatearFecha(params.value)}</span>
+        ),
+    },
     {
         field: 'hora_inicio', headerName: 'Horario', width: 130, disableColumnMenu: true,
         renderCell: (params: GridValueGetterParams) => (
@@ -46,13 +57,13 @@ const columns: GridColDef[] = [
         align: 'center',
         disableColumnMenu: true,
         renderCell: (params: GridValueGetterParams) => (
-            < Actions funcion={params.row} />
+            < Actions funcion={params.row.acciones} updateFuncion={params.row.updateFuncion} />
         ),
     }
 ];
 
 export function TableFunciones(props) {
-    const { funciones } = props;
+    const { funciones, updateFuncion } = props;
 
     const rows = map(funciones, (funcion, index) => ({
         id: funcion.id,
@@ -61,6 +72,7 @@ export function TableFunciones(props) {
         'sala_data.nombre': funcion.sala_data.nombre,
         'pelicula_data.nombre': funcion.pelicula_data.nombre,
         acciones: funcion,
+        updateFuncion
     }));
 
     return (
