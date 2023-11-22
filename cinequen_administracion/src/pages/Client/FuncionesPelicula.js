@@ -5,6 +5,7 @@ import { Icon } from 'semantic-ui-react';
 import { Button, Box } from '@mui/material';
 import { AccordionFunciones } from "../../components/Client"
 import { map, uniqBy } from 'lodash';
+import dayjs from 'dayjs';
 
 export function FuncionesPelicula() {
     const { id } = useParams();
@@ -24,24 +25,26 @@ export function FuncionesPelicula() {
 
     useEffect(() => {
         if (!loading) {
+            //console.log(funciones)
             setNombrePelicula(funciones[0].pelicula_data.nombre);
             const gruposOrdenados = ordenarFuncionesPorFechaYEstablecimiento(funciones);
+            console.log(gruposOrdenados)
             setGruposFunciones(gruposOrdenados);
 
             // Seleccionar la primera fecha y mostrar el acordeón correspondiente
             const primeraFecha = uniqBy(funciones, 'fecha')[0].fecha;
-            setSelectedFecha(primeraFecha);
+            handleFechaClick(primeraFecha); // Seleccionar la primera fecha al cargar el componente
         }
     }, [loading, funciones]);
 
     const ordenarFuncionesPorFechaYEstablecimiento = (funciones) => {
         const gruposPorFecha = map(uniqBy(funciones, 'fecha'), (funcion) => ({
-            fecha: funcion.fecha,
+            fecha: dayjs(funcion.fecha).format('MMM DD'),
             grupos: [],
         }));
 
         funciones.forEach((funcion) => {
-            const grupoFecha = gruposPorFecha.find((grupo) => grupo.fecha === funcion.fecha);
+            const grupoFecha = gruposPorFecha.find((grupo) => grupo.fecha === dayjs(funcion.fecha).format('MMM DD'));
             const establecimiento = funcion.sala_data.establecimiento_data;
 
             let grupoEstablecimiento = grupoFecha.grupos.find(
@@ -71,40 +74,46 @@ export function FuncionesPelicula() {
     };
 
     const handleFechaClick = (fecha) => {
-        setSelectedFecha(fecha);
+        const fechaFormateada = dayjs(fecha).format('MMM DD');
+        setSelectedFecha(fechaFormateada);
     };
 
     const fechasDisponibles = uniqBy(funciones, 'fecha')
-        .map((funcion) => funcion.fecha)
-        .sort((a, b) => new Date(a) - new Date(b));
+        .map((funcion) => {
+            const fechaFormateada = dayjs(funcion.fecha).format('MMM DD');
+            return fechaFormateada;
+        })
+        .sort((a, b) => dayjs(a).toDate() - dayjs(b).toDate());
 
     return (
         <>
-            <h1>Funciones para {nombrePelicula}</h1>
-            <Box sx={{ margin: '30px' }}>
-                {fechasDisponibles.map((fecha) => (
-                    <Button
-                        key={fecha}
-                        size="large"
-                        onClick={() => handleFechaClick(fecha)}
-                        variant={fecha === selectedFecha ? 'contained' : 'outlined'}
-                        sx={{
-                            margin: '1rem',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Icon name='calendar alternate outline' size='big' /> {fecha}
-                    </Button>
-                ))}
-            </Box>
-            <Box sx={{ width: '500px', margin: '30px' }}>
-                {selectedFecha && (
-                    <AccordionFunciones
-                        handleChange={handleChange}
-                        expanded={expanded}
-                        gruposFunciones={gruposFunciones.find((grupo) => grupo.fecha === selectedFecha).grupos}
-                    />
-                )}
+            <Box sx={{ width: '95%', margin: '0 auto', backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: 1, mt: '20px', mb: '200px', padding: '30px' }}>
+                <h1>Funciones para {nombrePelicula}</h1>
+                <Box>
+                    {fechasDisponibles.map((fecha) => (
+                        <Button
+                            key={fecha}
+                            size="large"
+                            onClick={() => handleFechaClick(fecha)}
+                            variant={fecha === selectedFecha ? 'contained' : 'outlined'}
+                            sx={{
+                                margin: '1rem',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Icon name='calendar alternate outline' size='big' /> {fecha}
+                        </Button>
+                    ))}
+                </Box>
+                <Box sx={{ width: '500px' }}>
+                    {selectedFecha && (
+                        <AccordionFunciones
+                            handleChange={handleChange}
+                            expanded={expanded}
+                            gruposFunciones={gruposFunciones.find((grupo) => grupo.fecha === selectedFecha).grupos}
+                        />
+                    )}
+                </Box>
             </Box>
         </>
     );
