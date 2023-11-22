@@ -64,3 +64,22 @@ export async function addFuncionApi(data, token) {
     }
 }
 
+export async function updateFuncionApi(id, data, token) {
+    try {
+        const url = `${BASE_API}/api/funciones/${id}/`;
+        const params = {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        };
+
+        const response = await fetch(url, params);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        throw error
+    }
+}

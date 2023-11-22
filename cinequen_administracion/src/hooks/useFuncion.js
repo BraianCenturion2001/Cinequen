@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getFuncionesApi, addFuncionApi, getFuncionesEstablecimientoApi, getFuncionesPeliculaApi, getFuncionApi } from "../api/funciones";
+import { getFuncionesApi, addFuncionApi, getFuncionesEstablecimientoApi, getFuncionesPeliculaApi, getFuncionApi, updateFuncionApi } from "../api/funciones";
 import { useAuth } from ".";
 
 export function useFuncion() {
@@ -67,6 +67,17 @@ export function useFuncion() {
         }
     }
 
+    const updateFuncion = async (id, data) => {
+        try {
+            setLoading(true)
+            await updateFuncionApi(id, data, auth.token);
+            setLoading(false)
+        } catch (error) {
+            setLoading(false);
+            setError(error)
+        }
+    }
+
     return {
         loading,
         error,
@@ -76,6 +87,6 @@ export function useFuncion() {
         addFuncion,
         getFuncionesEstablecimiento,
         getFuncionesPelicula,
-
+        updateFuncion
     };
 }

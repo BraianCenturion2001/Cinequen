@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import "./AddFuncionForm.scss"
 import { Form, Button, Dropdown } from "semantic-ui-react"
+import { Grid } from '@mui/material';
 import { useEstablecimiento, usePeliculaEstablecimiento, useSala, useFuncion } from "../../../../hooks"
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -10,7 +11,7 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import dayjs from 'dayjs';
 
 export function AddFuncionForm(props) {
-    const { onClose, onRefetch } = props;
+    const { onClose, onRefetch, funcion } = props;
 
     const [establecimientosFormato, setEstablecimientosFormato] = useState([])
     const [peliculasOptions, setPeliculasOptions] = useState([]);
@@ -20,7 +21,7 @@ export function AddFuncionForm(props) {
     const { establecimientos, getEstablecimientos } = useEstablecimiento();
     const { loading: loadingPE, peliculasEstablecimientos, getPEFiltro1 } = usePeliculaEstablecimiento();
     const { loading: loadingSalas, salas, getSalasEstablecimiento } = useSala();
-    const { addFuncion } = useFuncion();
+    const { addFuncion, updateFuncion } = useFuncion();
 
     const formatoOptions = [
         { key: '1', value: '2-D', text: '2-D' },
@@ -32,9 +33,11 @@ export function AddFuncionForm(props) {
         { key: '2', value: 'Subtitulado', text: 'Subtitulado' },
     ];
 
-
     useEffect(() => {
         getEstablecimientos()
+        if (funcion) {
+            handleEstablecimientoChange(null, { value: funcion.sala_data.establecimiento_data.id });
+        }
     }, [])
 
     useEffect(() => {
@@ -45,12 +48,18 @@ export function AddFuncionForm(props) {
         if (!loadingPE) {
             const peliculasData = peliculasEstablecimientos.map((item) => item.pelicula_data);
             setPeliculasOptions(formatDropdownData(peliculasData));
+            if (funcion) {
+                formik.setFieldValue('pelicula', funcion.pelicula_data.id);
+            }
         }
     }, [loadingPE, peliculasEstablecimientos]);
 
     useEffect(() => {
         if (!loadingSalas) {
             setSalasOptions(formatDropdownData(salas));
+            if (funcion) {
+                formik.setFieldValue('sala', funcion.sala_data.id);
+            }
         }
     }, [loadingSalas, salas]);
 
@@ -71,13 +80,14 @@ export function AddFuncionForm(props) {
     };
 
     const formik = useFormik({
-        initialValues: initialValues(),
-        validationSchema: Yup.object(newSchema()),
+        initialValues: initialValues(funcion),
+        validationSchema: Yup.object(funcion ? updateSchema() : newSchema()),
         validateOnChange: false,
         onSubmit: async (formValue) => {
             //console.log(formValue)
             try {
-                await addFuncion(formValue);
+                if (funcion) await updateFuncion(funcion.id, formValue);
+                else await addFuncion(formValue);
                 onRefetch();
                 onClose();
             } catch (error) {
@@ -86,36 +96,41 @@ export function AddFuncionForm(props) {
         }
     })
 
-    const fecha = null;
-    const hora_inicio = null;
-    const hora_fin = null;
+    const fecha = funcion ? dayjs(funcion.fecha) : null;
+    const hora_inicio = funcion ? dayjs(funcion.hora_inicio, 'HH:mm:ss') : null;
+    const hora_fin = funcion ? dayjs(funcion.hora_fin, 'HH:mm:ss') : null;
 
     return (
         <Form className='add-edit-funcion-form' onSubmit={formik.handleSubmit}>
-            <DatePicker
-                disablePast
-                name="fecha"
-                label="Fecha"
-                value={fecha}
-                onChange={(newFecha) => formik.setFieldValue('fecha', dayjs(newFecha).format('YYYY-MM-DD'))}
-                error={formik.errors.fecha}
-            />
-
-            <TimePicker
-                label="Horario de inicio"
-                views={['hours', 'minutes']}
-                ampm={false}
-                value={hora_inicio}
-                onChange={(newHora) => formik.setFieldValue('hora_inicio', dayjs(newHora).format('HH:mm:ss'))}
-            />
-
-            <TimePicker
-                label="Horario de finalización"
-                views={['hours', 'minutes']}
-                ampm={false}
-                value={hora_fin}
-                onChange={(newHora) => formik.setFieldValue('hora_fin', dayjs(newHora).format('HH:mm:ss'))}
-            />
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <DatePicker
+                        name="fecha"
+                        label="Fecha"
+                        value={fecha}
+                        onChange={(newFecha) => formik.setFieldValue('fecha', dayjs(newFecha).format('YYYY-MM-DD'))}
+                        error={formik.errors.fecha}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <TimePicker
+                        label="Horario de inicio"
+                        views={['hours', 'minutes']}
+                        ampm={false}
+                        value={hora_inicio}
+                        onChange={(newHora) => formik.setFieldValue('hora_inicio', dayjs(newHora).format('HH:mm:ss'))}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <TimePicker
+                        label="Horario de finalización"
+                        views={['hours', 'minutes']}
+                        ampm={false}
+                        value={hora_fin}
+                        onChange={(newHora) => formik.setFieldValue('hora_fin', dayjs(newHora).format('HH:mm:ss'))}
+                    />
+                </Grid>
+            </Grid>
 
             <Dropdown
                 placeholder='Establecimiento'
@@ -148,7 +163,7 @@ export function AddFuncionForm(props) {
             <Dropdown placeholder='Idioma' fluid selection search options={idiomaOptions} value={formik.values.idioma} onChange={(_, data) => formik.setFieldValue('idioma', data.value)} error={formik.errors.idioma} />
 
 
-            <Button type='submit' content="Registrar" color="green" fluid />
+            <Button type='submit' content={funcion ? "Actualizar" : "Registrar"} color={funcion ? "yellow" : "green"} fluid />
         </Form >
     )
 }
@@ -162,16 +177,16 @@ function formatDropdownData(data) {
     }));
 }
 
-function initialValues() {
+function initialValues(data) {
     return {
-        fecha: "",
-        hora_fin: "",
-        hora_inicio: "",
+        fecha: data?.fecha || "",
+        hora_fin: data?.hora_fin || "",
+        hora_inicio: data?.hora_inicio || "",
         establecimiento: "",
         pelicula: "",
         sala: "",
-        formato: "",
-        idioma: "",
+        formato: data?.formato || "",
+        idioma: data?.idioma || "",
     }
 }
 
@@ -188,3 +203,15 @@ function newSchema() {
     }
 }
 
+function updateSchema() {
+    return {
+        fecha: Yup.string().required(true),
+        hora_fin: Yup.string().required(true),
+        hora_inicio: Yup.string().required(true),
+        establecimiento: Yup.string().required(true),
+        pelicula: Yup.string().required(true),
+        sala: Yup.string().required(true),
+        formato: Yup.string().required(true),
+        idioma: Yup.string().required(true),
+    }
+}
