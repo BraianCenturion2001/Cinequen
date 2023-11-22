@@ -4,13 +4,20 @@ import { Box, Accordion, AccordionSummary, AccordionDetails, Typography, Button 
 import { Icon } from 'semantic-ui-react';
 import { map, groupBy } from 'lodash';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../../../hooks"
+import { toast } from 'react-toastify';
 
 export function AccordionFunciones(props) {
     const { gruposFunciones, expanded, handleChange } = props;
     const navigate = useNavigate();
+    const { auth } = useAuth();
 
     const handleButtonClick = (funcionId) => {
-        navigate(`/funcion/compra/${funcionId}`);
+        if (!auth) {
+            toast.error('Para comprar entradas debes iniciar sesión!');
+        } else {
+            navigate(`/funcion/compra/${funcionId}`);
+        }
     };
 
     function renderFunciones(funciones) {
