@@ -15,6 +15,7 @@ from butacas.api.router import router_butacas
 from butacasxfuncion.api.router import router_butacasxfuncion
 from entradas.api.router import router_entradas
 from productos_canje.api.router import router_productos_canje
+from canjes.api.router import router_canjes
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -45,6 +46,7 @@ urlpatterns = [
     path('api/', include(router_butacasxfuncion.urls)),
     path('api/', include(router_entradas.urls)),
     path('api/', include(router_productos_canje.urls)),
+    path('api/', include(router_canjes.urls)),
 ]
 
 # Configura el acceso a las imágenes

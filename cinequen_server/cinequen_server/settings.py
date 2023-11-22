@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'butacasxfuncion',
     'entradas',
     'productos_canje',
+    'canjes',
 
 ]
 
