@@ -9,3 +9,4 @@ export * from "./use-popover";
 export * from "./useButacasFuncion";
 export * from "./useEntrada";
 export * from "./useProductoCanje";
+export * from "./useCanjes";
