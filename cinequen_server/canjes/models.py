@@ -1,8 +1,9 @@
 from django.db import models
+import datetime
 
 
 class Canje(models.Model):
-    fecha = models.DateField()
+    fecha = models.DateField(default=datetime.date.today)
     puntos_restados = models.IntegerField()
     cliente = models.ForeignKey(
         'users.Cliente', on_delete=models.SET_NULL, null=True, blank=True)
