@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useEntrada } from "../../../hooks"
 import "./FormCompraEntradas.scss"
 import { Paso1Entradas } from './Paso1Entradas';
@@ -13,9 +13,18 @@ export function FormCompraEntradas(props) {
     const [precioEntradas, setPrecioEntradas] = useState(0);
     const [butacasIds, setButacasIds] = useState([]);
     const [activeStep, setActiveStep] = useState(0);
+    const [isDisabled, setIsDisabled] = useState(true);
     const steps = ['Indica cantidad de Entradas', 'Selecciona tus Butacas', 'Método de Pago'];
 
     const handleNext = () => {
+        if (activeStep === 0 && cantidadEntradas <= 0) {
+            // No se puede avanzar si la cantidad de entradas es menor o igual a 0
+            return;
+        }
+        if (activeStep === 1 && butacasIds.length < cantidadEntradas) {
+            // No se puede avanzar si la cantidad de butacas seleccionadas no coincide con la cantidad de entradas
+            return;
+        }
         setActiveStep(prevActiveStep => prevActiveStep + 1);
     };
 
@@ -62,6 +71,20 @@ export function FormCompraEntradas(props) {
         }
     };
 
+
+    useEffect(() => {
+        if (activeStep === 0 && cantidadEntradas <= 0) {
+            setIsDisabled(true);
+        } else if (activeStep === 1 && butacasIds.length < cantidadEntradas) {
+            setIsDisabled(true);
+        } else {
+            setIsDisabled(false);
+        }
+
+
+    }, [cantidadEntradas, butacasIds, activeStep]);
+
+
     return (
         <Box sx={{ width: '95%', margin: '0 auto', backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: 1, mt: '20px', mb: '20px', padding: '30px' }}>
             <Stepper activeStep={activeStep}>
@@ -85,7 +108,7 @@ export function FormCompraEntradas(props) {
                 </Button>
                 <Box sx={{ flex: '1 1 auto' }} />
                 {activeStep < steps.length - 1 && (
-                    <Button onClick={handleNext}>
+                    <Button onClick={handleNext} disabled={isDisabled}>
                         <i className="fa-duotone fa-forward" style={{ marginRight: '15px' }}></i> Siguiente
                     </Button>
                 )}
