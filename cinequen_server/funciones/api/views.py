@@ -2,6 +2,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Q
+from datetime import datetime, timedelta
 
 from funciones.models import Funcion
 from funciones.api.serializer import FuncionSerializer
@@ -20,6 +21,31 @@ class FuncionApiViewSet(ModelViewSet):
     queryset = Funcion.objects.all()
     filter_backends = [DjangoFilterBackend]
     filterset_class = FuncionFilter
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        pelicula_param = self.request.query_params.get('pelicula')
+        if pelicula_param is not None:
+            queryset = queryset.filter(pelicula=pelicula_param)
+        return queryset
+
+    def list(self, request, *args, **kwargs):
+        serializer = FuncionSerializer(self.get_queryset(), many=True)
+        funciones = serializer.data
+        pelicula_param = request.query_params.get('pelicula')
+        if pelicula_param is not None:
+
+            # Filtrar las funciones que cumplen con la condición
+            today = datetime.now().date()
+            seven_days_later = today + timedelta(days=7)
+            funciones_filtradas = [
+                funcion for funcion in funciones
+                if today <= datetime.strptime(funcion['fecha'], '%Y-%m-%d').date() <= seven_days_later
+            ]
+
+            return Response(funciones_filtradas)
+
+        return Response(funciones)
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
