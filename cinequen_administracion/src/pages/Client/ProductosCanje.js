@@ -3,6 +3,7 @@ import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@
 import { Loader } from "semantic-ui-react"
 import { useProductoCanje, useAuth } from "../../hooks"
 import { map } from "lodash"
+import { toast } from 'react-toastify';
 
 export function ProductosCanje() {
     const { loading, productos, getProductosCanje } = useProductoCanje()
@@ -11,18 +12,19 @@ export function ProductosCanje() {
     const [condicion, setCondicion] = useState(false);
 
     useEffect(() => {
-        checkAuth();
-
         getProductosCanje();
     }, [])
 
-    const checkAuth = () => {
+    const canjearProducto = (idProducto, precioPuntos) => {
         if (auth?.me !== undefined) {
-            setBotonCanje(<Button type="submit" variant="outlined" color="error" fullWidth >Canjear Producto</Button>);
+            if (auth.me.puntos < precioPuntos) {
+                toast.error('Puntos insuficientes!');
+            } else {
+                /* accion de canjear */
+            }
         } else {
-            setBotonCanje(<Button type="submit" variant="outlined" color="error" fullWidth >Iniciar Sesión</Button>);
+            toast.error('Para canjear productos debes iniciar sesión!');
         }
-        setCondicion(true);
     };
 
     const renderCards = () => {
@@ -51,7 +53,9 @@ export function ProductosCanje() {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    {botonCanje}
+                    <Button onClick={() => canjearProducto(producto.id, producto.precio_puntos)} type="submit" variant="outlined" color="error" fullWidth >
+                        Canjear Producto
+                    </Button>
                 </CardActions>
             </Card>
         ));
@@ -59,7 +63,7 @@ export function ProductosCanje() {
     return (
         <>
             {
-                !condicion && loading ? (
+                loading ? (
                     <Loader active inline="centered" >
                         Cargando
                     </Loader>
