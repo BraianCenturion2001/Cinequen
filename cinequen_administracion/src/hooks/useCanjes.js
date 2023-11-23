@@ -2,7 +2,7 @@ import { useState } from "react";
 import { addCanjeApi, getCanjesApi } from "../api/canjes";
 import { useAuth } from ".";
 
-export function usePeliculaEstablecimiento() {
+export function useCanjes() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [canjes, setCanjes] = useState(null);
@@ -23,8 +23,9 @@ export function usePeliculaEstablecimiento() {
     const addCanje = async (data) => {
         try {
             setLoading(true)
-            await addCanjeApi(data, auth.token);
-            setLoading(false)
+            var result = await addCanjeApi(data, auth.token);
+            setLoading(false);
+            return result;
         } catch (error) {
             setLoading(false);
             setError(error)

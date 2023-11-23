@@ -25,8 +25,7 @@ export async function addCanjeApi(data, token) {
         };
 
         const response = await fetch(url, params);
-        const result = await response.json();
-        return result;
+        return response.status;
     } catch (error) {
         throw error
     }

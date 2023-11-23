@@ -1,31 +1,48 @@
 import React, { useEffect, useState } from 'react'
 import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@mui/material';
 import { Loader } from "semantic-ui-react"
-import { useProductoCanje, useAuth } from "../../hooks"
+import { useProductoCanje, useAuth, useCanjes } from "../../hooks"
 import { map } from "lodash"
 import { toast } from 'react-toastify';
 
 export function ProductosCanje() {
-    const { loading, productos, getProductosCanje } = useProductoCanje()
+    const { loading: loadingProductos, productos, getProductosCanje } = useProductoCanje()
+    const { loading: loadingCanje, addCanje } = useCanjes();
+    const [resultado, setResultado] = useState(null)
     const { auth } = useAuth();
-    const [botonCanje, setBotonCanje] = useState(null);
-    const [condicion, setCondicion] = useState(false);
 
     useEffect(() => {
         getProductosCanje();
     }, [])
 
-    const canjearProducto = (idProducto, precioPuntos) => {
+    const canjearProducto = async (idProducto, precioPuntos) => {
         if (auth?.me !== undefined) {
             if (auth.me.puntos < precioPuntos) {
                 toast.error('Puntos insuficientes!');
             } else {
-                /* accion de canjear */
+                const canjeData = {
+                    producto: idProducto,
+                    puntos_restados: precioPuntos,
+                    cliente: auth.me.user_id,
+                };
+
+                var resultado_canje = await addCanje(canjeData);
+                setResultado(resultado_canje)
             }
         } else {
             toast.error('Para canjear productos debes iniciar sesión!');
         }
     };
+
+    useEffect(() => {
+        if (!loadingCanje) {
+            if (resultado !== 201) {
+                toast.error('Puntos insuficientes!')
+            } else {
+                toast.success('Canje realizado con éxito!')
+            }
+        }
+    }, [loadingCanje, resultado])
 
     const renderCards = () => {
         return map(productos, (producto, index) => (
@@ -63,7 +80,7 @@ export function ProductosCanje() {
     return (
         <>
             {
-                loading ? (
+                loadingProductos ? (
                     <Loader active inline="centered" >
                         Cargando
                     </Loader>

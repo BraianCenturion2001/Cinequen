@@ -36,12 +36,12 @@ class CanjeApiViewSet(ModelViewSet):
         # Restar los puntos_restados del serializer a los puntos del cliente
         puntos_restados = serializer.validated_data['puntos_restados']
         if cliente.puntos < puntos_restados:
-            raise ValidationError('Puntos insuficientes')
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
         # Buscar el producto de canje correspondiente
         producto = ProductoCanje.objects.get(id=request.data.get('producto'))
         if producto.stock < 1:
-            raise ValidationError('Producto agotado')
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
         # Restar los puntos_restados del serializer a los puntos del cliente
         cliente.puntos -= puntos_restados
@@ -54,4 +54,4 @@ class CanjeApiViewSet(ModelViewSet):
         # Crear el objeto Canje
         self.perform_create(serializer)
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED)
