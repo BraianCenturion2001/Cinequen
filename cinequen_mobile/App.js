@@ -1,20 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { ThemeProvider } from "./src/context";
+import { RootNavigation } from "./src/navigation";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>La desvelación me respira en la nuca!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ThemeProvider>
+      <RootNavigation />
+    </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
