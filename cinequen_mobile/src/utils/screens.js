@@ -1,3 +1,7 @@
+const app = {
+  tab: "Tab",
+};
+
 const auth = {
   auth: "auth",
   loginEmail: "LoginEmail",
@@ -5,4 +9,5 @@ const auth = {
 
 export const screen = {
   auth,
+  app,
 };
