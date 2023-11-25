@@ -20,7 +20,7 @@ const scanner = {
 
 const funciones = {
   tab: "Funciones",
-  funciones: "Funciones",
+  funciones: "Funciones Index",
   funcionDetalle: "funcionDetalle",
 };
 
