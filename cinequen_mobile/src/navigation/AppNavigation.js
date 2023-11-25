@@ -15,7 +15,7 @@ export function AppNavigation() {
     <NavigationContainer theme={MyTheme}>
       <Stack.Navigator>
         <Stack.Screen
-          name={screen.app}
+          name={screen.app.tab}
           component={TabNavigation}
           options={{ headerShown: false }}
         />
