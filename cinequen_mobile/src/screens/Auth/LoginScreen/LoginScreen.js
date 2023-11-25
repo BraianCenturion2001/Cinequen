@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import { View, SafeAreaView } from "react-native";
 import { Input, Button } from "react-native-elements";
 import { styles } from "./LoginScreen.styles";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
+import { useAuth } from "../../../hooks";
+import { Auth } from "../../../api";
 import { initialValues, validationSchema } from "./LoginScreen.data";
+
+const auth = new Auth();
 
 export function LoginScreen(props) {
   const { navigation } = props;
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState();
 
   const onShowPassword = () => setShowPassword((prevState) => !prevState);
@@ -15,7 +20,14 @@ export function LoginScreen(props) {
     initialValues: initialValues(),
     validationSchema: validationSchema(),
     validateOnChange: false,
-    onSubmit: (formValue) => {},
+    onSubmit: async (formValue) => {
+      try {
+        const response = await auth.login(formValue);
+        login(response);
+      } catch (error) {
+        console.log(error);
+      }
+    },
   });
 
   return (
