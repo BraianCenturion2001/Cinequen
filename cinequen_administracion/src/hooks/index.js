@@ -10,3 +10,4 @@ export * from "./useButacasFuncion";
 export * from "./useEntrada";
 export * from "./useProductoCanje";
 export * from "./useCanjes";
+export * from "./useCharts";
