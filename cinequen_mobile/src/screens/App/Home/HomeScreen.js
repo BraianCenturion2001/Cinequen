@@ -1,11 +1,23 @@
 import React from "react";
-import { View } from "react-native";
-import { Text } from "react-native-elements";
+import { StyleSheet, Text, View } from "react-native";
 
 export function HomeScreen() {
   return (
-    <View>
-      <Text>HomeScreen</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Bienvenido a Cinequén Scanner App!</Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+});

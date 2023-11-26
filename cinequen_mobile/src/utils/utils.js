@@ -11,4 +11,5 @@ export const ENV = {
     ACCESS: "access",
     REFRESH: "refresh",
   },
+  VALIDATE_ENTRADA: "entradas",
 };

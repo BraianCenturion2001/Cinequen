@@ -14,7 +14,8 @@ export function RootNavigation() {
         barStyle={darkMode ? "light-content" : "dark-content"}
       />
 
-      {auth ? <AppNavigation /> : <AuthNavigation />}
+      {/* {auth ? <AppNavigation /> : <AuthNavigation />} */}
+      <AppNavigation />
     </>
   );
 }
