@@ -38,6 +38,7 @@ urlpatterns = [
     path('api/', include('users.api.router')),
     path('api/', include(router_user.urls)),
     path('api/', include(router_peliculas.urls)),
+    path('api/', include('peliculas.api.router')),
     path('api/', include(router_establecimientos.urls)),
     path('api/', include(router_salas.urls)),
     path('api/', include(router_funciones.urls)),
