@@ -7,6 +7,7 @@ const authController = new Auth();
 
 export const AuthContext = createContext({
   auth: undefined,
+  me: undefined,
   accessToken: null,
   refreshToken: null,
   login: () => null,
@@ -16,6 +17,7 @@ export const AuthContext = createContext({
 export function AuthProvider(props) {
   const { children } = props;
   const [auth, setAuth] = useState(undefined);
+  const [me, setMe] = useState(undefined);
   const [accessToken, setAccessToken] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
 
@@ -47,6 +49,24 @@ export function AuthProvider(props) {
     };
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      if (accessToken !== null && refreshToken !== null) {
+        try {
+          const resultMe = await authController.getMe({
+            access: accessToken,
+            refresh: refreshToken,
+          });
+          setMe(resultMe);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+
+    fetchData();
+  }, [accessToken, refreshToken]);
+
   const login = (tokens) => {
     if (tokens.access && tokens.refresh) {
       const decodeToken = jwtDecode(tokens.access);
@@ -61,6 +81,7 @@ export function AuthProvider(props) {
 
   const logout = () => {
     setAuth(undefined);
+    setMe(null);
     setAccessToken(null);
     setRefreshToken(null);
     jwt.removeTokens();
@@ -68,6 +89,7 @@ export function AuthProvider(props) {
 
   const data = {
     auth,
+    me,
     accessToken,
     refreshToken,
     login,

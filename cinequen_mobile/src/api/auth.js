@@ -1,6 +1,22 @@
 import { ENV } from "../utils";
 
 export class Auth {
+  async getMe(token) {
+    try {
+      const url = `${ENV.BASE_API}/${ENV.API_ROUTES.ME}`;
+      const params = {
+        headers: {
+          Authorization: `Bearer ${token.access}`,
+        },
+      };
+      const response = await fetch(url, params);
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async login(data) {
     const url = `${ENV.BASE_API}/${ENV.API_ROUTES.LOGIN}/`;
 

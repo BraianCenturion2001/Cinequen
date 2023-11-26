@@ -6,6 +6,7 @@ export const ENV = {
   API_ROUTES: {
     LOGIN: "auth/login",
     REFRESH: "auth/token/refresh",
+    ME: "auth/me",
   },
   JWT: {
     ACCESS: "access",
