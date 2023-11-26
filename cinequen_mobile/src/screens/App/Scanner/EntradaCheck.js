@@ -60,6 +60,14 @@ export function EntradaCheck({ route }) {
     return textoFormateado;
   }
 
+  const getButacas = (butacasData) => {
+    const butacas = [];
+    for (const butaca of butacasData) {
+      butacas.push(`${butaca.butaca_data.fila}-${butaca.butaca_data.numero}`);
+    }
+    return butacas.join(", ");
+  };
+
   return (
     <View style={styles.container}>
       {entrada && (
@@ -105,6 +113,12 @@ export function EntradaCheck({ route }) {
             /{" "}
             <Text style={styles.dynamicText}>
               {entrada.funcion_data.sala_data.nombre}
+            </Text>
+          </Text>
+          <Text style={styles.staticText}>
+            BUTACAS:{" "}
+            <Text style={styles.dynamicText}>
+              {getButacas(entrada.butacas_data)}
             </Text>
           </Text>
           <View style={styles.buttonContainer}>
