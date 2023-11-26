@@ -35,9 +35,7 @@ EMAIL_HOST_PASSWORD = 'qicylqpmmffyyxhy'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'cinequen@gmail.com'
 
-ALLOWED_HOSTS = [
-    '127.0.0.1', "localhost"
-]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
