@@ -77,16 +77,44 @@ class BartsView(APIView):
 
         return Response({'taquilla': taquilla_anual, 'series': series})
 
+class DonaView(APIView):
 
-def get_entradas_vendidas_por_pelicula(pelicula, mes):
-    funciones = Funcion.objects.filter(
-        pelicula=pelicula,
-        fecha__month=mes
-    )
+    def get(self, request):
+        peliculas = Pelicula.objects.all()
+        series=[]
+        
+        for pelicula in peliculas:
+            entradas = get_entradas_vendidas_por_pelicula(
+                pelicula
+            )
+            series.append({'label':pelicula.nombre, 'value': entradas})
+               
+
+        return Response(series)
+    
+class LinesView(APIView):
+
+    def get(self, request):
+        series=[]
+        for mes in range(1, 13):
+            entradas = 0;
+            funciones = Funcion.objects.filter(fecha__month=mes)
+            for funcion in funciones:
+                entradas += ButacaxFuncion.objects.filter(
+                    funcion=funcion, estado=True
+                ).count()
+            series.append(entradas)
+        return Response(series)
+
+
+def get_entradas_vendidas_por_pelicula(pelicula, mes=None):
+    funciones = Funcion.objects.filter(pelicula=pelicula)
+    if mes is not None:
+        funciones = funciones.filter(fecha__month=mes)
     entradas = 0
     for funcion in funciones:
         entradas += ButacaxFuncion.objects.filter(
             funcion=funcion, estado=True
         ).count()
-
     return entradas
+
