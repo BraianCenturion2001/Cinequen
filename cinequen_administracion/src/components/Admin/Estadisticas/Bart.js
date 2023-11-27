@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { Loader } from "semantic-ui-react"
 import { useCharts } from "../../../hooks"
-import { axisClasses, BarChart } from '@mui/x-charts';
+import { BarChart } from '@mui/x-charts';
 
 export function Bart() {
-    const { loading, data, getBarts } = useCharts();
+    const { loading, dataBarts, getBarts } = useCharts();
 
     useEffect(() => {
         getBarts();
@@ -29,9 +29,9 @@ export function Bart() {
                     </Loader>
                 ) : (
                     <BarChart
-                        dataset={data.taquilla}
+                        dataset={dataBarts.taquilla}
                         xAxis={[{ scaleType: 'band', dataKey: 'month' }]}
-                        series={data.series.map((seriesObj) => ({
+                        series={dataBarts.series.map((seriesObj) => ({
                             ...seriesObj,
                             valueFormatter,
                         }))}
