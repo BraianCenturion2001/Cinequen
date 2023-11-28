@@ -4,6 +4,7 @@ import { Button } from "react-native-elements";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { CustomModal } from "./Modal";
 import { useNavigation } from "@react-navigation/native";
+import { ENV } from "../../../utils"
 
 export function Scanner() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -42,7 +43,7 @@ export function Scanner() {
   const handleBarCodeScanned = ({ type, data }) => {
     const dataStr = JSON.stringify(data);
     const dataObj = JSON.parse(dataStr);
-    if (dataObj.startsWith("http://192.168.100.7:8000/api/entradas/")) {
+    if (dataObj.startsWith(`${ENV.BASE_API}/entradas/`)) {
       setReloadScanner(true);
       navigation.navigate("EntradaCheck", { data });
     } else {
