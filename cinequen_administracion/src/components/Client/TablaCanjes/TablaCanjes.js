@@ -23,7 +23,12 @@ export function TablaCanjes(props) {
   };
   // Función para renderizar las filas de la tabla
   const renderFilasTabla = (canjes) => {
-    return map(canjes, (canje) => (
+    const canjesOrdenados = canjes.sort((a, b) => {
+      const fechaA = new Date(a.fecha);
+      const fechaB = new Date(b.fecha);
+      return fechaB - fechaA;
+    });
+    return map(canjesOrdenados, (canje) => (
       <TableRow key={canje.id}>
         <TableCell>{formatearFecha(canje.fecha)}</TableCell>
         <TableCell>{canje.producto_data.nombre}</TableCell>
