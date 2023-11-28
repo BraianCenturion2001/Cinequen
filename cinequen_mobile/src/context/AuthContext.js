@@ -25,7 +25,6 @@ export function AuthProvider(props) {
     async () => {
       const response = await jwt.getTokens();
       const accessExpired = jwt.hasExpired(response.access);
-
       if (accessExpired) {
         const refreshExpired = jwt.hasExpired(response.refresh);
         if (refreshExpired) {
@@ -51,7 +50,7 @@ export function AuthProvider(props) {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (accessToken !== null && refreshToken !== null) {
+      if (AuthContext.accessToken !== null && AuthContext.refreshToken !== null) {
         try {
           const resultMe = await authController.getMe({
             access: accessToken,
@@ -63,7 +62,6 @@ export function AuthProvider(props) {
         }
       }
     };
-
     fetchData();
   }, [accessToken, refreshToken]);
 
