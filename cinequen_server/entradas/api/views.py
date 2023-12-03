@@ -47,7 +47,7 @@ class EntradaApiViewSet(ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         entrada = self.perform_create(serializer)
-        qr_value = f"http://192.168.0.198:8000/api/entradas/{entrada.pk}/"
+        qr_value = f"http://192.168.100.7:8000/api/entradas/{entrada.pk}/"
         headers = self.get_success_headers(serializer.data)
         return Response({'qr_value': qr_value}, status=status.HTTP_201_CREATED, headers=headers)
 
