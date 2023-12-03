@@ -1,12 +1,11 @@
-import React from 'react';
-import { SelectFunciones } from "../../components/Client"
+import React from "react";
+import { SelectFunciones, CarouselHome } from "../../components/Client";
 
 export function Home() {
-
-    return (
-        <>
-            <SelectFunciones />
-        </>
-    )
+  return (
+    <>
+      <CarouselHome />
+      <SelectFunciones />
+    </>
+  );
 }
-
