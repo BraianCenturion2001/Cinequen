@@ -21,6 +21,7 @@ export function FuncionesPelicula() {
 
     useEffect(() => {
         getFuncionesPelicula(id);
+        document.title = 'Ver Funciones';
     }, []);
 
     useEffect(() => {

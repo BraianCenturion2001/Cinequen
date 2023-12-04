@@ -13,6 +13,7 @@ export function Verificacion() {
 
     useEffect(() => {
         validateUser(id)
+        document.title = 'Verificarme';
     }, [])
 
     useEffect(() => {

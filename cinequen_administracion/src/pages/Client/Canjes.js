@@ -10,6 +10,7 @@ export function Canjes() {
     useEffect(() => {
         const userId = auth.me.user_id;
         getCanjes({ user: userId });
+        document.title = 'Mis Canjes';
     }, []);
 
     return (

@@ -12,6 +12,7 @@ export function CompraEntradas() {
 
     useEffect(() => {
         getFuncion(id);
+        document.title = 'Comprar Entradas';
     }, []);
 
     useEffect(() => {
