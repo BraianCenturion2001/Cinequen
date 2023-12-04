@@ -11,6 +11,7 @@ export function EntradasCliente() {
     useEffect(() => {
         const userId = auth.me.user_id;
         getEntradas({ user: userId });
+        document.title = 'Mis Entradas';
     }, []);
 
     return (

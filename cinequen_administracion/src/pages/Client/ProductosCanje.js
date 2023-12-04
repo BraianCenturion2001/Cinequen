@@ -13,6 +13,7 @@ export function ProductosCanje() {
 
     useEffect(() => {
         getProductosCanje();
+        document.title = 'Ver Productos de Canje';
     }, [])
 
     const canjearProducto = async (idProducto, precioPuntos) => {
