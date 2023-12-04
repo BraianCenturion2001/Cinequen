@@ -1,7 +1,7 @@
 import React from "react";
 import Carousel from "nuka-carousel";
 import { BASE_REACT } from "../../../utils/constants";
-import { Button } from "semantic-ui-react";
+import { Button } from "@mui/material";
 
 export function CarouselHome() {
   const carouselStyle = {
@@ -16,8 +16,19 @@ export function CarouselHome() {
 
   const buttonPrev = ({ previousSlide, previousDisabled }) => (
     <Button
-      circular
-      inverted
+      size="large"
+      variant="outlined"
+      sx={{
+        color: "black", // Color del texto normal
+        backgroundColor: "white",
+        borderColor: "gray",
+        borderWidth: 2,
+        "&:hover": {
+          color: "white",
+          borderColor: "white",
+        },
+        marginLeft: "15px",
+      }}
       disabled={previousDisabled}
       onClick={previousSlide}
       title={"Anterior"}
@@ -28,8 +39,19 @@ export function CarouselHome() {
 
   const buttonNext = ({ nextDisabled, nextSlide }) => (
     <Button
-      circular
-      inverted
+      size="large"
+      variant="outlined"
+      sx={{
+        color: "black", // Color del texto normal
+        backgroundColor: "white",
+        borderColor: "gray",
+        borderWidth: 2,
+        "&:hover": {
+          color: "white",
+          borderColor: "white",
+        },
+        marginRight: "15px",
+      }}
       disabled={nextDisabled}
       onClick={nextSlide}
       title={"Siguiente"}
