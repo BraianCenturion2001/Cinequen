@@ -1,36 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { BASE_REACT } from "../../../utils/constants"
-import { initMercadoPago, Payment } from '@mercadopago/sdk-react'
-import { MERCADO_PAGO_API_KEY } from "../../../utils/constants"
-import { useEntrada } from "../../../hooks"
-import { QRCode } from 'react-qrcode-logo';
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { initMercadoPago, Payment } from '@mercadopago/sdk-react';
+import { MERCADO_PAGO_API_KEY } from "../../../utils/constants";
 
 initMercadoPago(MERCADO_PAGO_API_KEY, { locale: 'es-AR' });
 
 export function Paso3Pago(props) {
-    const { precioEntradas, handleComprar } = props;
-    const navigate = useNavigate();
-    const { generarPDF } = useEntrada();
-    const [showQRCode, setShowQRCode] = useState(false);
-    const [qrValue, setQRValue] = useState('');
-
-    const handleGenerarPDF = async () => {
-        try {
-            await generarPDF();
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    useEffect(() => {
-        if (showQRCode) {
-            setTimeout(() => {
-                handleGenerarPDF();
-                navigate('/mis-entradas');
-            }, 3000);
-        }
-    }, [showQRCode]);
+    const { precioEntradas, handleComprar, setQRValue, handleNext } = props;
 
     const initialization = {
         amount: precioEntradas,
@@ -49,7 +24,9 @@ export function Paso3Pago(props) {
         try {
             const qrValue = await handleComprar();
             setQRValue(qrValue);
-            setShowQRCode(true);
+            setTimeout(() => {
+                handleNext();
+            }, 1000);
         } catch (error) {
             console.error(error);
         }
@@ -67,7 +44,7 @@ export function Paso3Pago(props) {
 
     return (
         <>
-            <h2>Monto a pagar: ${precioEntradas}</h2>
+            <h2>Monto total a pagar: ${precioEntradas}</h2>
             <Payment
                 initialization={initialization}
                 customization={customization}
@@ -75,25 +52,6 @@ export function Paso3Pago(props) {
                 onReady={onReady}
                 onError={onError}
             />
-
-            {showQRCode && (
-                <QRCode
-                    value={qrValue}
-                    enableCORS={true}
-                    logoImage={BASE_REACT + '/images/Icon 1.png'}
-                    removeQrCodeBehindLogo={true}
-                    size={250}
-                    eyeColor='#cc1212'
-                    fgColor='#cc1212'
-                    qrStyle="dots"
-                    eyeRadius={[
-                        [10, 10, 0, 10],
-                        [10, 10, 10, 0], // top/right eye
-                        [10, 0, 10, 10], // bottom/left
-                    ]}
-                    id={'QRCodePDF'}
-                />
-            )}
         </>
     )
 }

@@ -4,17 +4,21 @@ import "./FormCompraEntradas.scss"
 import { Paso1Entradas } from './Paso1Entradas';
 import { Paso2Butacas } from './Paso2Butacas';
 import { Paso3Pago } from './Paso3Pago';
-import { Box, Stepper, Typography, Step, StepLabel, Button } from '@mui/material';
+import { Paso4QR } from "./Paso4QR"
+import { Box, Stepper, Step, StepLabel, Button, Typography } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 
 export function FormCompraEntradas(props) {
     const { funcion } = props;
     const { insertEntrada } = useEntrada();
+    const navigate = useNavigate();
     const [cantidadEntradas, setCantidadEntradas] = useState(0);
     const [precioEntradas, setPrecioEntradas] = useState(0);
     const [butacasIds, setButacasIds] = useState([]);
     const [activeStep, setActiveStep] = useState(0);
     const [isDisabled, setIsDisabled] = useState(true);
-    const steps = ['Indica cantidad de Entradas', 'Selecciona tus Butacas', 'Método de Pago'];
+    const [qrValue, setQRValue] = useState('');
+    const steps = ['Indica cantidad de Entradas', 'Selecciona tus Butacas', 'Método de Pago', 'Descarga tu Entrada'];
 
     const handleNext = () => {
         if (activeStep === 0 && cantidadEntradas <= 0) {
@@ -27,6 +31,13 @@ export function FormCompraEntradas(props) {
         }
         setActiveStep(prevActiveStep => prevActiveStep + 1);
     };
+
+    const handleFinish = () => {
+        setActiveStep(prevActiveStep => prevActiveStep + 1);
+        setTimeout(() => {
+            navigate("/mis-entradas");
+        }, 1500);
+    }
 
     const handleBack = () => {
         setActiveStep(prevActiveStep => prevActiveStep - 1);
@@ -64,13 +75,24 @@ export function FormCompraEntradas(props) {
                     <Paso3Pago
                         precioEntradas={precioEntradas}
                         handleComprar={handleComprar}
+                        setQRValue={setQRValue}
+                        handleNext={handleNext}
+                    />
+                );
+            case 3:
+                return (
+                    <Paso4QR
+                        qrValue={qrValue}
                     />
                 );
             default:
-                return null;
+                return (
+                    <Typography variant="h5" color="textPrimary" gutterBottom>
+                        Gracias por elegirnos!
+                    </Typography>
+                );
         }
     };
-
 
     useEffect(() => {
         if (activeStep === 0 && cantidadEntradas <= 0) {
@@ -98,10 +120,9 @@ export function FormCompraEntradas(props) {
                 {getStepContent(activeStep)}
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                {activeStep > 0 && (
+                {activeStep > 0 && activeStep < steps.length - 1 && (
                     <Button
                         color="inherit"
-                        disabled={activeStep === 0}
                         onClick={handleBack}
                         sx={{ mr: 1 }}
                     >
@@ -110,9 +131,15 @@ export function FormCompraEntradas(props) {
                 )}
 
                 <Box sx={{ flex: '1 1 auto' }} />
-                {activeStep < steps.length - 1 && (
+                {activeStep !== 2 && activeStep !== 3 && (
                     <Button onClick={handleNext} disabled={isDisabled}>
                         <i className="fa-duotone fa-forward" style={{ marginRight: '15px' }}></i> Siguiente
+                    </Button>
+                )}
+
+                {activeStep === 3 && (
+                    <Button onClick={handleFinish} disabled={isDisabled}>
+                        <i className="fa-duotone fa-flag-checkered" style={{ marginRight: '15px' }}></i> Finalizar
                     </Button>
                 )}
             </Box>
