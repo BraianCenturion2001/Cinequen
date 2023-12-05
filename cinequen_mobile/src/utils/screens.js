@@ -1,6 +1,6 @@
 const auth = {
   auth: "auth",
-  loginEmail: "LoginEmail",
+  loginEmail: "Iniciar Sesión Administrador",
 };
 
 const app = {

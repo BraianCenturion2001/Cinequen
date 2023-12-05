@@ -12,7 +12,12 @@ export function TabNavigation() {
       initialRouteName={screen.home.tab}
       screenOptions={({ route }) => ({
         tabBarActiveTintColor: "#fff",
-        tabBarStyle: { backgroundColor: "#252525", borderTopWidth: 0 },
+        tabBarInactiveTintColor: "#940000",
+        tabBarStyle: {
+          backgroundColor: "#440000",
+          borderTopWidth: 0,
+          height: 60,
+        },
         tabBarIcon: (props) => tabIcon({ route, ...props }),
       })}
     >
@@ -26,16 +31,8 @@ export function TabNavigation() {
         component={HomeStack}
         options={{
           title: "Inicio",
-          tabBarLabelStyle: {
-            display: "none",
-          },
           headerShown: false,
         }}
-      />
-      <Tab.Screen
-        name={screen.funciones.tab}
-        component={FuncionesStack}
-        options={{ title: "Ver Funciones", headerShown: false }}
       />
     </Tab.Navigator>
   );
