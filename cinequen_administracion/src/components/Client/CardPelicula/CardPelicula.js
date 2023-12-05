@@ -1,11 +1,11 @@
 import React from 'react';
 import "./CardPelicula.scss";
-import { Link } from 'react-router-dom';
-import { Card, CardActionArea, Typography, ImageListItem, ImageListItemBar, IconButton } from '@mui/material';
 import { Label } from "semantic-ui-react"
+import { useNavigate } from "react-router-dom";
 
 export function CardPelicula(props) {
     const { pelicula } = props;
+    const navigate = useNavigate();
 
     const renderLabel = (tipoPelicula) => {
         let color = "";
@@ -19,53 +19,50 @@ export function CardPelicula(props) {
             case 'Ultimas Semanas':
                 color = 'red';
                 break;
-            default:
-                color = 'black'; // Puedes establecer un color por defecto o manejar otros casos aquí
         }
 
         return (
-            <Label color={color} ribbon style={{ marginLeft: "14.3px", bottom: "-30px", zIndex: 10 }}>
+            <Label color={color} ribbon style={{ marginLeft: "19.5px", bottom: "-20px", zIndex: 10 }}>
                 {tipoPelicula}
             </Label>
         );
     };
 
+    const MovieInfo = ({ name, value }) => (
+        <div className={`movie__${name}`}>
+            <span className='info__head'>
+                {name}
+            </span>
+            {value}
+        </div>
+    )
+
+    const handleClick = () => {
+        navigate(`/funciones/pelicula/${pelicula.id}`);
+    };
+
+
     return (
         <>
             {renderLabel(pelicula.tipo)}
-            <Card elevation={3}>
-                <CardActionArea component={Link} to={`/funciones/pelicula/${pelicula.id}`}>
-                    <ImageListItem style={{ height: '315px' }}>
-                        <img
-                            srcSet={pelicula.poster}
-                            src={pelicula.poster}
-                            alt={pelicula.nombre}
-                            loading="lazy"
-                        />
-                        <ImageListItemBar
-                            title={pelicula.nombre}
-                            subtitle={
-                                <Typography component="div">
-                                    <i className="fa-duotone fa-clock-rotate-left" style={{ marginRight: '5px', '--fa-primary-color': '#ffffff', '--fa-secondary-color': '#ffffff' }}></i>
-                                    Duración: {formatDuracion(pelicula.duracion)}
-                                </Typography>
-                            } actionIcon={
-                                <IconButton
-                                    sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                                >
-                                    <i class="fa-duotone fa-film fa-xl" style={{ '--fa-primary-color': '#ffffff', '--fa-secondary-color': '#ffffff' }}></i>
-                                </IconButton>
-                            }
-                        />
-                    </ImageListItem>
-                </CardActionArea>
-            </Card>
+            <div className='movie' style={{ backgroundImage: `url(${pelicula.poster})` }}>
+
+                <h2 className='movie__title'>{pelicula.nombre}</h2>
+
+                <div className='movie__infos'>
+                    <MovieInfo name='Duración' value={pelicula.duracion} />
+                    <MovieInfo name='Director' value={pelicula.director} />
+                    <MovieInfo name='Cast' value={pelicula.actores} />
+                    <MovieInfo name='Clasificacion' value={pelicula.clasificacion} />
+                </div>
+
+                <div className='movie__imdb'>
+                    <a onClick={handleClick} className='movie__imdb-button'> <i
+                        className="fa-duotone fa-film"
+                        style={{ marginRight: "5px" }}
+                    ></i>Ver Funciones</a>
+                </div>
+            </div>
         </>
     );
-}
-
-function formatDuracion(duracion) {
-    const horas = Math.floor(duracion / 60);
-    const minutos = duracion % 60;
-    return `${horas}:${minutos.toString().padStart(2, '0')}hs`;
 }
