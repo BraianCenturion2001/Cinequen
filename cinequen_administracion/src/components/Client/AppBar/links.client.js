@@ -14,11 +14,11 @@ const linksClient = [
 const linksLog = [
     {
         pathname: "/register",
-        title: "Registro",
+        title: "Registrarse",
     },
     {
         pathname: "/login",
-        title: "Log In",
+        title: "Iniciar Sesión",
     },
 ]
 
