@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { getEntradasApi, insertEntradaApi } from "../api/entradas";
 import { useAuth } from ".";
-import { Document, Page, Text, View, Image, pdf } from '@react-pdf/renderer';
+import { Document, Page, Text, View, Image, pdf, StyleSheet } from '@react-pdf/renderer';
 import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
 
@@ -37,6 +37,37 @@ export function useEntrada() {
         }
     };
 
+    const styles = StyleSheet.create({
+        container: {
+            width: 450,
+            height: '100%',
+            margin: '0 auto',
+            backgroundColor: '#440000',
+            color: 'white',
+        },
+        subcontainer: {
+            width: 400,
+            height: '100%',
+            margin: '0 auto',
+            marginTop: 20,
+            marginBottom: 20,
+            backgroundColor: '#940000',
+            borderRadius: 15,
+        },
+        title: {
+            margin: '0 auto',
+            marginTop: '30px',
+            marginBottom: '50px',
+            color: "white",
+        },
+        image: {
+            margin: '0 auto',
+            height: 200,
+            width: 200,
+        }
+
+    });
+
     const generarPDF = async () => {
         try {
             const convertToBase64 = async () => {
@@ -49,11 +80,13 @@ export function useEntrada() {
             const imgData = await convertToBase64();
 
             const MyDocument = (
-                <Document size={[2000, 647]}>
+                <Document>
                     <Page>
-                        <View>
-                            <Text>QR Code:</Text>
-                            <Image src={imgData} />
+                        <View style={styles.container}>
+                            <View style={styles.subcontainer}>
+                                <Text style={styles.title}>QR Entrada:</Text>
+                                <Image src={imgData} style={styles.image} />
+                            </View>
                         </View>
                     </Page>
                 </Document>
