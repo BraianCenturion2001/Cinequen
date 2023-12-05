@@ -3,7 +3,7 @@ import { useFuncion } from "../../hooks";
 import { useParams } from "react-router-dom";
 import { Icon, Loader } from "semantic-ui-react";
 import { Button, Box, Typography } from "@mui/material";
-import { AccordionFunciones } from "../../components/Client";
+import { AccordionFunciones, FiltrosFunciones } from "../../components/Client";
 import { map, uniqBy } from "lodash";
 import dayjs from "dayjs";
 
@@ -14,6 +14,41 @@ export function FuncionesPelicula() {
   const [nombrePelicula, setNombrePelicula] = useState("");
   const [selectedFecha, setSelectedFecha] = useState("");
   const [gruposFunciones, setGruposFunciones] = useState([]);
+  const [funcionesFiltrables, setfuncionesFiltrables] = useState([]);
+
+  const [filtros, setFiltros] = useState({
+    tipoSala: null,
+    formato: null,
+    idioma: null,
+  });
+
+  const aplicarFiltros = (filtro, valor) => {
+    setFiltros((prevFiltros) => ({
+      ...prevFiltros,
+      [filtro]: valor,
+    }));
+  };
+
+  useEffect(() => {
+    if (!loading) {
+      if (funciones.length > 0) {
+        const funcionesFiltradas = funciones.filter((funcion) => {
+          const fechaFormateada = dayjs(funcion.fecha).format("MMM DD");
+          return (
+            fechaFormateada === selectedFecha &&
+            (!filtros.tipoSala ||
+              funcion.sala_data.tipo === filtros.tipoSala) &&
+            (!filtros.formato || funcion.formato === filtros.formato) &&
+            (!filtros.idioma || funcion.idioma === filtros.idioma)
+          );
+        });
+        setfuncionesFiltrables(funcionesFiltradas);
+        const gruposOrdenados =
+          ordenarFuncionesPorFechaYEstablecimiento(funcionesFiltradas);
+        setGruposFunciones(gruposOrdenados);
+      }
+    }
+  }, [loading, funciones, filtros]);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -34,8 +69,12 @@ export function FuncionesPelicula() {
         setGruposFunciones(gruposOrdenados);
 
         // Seleccionar la primera fecha y mostrar el acordeón correspondiente
-        const primeraFecha = uniqBy(funciones, "fecha")[0].fecha;
+        const fechasOrdenadas = uniqBy(funciones, "fecha")
+          .map((funcion) => dayjs(funcion.fecha).format("MMM DD"))
+          .sort((a, b) => dayjs(a).toDate() - dayjs(b).toDate());
+        const primeraFecha = fechasOrdenadas[0];
         handleFechaClick(primeraFecha); // Seleccionar la primera fecha al cargar el componente
+        setfuncionesFiltrables(funciones);
       }
     }
   }, [loading, funciones]);
@@ -98,6 +137,14 @@ export function FuncionesPelicula() {
   const handleFechaClick = (fecha) => {
     const fechaFormateada = dayjs(fecha).format("MMM DD");
     setSelectedFecha(fechaFormateada);
+
+    // Filtrar funciones por la nueva fecha
+    const funcionesFiltradas = funciones.filter((funcion) => {
+      const fechaFuncion = dayjs(funcion.fecha).format("MMM DD");
+      return fechaFuncion === fechaFormateada;
+    });
+
+    setfuncionesFiltrables(funcionesFiltradas);
   };
 
   const fechasDisponibles = uniqBy(funciones, "fecha")
@@ -129,6 +176,7 @@ export function FuncionesPelicula() {
             <Typography variant="h3" align="center">
               Funciones para {nombrePelicula}
             </Typography>
+            <FiltrosFunciones aplicarFiltros={aplicarFiltros} />
             <Box>
               {fechasDisponibles.map((fecha) => (
                 <Button
@@ -146,16 +194,29 @@ export function FuncionesPelicula() {
               ))}
             </Box>
             <Box sx={{ width: "500px" }}>
-              {selectedFecha && (
-                <AccordionFunciones
-                  handleChange={handleChange}
-                  expanded={expanded}
-                  gruposFunciones={
-                    gruposFunciones.find(
-                      (grupo) => grupo.fecha === selectedFecha
-                    ).grupos
-                  }
-                />
+              {gruposFunciones && gruposFunciones.length > 0 ? (
+                selectedFecha &&
+                gruposFunciones.find(
+                  (grupo) => grupo.fecha === selectedFecha
+                ) ? (
+                  <AccordionFunciones
+                    handleChange={handleChange}
+                    expanded={expanded}
+                    gruposFunciones={
+                      gruposFunciones.find(
+                        (grupo) => grupo.fecha === selectedFecha
+                      ).grupos
+                    }
+                  />
+                ) : (
+                  <Typography variant="h5">
+                    No hay funciones para la fecha seleccionada.
+                  </Typography>
+                )
+              ) : (
+                <Typography variant="h5">
+                  Sin funciones con los filtros aplicados.
+                </Typography>
               )}
             </Box>
           </>

@@ -1,1 +1,2 @@
-export * from "./AccordionFunciones"
+export * from "./AccordionFunciones";
+export * from "./FiltrosFunciones";
