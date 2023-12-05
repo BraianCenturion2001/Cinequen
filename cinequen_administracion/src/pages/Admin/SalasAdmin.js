@@ -16,6 +16,10 @@ export function SalasAdmin() {
     const onRefetch = () => setRefetch((prev) => !prev);
 
     useEffect(() => {
+        document.title = 'Ver Salas';
+    }, [])
+
+    useEffect(() => {
         getSalas();
     }, [refetch])
 

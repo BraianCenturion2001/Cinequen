@@ -13,6 +13,10 @@ export function UsersAdmin() {
     const [contentModal, setContentModal] = useState(null)
 
     useEffect(() => {
+        document.title = 'Ver Usuarios';
+    }, [])
+
+    useEffect(() => {
         getUsers();
     }, [refetch])
 

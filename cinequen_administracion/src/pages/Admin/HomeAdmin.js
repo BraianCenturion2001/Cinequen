@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid } from '@mui/material';
 import { Bart, Dona, Lines } from "../../components/Admin";
 
 export function HomeAdmin() {
+    useEffect(() => {
+        document.title = 'Escritorio';
+    }, [])
+
     return (
         <div>
             <h2>Escritorio</h2>

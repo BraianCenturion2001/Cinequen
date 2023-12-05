@@ -12,6 +12,10 @@ export function ProductosCanjeAdmin() {
     const [contentModal, setContentModal] = useState(null)
 
     useEffect(() => {
+        document.title = 'Ver Productos';
+    }, [])
+
+    useEffect(() => {
         getProductosCanje();
     }, [refetch])
 
