@@ -45,7 +45,12 @@ export function CardPelicula(props) {
     return (
         <>
             {renderLabel(pelicula.tipo)}
-            <div className='movie' style={{ backgroundImage: `url(${pelicula.poster})` }}>
+            <div className='movie' style={{
+                backgroundImage: `url(${pelicula.poster})`
+                , backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat'
+            }}>
 
                 <h2 className='movie__title'>{pelicula.nombre}</h2>
 
