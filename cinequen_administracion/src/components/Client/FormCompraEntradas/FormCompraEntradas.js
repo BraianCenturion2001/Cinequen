@@ -17,6 +17,7 @@ export function FormCompraEntradas(props) {
     const [butacasIds, setButacasIds] = useState([]);
     const [activeStep, setActiveStep] = useState(0);
     const [isDisabled, setIsDisabled] = useState(true);
+    const [isDisabledQR, setIsDisabledQR] = useState(true);
     const [qrValue, setQRValue] = useState('');
     const steps = ['Indica cantidad de Entradas', 'Selecciona tus Butacas', 'Método de Pago', 'Descarga tu Entrada'];
 
@@ -83,13 +84,24 @@ export function FormCompraEntradas(props) {
                 return (
                     <Paso4QR
                         qrValue={qrValue}
+                        setIsDisabledQR={setIsDisabledQR}
                     />
                 );
             default:
                 return (
-                    <Typography variant="h5" color="textPrimary" gutterBottom>
-                        Gracias por elegirnos!
-                    </Typography>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height: '400px',
+                        }}
+                    >
+                        <Typography variant="h5" color="textPrimary" gutterBottom>
+                            Gracias por elegirnos!
+                        </Typography>
+                    </Box>
                 );
         }
     };
@@ -131,14 +143,14 @@ export function FormCompraEntradas(props) {
                 )}
 
                 <Box sx={{ flex: '1 1 auto' }} />
-                {activeStep !== 2 && activeStep !== 3 && (
+                {activeStep !== 2 && activeStep !== 3 && activeStep !== 4 && (
                     <Button onClick={handleNext} disabled={isDisabled}>
                         <i className="fa-duotone fa-forward" style={{ marginRight: '15px' }}></i> Siguiente
                     </Button>
                 )}
 
                 {activeStep === 3 && (
-                    <Button onClick={handleFinish} disabled={isDisabled}>
+                    <Button onClick={handleFinish} disabled={isDisabledQR}>
                         <i className="fa-duotone fa-flag-checkered" style={{ marginRight: '15px' }}></i> Finalizar
                     </Button>
                 )}

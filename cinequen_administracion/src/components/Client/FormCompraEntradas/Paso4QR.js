@@ -5,7 +5,7 @@ import { useEntrada } from "../../../hooks";
 import { Box, Typography } from '@mui/material';
 
 export function Paso4QR(props) {
-    const { qrValue } = props;
+    const { qrValue, setIsDisabledQR } = props;
     const { generarPDF } = useEntrada();
 
     const handleGenerarPDF = async () => {
@@ -20,6 +20,7 @@ export function Paso4QR(props) {
         setTimeout(() => {
             handleGenerarPDF();
         }, 1500);
+        setIsDisabledQR(false);
     }, []);
 
     return (
