@@ -109,13 +109,13 @@ export function SelectFunciones() {
         </Box>
       ) : (
         <Box sx={{ margin: "0 40px" }}>
-          <Grid container spacing={12}>
+          <Grid container spacing={2}>
             {peliculasOptions.map((pelicula, index) => (
               <Zoom
                 in={checkedPeliculas}
                 style={{ transitionDelay: `${delay + index * 300}ms` }}
               >
-                <Grid item xs={3} sm={3} md={3} lg={3} xl={3} key={pelicula.id}>
+                <Grid item xs={6} sm={4} md={3} lg={2} xl={2} key={pelicula.id}>
                   <CardPelicula pelicula={pelicula} />
                 </Grid>
               </Zoom>

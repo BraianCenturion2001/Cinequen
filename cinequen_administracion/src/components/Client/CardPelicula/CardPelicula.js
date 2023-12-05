@@ -24,7 +24,7 @@ export function CardPelicula(props) {
         }
 
         return (
-            <Label color={color} ribbon style={{ marginLeft: "14px", bottom: "-30px", zIndex: 10 }}>
+            <Label color={color} ribbon style={{ marginLeft: "14.3px", bottom: "-30px", zIndex: 10 }}>
                 {tipoPelicula}
             </Label>
         );
