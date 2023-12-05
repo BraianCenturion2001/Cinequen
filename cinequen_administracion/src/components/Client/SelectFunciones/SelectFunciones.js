@@ -93,6 +93,7 @@ export function SelectFunciones() {
           search
           options={establecimientosFormato}
           onChange={handleEstablecimientoChange}
+          style={{ zIndex: 11 }}
         />
       </Box>
       {loadingPeliculas ? (
