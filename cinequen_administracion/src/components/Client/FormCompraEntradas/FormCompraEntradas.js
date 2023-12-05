@@ -98,14 +98,17 @@ export function FormCompraEntradas(props) {
                 {getStepContent(activeStep)}
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                <Button
-                    color="inherit"
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                    sx={{ mr: 1 }}
-                >
-                    <i class="fa-duotone fa-backward" style={{ marginRight: '15px' }}></i> Volver
-                </Button>
+                {activeStep > 0 && (
+                    <Button
+                        color="inherit"
+                        disabled={activeStep === 0}
+                        onClick={handleBack}
+                        sx={{ mr: 1 }}
+                    >
+                        <i class="fa-duotone fa-backward" style={{ marginRight: '15px' }}></i> Volver
+                    </Button>
+                )}
+
                 <Box sx={{ flex: '1 1 auto' }} />
                 {activeStep < steps.length - 1 && (
                     <Button onClick={handleNext} disabled={isDisabled}>
