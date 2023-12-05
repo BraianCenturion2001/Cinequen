@@ -6,7 +6,9 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
   Paper,
+  Box,
   Button,
 } from "@mui/material";
 import { QRCode } from "react-qrcode-logo";
@@ -92,53 +94,80 @@ export function TablaEntradas(props) {
         </TableCell>
         <TableCell>{entrada.funcion_data.pelicula_data.nombre}</TableCell>
         <TableCell>{obtenerButacasNombres(entrada.butacas_data)}</TableCell>
-        <TableCell align="right">
-          {entrada.estado ? (
-            <Button
-              variant="outlined"
-              color="success"
-              style={{ marginRight: "5px" }}
-            >
-              <i
-                className="fa-duotone fa-check fa-lg"
-                style={{
-                  marginRight: "10px",
-                  "--fa-primary-color": "#416b1f",
-                  "--fa-secondary-color": "#416b1f",
+        <TableCell>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: "20px",
+            }}
+          >
+            {entrada.estado ? (
+              <Box
+                sx={{
+                  marginLeft: "8px",
+                  backgroundColor: "#ADD8E6",
+                  borderRadius: "15px",
+                  width: "100px",
+                  padding: "10px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontWeight: "bold",
                 }}
-              ></i>
-              Escaneada
-            </Button>
-          ) : (
-            <Button
-              variant="outlined"
-              color="error"
-              style={{ marginRight: "5px" }}
-            >
-              <i
-                className="fa-duotone fa-xmark fa-lg"
-                style={{
-                  marginRight: "10px",
-                  "--fa-primary-color": "#e61919",
-                  "--fa-secondary-color": "#c11515",
-                  "--fa-secondary-opacity": "1",
+              >
+                <i
+                  className="fa-duotone fa-check fa-lg"
+                  style={{
+                    marginRight: "8px",
+                    "--fa-primary-color": "#416b1f",
+                    "--fa-secondary-color": "#416b1f",
+                  }}
+                ></i>
+                Escaneada
+              </Box>
+            ) : (
+              <Box
+                sx={{
+                  marginLeft: "8px",
+                  backgroundColor: "#d9633c",
+                  borderRadius: "15px",
+                  width: "120px",
+                  padding: "10px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontWeight: "bold",
                 }}
-              ></i>
-              Sin Escanear
-            </Button>
-          )}
-          {esHistorial && (
-            <Button
-              variant="outlined"
-              color="info"
-              onClick={() => modalQR(`${BASE_API}/api/entradas/${entrada.id}`)}
-            >
-              <i
-                class="fa-duotone fa-qrcode fa-xl"
-                style={{ marginTop: "10px", marginBottom: "10px" }}
-              ></i>
-            </Button>
-          )}
+              >
+                <i
+                  className="fa-duotone fa-xmark fa-lg"
+                  style={{
+                    marginRight: "8px",
+                    "--fa-primary-color": "#e61919",
+                    "--fa-secondary-color": "#c11515",
+                    "--fa-secondary-opacity": "1",
+                  }}
+                ></i>
+                Sin escanear
+              </Box>
+            )}
+            {esHistorial && (
+              <Button
+                variant="outlined"
+                color="info"
+                onClick={() =>
+                  modalQR(`${BASE_API}/api/entradas/${entrada.id}`)
+                }
+              >
+                <i
+                  class="fa-duotone fa-qrcode fa-xl"
+                  style={{ marginTop: "10px", marginBottom: "10px" }}
+                ></i>
+              </Button>
+            )}
+          </Box>
         </TableCell>
       </TableRow>
     ));
@@ -158,8 +187,8 @@ export function TablaEntradas(props) {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="center" colSpan={4}>
-                Entradas Activas
+              <TableCell align="center" colSpan={5}>
+                <Typography variant="h3">Entradas activas</Typography>
               </TableCell>
             </TableRow>
             <TableRow>
@@ -167,7 +196,7 @@ export function TablaEntradas(props) {
               <TableCell>Establecimiento</TableCell>
               <TableCell>Pelicula</TableCell>
               <TableCell>Butacas</TableCell>
-              <TableCell align="right">Acciones</TableCell>
+              <TableCell align="center">Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -175,7 +204,7 @@ export function TablaEntradas(props) {
               renderFilasTabla(entradasFuturas, true)
             ) : (
               <TableRow>
-                <TableCell align="center" colSpan={6}>
+                <TableCell align="center" colSpan={5}>
                   Sin entradas registradas.
                 </TableCell>
               </TableRow>
@@ -185,8 +214,8 @@ export function TablaEntradas(props) {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="center" colSpan={4}>
-                Historial de Entradas
+              <TableCell align="center" colSpan={5}>
+                <Typography variant="h3">Historial de Entradas</Typography>
               </TableCell>
             </TableRow>
             <TableRow>
@@ -194,7 +223,7 @@ export function TablaEntradas(props) {
               <TableCell>Establecimiento</TableCell>
               <TableCell>Pelicula</TableCell>
               <TableCell>Butacas</TableCell>
-              <TableCell align="right">-</TableCell>
+              <TableCell align="center"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -202,7 +231,7 @@ export function TablaEntradas(props) {
               renderFilasTabla(entradasPasadas)
             ) : (
               <TableRow>
-                <TableCell align="center" colSpan={6}>
+                <TableCell align="center" colSpan={5}>
                   Sin entradas registradas.
                 </TableCell>
               </TableRow>
