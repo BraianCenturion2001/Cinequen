@@ -9,7 +9,6 @@ export function HomeAdmin() {
 
     return (
         <div>
-            <h2>Escritorio</h2>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Bart />

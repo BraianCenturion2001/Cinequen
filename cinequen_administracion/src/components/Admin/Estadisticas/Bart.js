@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Loader } from "semantic-ui-react"
 import { useCharts } from "../../../hooks"
 import { BarChart } from '@mui/x-charts';
+import { Typography } from "@mui/material"
 
 export function Bart() {
     const { loading, dataBarts, getBarts } = useCharts();
@@ -28,15 +29,18 @@ export function Bart() {
                         Cargando
                     </Loader>
                 ) : (
-                    <BarChart
-                        dataset={dataBarts.taquilla}
-                        xAxis={[{ scaleType: 'band', dataKey: 'month' }]}
-                        series={dataBarts.series.map((seriesObj) => ({
-                            ...seriesObj,
-                            valueFormatter,
-                        }))}
-                        {...chartSetting}
-                    />
+                    <>
+                        <Typography variant="h6" gutterBottom>Rendimiento Anual Taquilla</Typography>
+                        <BarChart
+                            dataset={dataBarts.taquilla}
+                            xAxis={[{ scaleType: 'band', dataKey: 'month' }]}
+                            series={dataBarts.series.map((seriesObj) => ({
+                                ...seriesObj,
+                                valueFormatter,
+                            }))}
+                            {...chartSetting}
+                        />
+                    </>
                 )
             }
         </>
