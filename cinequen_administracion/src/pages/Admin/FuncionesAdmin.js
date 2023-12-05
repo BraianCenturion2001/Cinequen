@@ -15,6 +15,10 @@ export function FuncionesAdmin() {
     const onRefetch = () => setRefetch((prev) => !prev);
 
     useEffect(() => {
+        document.title = 'Ver Funciones';
+    }, [])
+
+    useEffect(() => {
         getFunciones();
     }, [refetch])
 

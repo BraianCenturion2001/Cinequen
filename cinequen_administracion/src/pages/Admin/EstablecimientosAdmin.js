@@ -17,6 +17,7 @@ export function EstablecimientosAdmin() {
 
     useEffect(() => {
         getEstablecimientos();
+        document.title = 'Ver Establecimientos';
     }, [refetch])
 
     const addEstablecimiento = () => {

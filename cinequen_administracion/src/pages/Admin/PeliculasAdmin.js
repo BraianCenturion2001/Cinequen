@@ -13,6 +13,10 @@ export function PeliculasAdmin() {
     const [contentModal, setContentModal] = useState(null)
 
     useEffect(() => {
+        document.title = 'Ver Peliculas';
+    }, [])
+
+    useEffect(() => {
         getPeliculas();
     }, [refetch])
 
