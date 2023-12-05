@@ -78,13 +78,15 @@ export function TablaEntradas(props) {
     openCloseModal();
   };
 
-  // Obtener la fecha de hoy
   const today = new Date();
+
+  // Restar un día (24 horas en milisegundos)
+  const yesterday = new Date(today - 24 * 60 * 60 * 1000);
 
   // Dividir las entradas en dos arreglos basado en la fecha de la función
   const [entradasFuturas, entradasPasadas] = partition(entradas, (entrada) => {
     const fechaFuncion = new Date(entrada.funcion_data.fecha);
-    return fechaFuncion >= today;
+    return fechaFuncion >= yesterday;
   });
 
   // Función para obtener los nombres de las butacas
