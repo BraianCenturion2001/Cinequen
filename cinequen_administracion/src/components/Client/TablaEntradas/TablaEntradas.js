@@ -43,24 +43,37 @@ export function TablaEntradas(props) {
   }, [showModal]);
 
   const modalQR = (qrValue) => {
-    setTitleModal("Descargar QR");
+    setTitleModal("Volver a descargar entrada");
     setContentModal(
-      <QRCode
-        value={qrValue}
-        enableCORS={true}
-        logoImage={BASE_REACT + "/images/Icon 1.png"}
-        removeQrCodeBehindLogo={true}
-        size={250}
-        eyeColor="#cc1212"
-        fgColor="#cc1212"
-        qrStyle="dots"
-        eyeRadius={[
-          [10, 10, 0, 10],
-          [10, 10, 10, 0], // top/right eye
-          [10, 0, 10, 10], // bottom/left
-        ]}
-        id={"QRCodePDF"}
-      />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "300px",
+        }}
+      >
+        <Typography variant="h5" color="textPrimary" gutterBottom>
+          En breve se descargará este QR!
+        </Typography>
+        <QRCode
+          value={qrValue}
+          enableCORS={true}
+          logoImage={BASE_REACT + "/images/Icon 1.png"}
+          removeQrCodeBehindLogo={true}
+          size={250}
+          eyeColor="#cc1212"
+          fgColor="#cc1212"
+          qrStyle="dots"
+          eyeRadius={[
+            [10, 10, 0, 10],
+            [10, 10, 10, 0], // top/right eye
+            [10, 0, 10, 10], // bottom/left
+          ]}
+          id={"QRCodePDF"}
+        />
+      </Box>
     );
     openCloseModal();
   };
