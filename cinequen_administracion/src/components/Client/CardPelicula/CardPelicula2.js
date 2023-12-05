@@ -19,6 +19,9 @@ export function CardPelicula2(props) {
                     <Typography component="div" color="success" variant="h5">
                         {formatFecha(funcion.fecha)} | {funcion.hora_inicio.substring(0, 5)}hs
                     </Typography>
+                    <Typography component="div" color="success" variant="h6">
+                        {funcion.formato} - {funcion.idioma}
+                    </Typography>
                     <Typography variant="subtitle1" color="text.secondary" component="div">
                         {funcion.sala_data.establecimiento_data.nombre} - {funcion.sala_data.nombre}
                     </Typography>
